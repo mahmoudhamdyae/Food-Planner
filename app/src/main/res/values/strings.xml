@@ -37,7 +37,7 @@
     <string name="sign_up_button">Create an Account</string>
     <string name="user_name_error">Please insert a valid name.</string>
     <string name="password_match_error">Passwords do not match.</string>
-    <string name="sign_up_with_google_button">Sign up with Google</string>
+    <string name="sign_up_with_google_button">Sign in with Google</string>
     <string name="already_have_an_account">Already have an Account? </string>
     <string name="sign_in">Sign in</string>
 

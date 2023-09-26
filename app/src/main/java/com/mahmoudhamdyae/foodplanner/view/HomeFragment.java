@@ -1,6 +1,9 @@
 package com.mahmoudhamdyae.foodplanner.view;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,14 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mahmoudhamdyae.foodplanner.R;
-import com.mahmoudhamdyae.foodplanner.view.auth.LoginFragmentDirections;
 
 public class HomeFragment extends Fragment {
 
@@ -50,5 +49,9 @@ public class HomeFragment extends Fragment {
             NavDirections action = HomeFragmentDirections.actionHomeFragmentToLoginFragment();
             Navigation.findNavController(getView()).navigate(action);
         }
+    }
+
+    private void signOut() {
+        mAuth.signOut();
     }
 }
