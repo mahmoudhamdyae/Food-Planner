@@ -58,6 +58,10 @@ public class LoginFragment extends Fragment {
         // TextInputs
         emailEditText = view.findViewById(R.id.email);
         passwordEditText = view.findViewById(R.id.password);
+
+        forgotPassword.setOnClickListener(v -> {
+            forgotPassword();
+        });
     }
 
     private void validateAndLogin() {
@@ -88,5 +92,8 @@ public class LoginFragment extends Fragment {
     private void login() {
         NavDirections action = LoginFragmentDirections.actionLoginFragmentToHomeFragment();
         Navigation.findNavController(getView()).navigate(action);
+    }
+
+    private void forgotPassword() {
     }
 }
