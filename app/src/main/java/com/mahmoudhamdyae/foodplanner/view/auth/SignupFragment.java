@@ -1,11 +1,13 @@
 package com.mahmoudhamdyae.foodplanner.view.auth;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,13 +15,21 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.utils.Validation;
 
 public class SignupFragment extends Fragment {
 
+    private final String TAG = "SignupFragment";
     private TextInputLayout userNameEditText, emailEditText, passwordEditText, repeatPasswordEditText;
+
+    private FirebaseAuth mAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +70,9 @@ public class SignupFragment extends Fragment {
         emailEditText = view.findViewById(R.id.email);
         passwordEditText = view.findViewById(R.id.password);
         repeatPasswordEditText = view.findViewById(R.id.repeat_password);
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
     }
 
     private void validateAndSignup() {
@@ -115,7 +128,23 @@ public class SignupFragment extends Fragment {
     }
 
     private void signup() {
-        NavDirections action = SignupFragmentDirections.actionSignupFragmentToHomeFragment();
-        Navigation.findNavController(getView()).navigate(action);
+        String email = emailEditText.getEditText().getText().toString();
+        String password = passwordEditText.getEditText().getText().toString();
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(getActivity(), task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "createUserWithEmail:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        // Navigate to Home Screen
+                        NavDirections action = SignupFragmentDirections.actionSignupFragmentToHomeFragment();
+                        Navigation.findNavController(getView()).navigate(action);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        Toast.makeText(getActivity(), "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
