@@ -2,6 +2,7 @@ package com.mahmoudhamdyae.foodplanner.utils;
 
 import com.mahmoudhamdyae.foodplanner.R;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validation {
@@ -11,14 +12,10 @@ public class Validation {
     }
 
     public boolean isValidEmail(String email) {
-        String emailRegex = ("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-                "\\@" +
-                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-                "(" +
-                "\\." +
-                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-                ")+");
-        return !email.isEmpty() && emailRegex.matches(email);
+        String emailRegex = "^(.+)@(.+)$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return !email.isEmpty() && matcher.matches();
     }
     
     public int passwordErrorMessage(String password) {

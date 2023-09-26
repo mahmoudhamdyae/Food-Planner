@@ -61,6 +61,8 @@ public class LoginFragment extends Fragment {
     }
 
     private void validateAndLogin() {
+        passwordEditText.setError(null);
+        emailEditText.setError(null);
         if (validateEmail() && validatePassword()) login();
     }
 
@@ -76,15 +78,15 @@ public class LoginFragment extends Fragment {
 
     private boolean validatePassword() {
         String password = passwordEditText.getEditText().getText().toString();
-        Validation validation = new Validation();
-        int error = validation.passwordErrorMessage(password);
-        if (error != -1) {
-            passwordEditText.setError(getResources().getString(error));
+        if (password.isEmpty()) {
+            passwordEditText.setError(getResources().getString(R.string.empty_password_error));
             return false;
         }
         return true;
     }
 
     private void login() {
+        NavDirections action = LoginFragmentDirections.actionLoginFragmentToHomeFragment();
+        Navigation.findNavController(getView()).navigate(action);
     }
 }

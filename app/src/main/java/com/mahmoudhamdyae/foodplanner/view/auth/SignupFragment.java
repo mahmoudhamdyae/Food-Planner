@@ -63,6 +63,10 @@ public class SignupFragment extends Fragment {
     }
 
     private void validateAndSignup() {
+        passwordEditText.setError(null);
+        emailEditText.setError(null);
+        repeatPasswordEditText.setError(null);
+        userNameEditText.setError(null);
         if (validateUserName() && validateEmail() && validatePassword() && validateRepeatPassword()) {
             signup();
         }
@@ -111,5 +115,7 @@ public class SignupFragment extends Fragment {
     }
 
     private void signup() {
+        NavDirections action = SignupFragmentDirections.actionSignupFragmentToHomeFragment();
+        Navigation.findNavController(getView()).navigate(action);
     }
 }
