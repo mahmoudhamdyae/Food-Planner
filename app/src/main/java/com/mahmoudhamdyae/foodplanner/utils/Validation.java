@@ -7,10 +7,6 @@ import java.util.regex.Pattern;
 
 public class Validation {
 
-    public boolean isValidUserName(String userName) {
-        return !userName.isEmpty();
-    }
-
     public boolean isValidEmail(String email) {
         String emailRegex = "^(.+)@(.+)$";
         Pattern pattern = Pattern.compile(emailRegex);

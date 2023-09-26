@@ -15,10 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mahmoudhamdyae.foodplanner.R;
@@ -27,7 +24,7 @@ import com.mahmoudhamdyae.foodplanner.utils.Validation;
 public class SignupFragment extends Fragment {
 
     private final String TAG = "SignupFragment";
-    private TextInputLayout userNameEditText, emailEditText, passwordEditText, repeatPasswordEditText;
+    private TextInputLayout emailEditText, passwordEditText, repeatPasswordEditText;
 
     private FirebaseAuth mAuth;
 
@@ -66,7 +63,6 @@ public class SignupFragment extends Fragment {
         });
 
         // TextInputs
-        userNameEditText = view.findViewById(R.id.user_name);
         emailEditText = view.findViewById(R.id.email);
         passwordEditText = view.findViewById(R.id.password);
         repeatPasswordEditText = view.findViewById(R.id.repeat_password);
@@ -79,20 +75,9 @@ public class SignupFragment extends Fragment {
         passwordEditText.setError(null);
         emailEditText.setError(null);
         repeatPasswordEditText.setError(null);
-        userNameEditText.setError(null);
-        if (validateUserName() && validateEmail() && validatePassword() && validateRepeatPassword()) {
+        if (validateEmail() && validatePassword() && validateRepeatPassword()) {
             signup();
         }
-    }
-
-    private boolean validateUserName() {
-        String userName = userNameEditText.getEditText().getText().toString();
-        Validation validation = new Validation();
-        if (!validation.isValidUserName(userName)) {
-            userNameEditText.setError(getResources().getString(R.string.user_name_error));
-            return false;
-        }
-        return true;
     }
 
     private boolean validateEmail() {
