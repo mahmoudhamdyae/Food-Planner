@@ -1,32 +1,28 @@
 package com.mahmoudhamdyae.foodplanner.view.home.presenter;
 
-import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
+import com.mahmoudhamdyae.foodplanner.model.Repository;
 import com.mahmoudhamdyae.foodplanner.view.home.view.IHomeView;
 import com.mahmoudhamdyae.network.NetworkCallback;
-import com.mahmoudhamdyae.network.RemoteSource;
-
-import java.util.List;
 
 public class HomePresenter implements IHomePresenter, NetworkCallback {
 
     private final IHomeView view;
-    private final RemoteSource remoteSource;
+    private final Repository repo;
 
-    public HomePresenter(IHomeView view, RemoteSource remoteSource) {
+    public HomePresenter(IHomeView view, Repository repo) {
         this.view = view;
-        this.remoteSource = remoteSource;
+        this.repo = repo;
     }
 
     @Override
-    public List<Meal> getMeals() {
-        remoteSource.makeNetworkCall(this);
-        return null;
+    public void getMeals() {
+        repo.getMeals(this);
     }
 
     @Override
-    public void onSuccessResult(MealsResponse mealsResponse) {
-        view.onGetMealsSuccess(mealsResponse);
+    public void onSuccessResult(Object object) {
+        view.onGetMealsSuccess((MealsResponse) object);
     }
 
     @Override

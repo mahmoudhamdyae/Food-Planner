@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
+import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
 import com.mahmoudhamdyae.foodplanner.view.home.presenter.HomePresenter;
 import com.mahmoudhamdyae.network.ApiClient;
 
@@ -61,7 +62,7 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
-        presenter = new HomePresenter(this, ApiClient.getInstance());
+        presenter = new HomePresenter(this, RepositoryImpl.getInstance(ApiClient.getInstance()));
         presenter.getMeals();
 
         setHasOptionsMenu(true);

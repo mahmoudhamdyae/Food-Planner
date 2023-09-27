@@ -2,5 +2,6 @@ package com.mahmoudhamdyae.network;
 
 public interface RemoteSource {
 
-    void makeNetworkCall(NetworkCallback networkCallback);
+    void getMeals(NetworkCallback networkCallback);
+    void searchMeal(String name, NetworkCallback networkCallback);
 }

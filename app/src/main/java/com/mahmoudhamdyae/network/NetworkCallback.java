@@ -1,9 +1,7 @@
 package com.mahmoudhamdyae.network;
 
-import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
-
 public interface NetworkCallback {
 
-    void onSuccessResult(MealsResponse mealsResponse);
+    void onSuccessResult(Object object);
     void onFailureResult(String errorMsg);
 }
