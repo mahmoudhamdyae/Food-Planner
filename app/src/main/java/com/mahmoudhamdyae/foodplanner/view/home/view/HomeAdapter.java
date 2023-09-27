@@ -1,4 +1,4 @@
-package com.mahmoudhamdyae.foodplanner.view.home;
+package com.mahmoudhamdyae.foodplanner.view.home.view;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -22,13 +23,15 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     private List<Meal> items;
     private final Context context;
+    private final OnMealClickListener listener;
 
     private static final String TAG = "RecyclerView";
 
-    public HomeAdapter(Context context, List<Meal> items) {
+    public HomeAdapter(Context context, List<Meal> items, OnMealClickListener listener) {
         super();
         this.items = items;
         this.context = context;
+        this.listener = listener;
     }
 
     public void setList(List<Meal> products) {
@@ -58,6 +61,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
         holder.titleView.setText(items.get(position).getStrCategory());
         holder.descriptionView.setText(items.get(position).getStrCategoryDescription());
+
+        holder.row.setOnClickListener(v -> listener.onMealClicked(items.get(position)));
         Log.i(TAG, "********* onBindViewHolder ***********");
     }
 
@@ -70,12 +75,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
         ImageView imageView;
         TextView titleView, descriptionView;
+        CardView row;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_view);
             titleView = itemView.findViewById(R.id.title);
             descriptionView = itemView.findViewById(R.id.desc);
+            row = itemView.findViewById(R.id.row);
         }
     }
 }

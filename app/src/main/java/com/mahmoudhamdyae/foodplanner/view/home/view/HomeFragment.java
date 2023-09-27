@@ -1,4 +1,4 @@
-package com.mahmoudhamdyae.foodplanner.view.home;
+package com.mahmoudhamdyae.foodplanner.view.home.view;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -21,16 +21,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mahmoudhamdyae.foodplanner.R;
+import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
+import com.mahmoudhamdyae.foodplanner.view.home.presenter.HomePresenter;
 import com.mahmoudhamdyae.network.ApiClient;
-import com.mahmoudhamdyae.network.NetworkCallback;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment implements NetworkCallback {
+public class HomeFragment extends Fragment implements OnMealClickListener, IHomeView {
 
     private HomeAdapter mAdapter;
     private FirebaseAuth mAuth;
+
+    private HomePresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,7 @@ public class HomeFragment extends Fragment implements NetworkCallback {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        mAdapter = new HomeAdapter(getContext(), new ArrayList<>());
+        mAdapter = new HomeAdapter(getContext(), new ArrayList<>(), this);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -58,8 +61,8 @@ public class HomeFragment extends Fragment implements NetworkCallback {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
-        ApiClient client = ApiClient.getInstance();
-        client.makeNetworkCall(this);
+        presenter = new HomePresenter(this, ApiClient.getInstance());
+        presenter.getMeals();
 
         setHasOptionsMenu(true);
     }
@@ -77,16 +80,6 @@ public class HomeFragment extends Fragment implements NetworkCallback {
                     // User cancelled the dialog
                     dialog.dismiss();
                 }).show();
-    }
-
-    @Override
-    public void onSuccessResult(MealsResponse mealsResponse) {
-        mAdapter.setList(mealsResponse.getCategories());
-    }
-
-    @Override
-    public void onFailureResult(String errorMsg) {
-        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -115,5 +108,20 @@ public class HomeFragment extends Fragment implements NetworkCallback {
     private void navigateToLoginScreen() {
         NavDirections action = HomeFragmentDirections.actionHomeFragmentToLoginFragment();
         Navigation.findNavController(requireView()).navigate(action);
+    }
+
+    @Override
+    public void onMealClicked(Meal meal) {
+        Toast.makeText(getContext(), "Clicked: " + meal.getStrCategory(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onGetMealsSuccess(MealsResponse mealsResponse) {
+        mAdapter.setList(mealsResponse.getCategories());
+    }
+
+    @Override
+    public void onGetMealsFail(String errorMsg) {
+        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 }
