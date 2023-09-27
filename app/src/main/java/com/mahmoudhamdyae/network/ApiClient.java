@@ -14,7 +14,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiClient {
+public class ApiClient implements RemoteSource {
 
     public static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     public static final String TAG = "Api_Client";
@@ -33,6 +33,7 @@ public class ApiClient {
         return client;
     }
 
+    @Override
     public void makeNetworkCall(NetworkCallback networkCallback) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)

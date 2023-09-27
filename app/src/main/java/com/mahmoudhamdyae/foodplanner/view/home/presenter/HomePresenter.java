@@ -3,24 +3,24 @@ package com.mahmoudhamdyae.foodplanner.view.home.presenter;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.view.home.view.IHomeView;
-import com.mahmoudhamdyae.network.ApiClient;
 import com.mahmoudhamdyae.network.NetworkCallback;
+import com.mahmoudhamdyae.network.RemoteSource;
 
 import java.util.List;
 
 public class HomePresenter implements IHomePresenter, NetworkCallback {
 
     private final IHomeView view;
-    private final ApiClient client;
+    private final RemoteSource remoteSource;
 
-    public HomePresenter(IHomeView view, ApiClient client) {
+    public HomePresenter(IHomeView view, RemoteSource remoteSource) {
         this.view = view;
-        this.client = client;
+        this.remoteSource = remoteSource;
     }
 
     @Override
     public List<Meal> getMeals() {
-        client.makeNetworkCall(this);
+        remoteSource.makeNetworkCall(this);
         return null;
     }
 
