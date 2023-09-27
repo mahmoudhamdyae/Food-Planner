@@ -9,13 +9,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.network.ApiClient;
@@ -61,17 +58,6 @@ public class HomeFragment extends Fragment implements NetworkCallback {
 
         client = ApiClient.getInstance();
         client.makeNetworkCall(this);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
-            NavDirections action = HomeFragmentDirections.actionHomeFragmentToLoginFragment();
-            Navigation.findNavController(getView()).navigate(action);
-        }
     }
 
     private void signOut() {

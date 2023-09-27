@@ -8,12 +8,12 @@
     <string name="welcome_screen_title">Food Planner</string>
 
     <!-- OnBoarding Screen -->
-<!--    <string name="on_boarding_title_1"></string>-->
-<!--    <string name="on_boarding_title_2"></string>-->
-<!--    <string name="on_boarding_title_3"></string>-->
-<!--    <string name="on_boarding_text_1"></string>-->
-<!--    <string name="on_boarding_text_2"></string>-->
-<!--    <string name="on_boarding_text_3"></string>-->
+    <!--    <string name="on_boarding_title_1"></string>-->
+    <!--    <string name="on_boarding_title_2"></string>-->
+    <!--    <string name="on_boarding_title_3"></string>-->
+    <!--    <string name="on_boarding_text_1"></string>-->
+    <!--    <string name="on_boarding_text_2"></string>-->
+    <!--    <string name="on_boarding_text_3"></string>-->
 
     <!-- Auth -->
     <string name="skip">Skip</string>
@@ -46,4 +46,10 @@
     <string name="password_content_description">Password</string>
     <string name="fab_add_content_description">Add</string>
     <string name="image">Image</string>
+
+    <!-- NavBar -->
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
