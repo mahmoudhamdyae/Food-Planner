@@ -1,5 +1,6 @@
 package com.mahmoudhamdyae.foodplanner.view.home;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
@@ -27,13 +29,8 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements NetworkCallback {
 
-    private final String TAG = "HomeFragment";
-    private FirebaseAuth mAuth;
-
     private HomeAdapter mAdapter;
-    private RecyclerView recyclerView;
-
-    private ApiClient client;
+    private FirebaseAuth mAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,22 +51,32 @@ public class HomeFragment extends Fragment implements NetworkCallback {
         mAuth = FirebaseAuth.getInstance();
 
         mAdapter = new HomeAdapter(getContext(), new ArrayList<>());
-        recyclerView = view.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
-        client = ApiClient.getInstance();
+        ApiClient client = ApiClient.getInstance();
         client.makeNetworkCall(this);
 
         setHasOptionsMenu(true);
     }
 
     private void signOut() {
-        mAuth.signOut();
-        navigateToHomeScreen();
+        new MaterialAlertDialogBuilder(requireContext())
+                .setMessage(R.string.dialog_sign_out_msg)
+                .setPositiveButton(R.string.dialog_sign_out, (DialogInterface.OnClickListener) (dialog, id) -> {
+                    // Sign out
+                    mAuth.signOut();
+                    navigateToLoginScreen();
+                    dialog.dismiss();
+                })
+                .setNegativeButton(R.string.dialog_cancel, (DialogInterface.OnClickListener) (dialog, id) -> {
+                    // User cancelled the dialog
+                    dialog.dismiss();
+                }).show();
     }
 
     @Override
@@ -83,8 +90,10 @@ public class HomeFragment extends Fragment implements NetworkCallback {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_main, menu);
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        if (mAuth.getCurrentUser() != null) inflater.inflate(R.menu.menu_main, menu);
+        else inflater.inflate(R.menu.menu_main_not_signed, menu);
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -94,14 +103,17 @@ public class HomeFragment extends Fragment implements NetworkCallback {
             case R.id.log_out:
                 signOut();
                 return true;
+            case R.id.sign_in:
+                navigateToLoginScreen();
+                return true;
             default:
                 break;
         }
         return false;
     }
 
-    private void navigateToHomeScreen() {
+    private void navigateToLoginScreen() {
         NavDirections action = HomeFragmentDirections.actionHomeFragmentToLoginFragment();
-        Navigation.findNavController(getView()).navigate(action);
+        Navigation.findNavController(requireView()).navigate(action);
     }
 }

@@ -118,7 +118,7 @@ public class LoginFragment extends Fragment {
         String email = emailEditText.getEditText().getText().toString();
         String password = passwordEditText.getEditText().getText().toString();
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), task -> {
+                .addOnCompleteListener(requireActivity(), task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success");
@@ -153,7 +153,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, /*accessToken=*/ null);
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 // Sign in success, update UI with the signed-in user's information
@@ -167,6 +167,6 @@ public class LoginFragment extends Fragment {
 
     private void navigateToHomeScreen() {
         NavDirections action = LoginFragmentDirections.actionLoginFragmentToHomeFragment();
-        Navigation.findNavController(getView()).navigate(action);
+        Navigation.findNavController(requireView()).navigate(action);
     }
 }
