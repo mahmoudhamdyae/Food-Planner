@@ -6,14 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".view.home.view.HomeFragment">
 
+    <TextView
+        android:id="@+id/meal_of_the_day_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/meal_of_the_day"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/meal_of_the_day"
+        layout="@layout/meal_row"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/meal_of_the_day_label" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meal_of_the_day"
         tools:listitem="@layout/meal_row" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

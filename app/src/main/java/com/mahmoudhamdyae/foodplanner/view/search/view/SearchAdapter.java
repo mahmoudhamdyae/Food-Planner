@@ -15,26 +15,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mahmoudhamdyae.foodplanner.R;
-import com.mahmoudhamdyae.foodplanner.model.Search;
+import com.mahmoudhamdyae.foodplanner.model.Meal;
 
 import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
-    private List<Search> items;
+    private List<Meal> items;
     private final Context context;
     private final OnMealClickListener listener;
 
     private static final String TAG = "RecyclerView";
 
-    public SearchAdapter(Context context, List<Search> items, OnMealClickListener listener) {
+    public SearchAdapter(Context context, List<Meal> items, OnMealClickListener listener) {
         super();
         this.items = items;
         this.context = context;
         this.listener = listener;
     }
 
-    public void setList(List<Search> products) {
+    public void setList(List<Meal> products) {
         this.items = products;
         notifyDataSetChanged();
     }

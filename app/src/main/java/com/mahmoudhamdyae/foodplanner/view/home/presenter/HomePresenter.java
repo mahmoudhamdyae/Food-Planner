@@ -1,5 +1,6 @@
 package com.mahmoudhamdyae.foodplanner.view.home.presenter;
 
+import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.model.Repository;
 import com.mahmoudhamdyae.foodplanner.view.home.view.IHomeView;
@@ -17,16 +18,25 @@ public class HomePresenter implements IHomePresenter, NetworkCallback {
 
     @Override
     public void getMeals() {
-        repo.getMeals(this);
+        repo.getCategories(this);
+    }
+
+    @Override
+    public void getMealOfTheDay() {
+        repo.getMealOfTheDay(this);
     }
 
     @Override
     public void onSuccessResult(Object object) {
-        view.onGetMealsSuccess((MealsResponse) object);
+        if (object instanceof CategoryResponse) {
+            view.onGetMealsSuccess((CategoryResponse) object);
+        } else if (object instanceof MealsResponse) {
+            view.onGetMealOfTheDaySuccess((MealsResponse) object);
+        }
     }
 
     @Override
     public void onFailureResult(String errorMsg) {
-        view.onGetMealsFail(errorMsg);
+        view.onNetworkFail(errorMsg);
     }
 }

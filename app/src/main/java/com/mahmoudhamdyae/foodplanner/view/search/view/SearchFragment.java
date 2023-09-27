@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
-import com.mahmoudhamdyae.foodplanner.model.Search;
-import com.mahmoudhamdyae.foodplanner.model.SearchResponse;
+import com.mahmoudhamdyae.foodplanner.model.Meal;
+import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.view.search.presenter.ISearchPresenter;
 import com.mahmoudhamdyae.foodplanner.view.search.presenter.SearchPresenter;
 import com.mahmoudhamdyae.network.ApiClient;
@@ -71,8 +71,8 @@ public class SearchFragment extends Fragment implements ISearchView, OnMealClick
     }
 
     @Override
-    public void onGetMealsSuccess(SearchResponse searchResponse) {
-        mAdapter.setList(searchResponse.getMeals());
+    public void onGetMealsSuccess(MealsResponse mealsResponse) {
+        mAdapter.setList(mealsResponse.getMeals());
     }
 
     @Override
@@ -81,7 +81,7 @@ public class SearchFragment extends Fragment implements ISearchView, OnMealClick
     }
 
     @Override
-    public void onMealClicked(Search meal) {
+    public void onMealClicked(Meal meal) {
         Toast.makeText(getContext(), "Clicked: " + meal.getStrCategory(), Toast.LENGTH_SHORT).show();
     }
 }

@@ -41,6 +41,9 @@
     <string name="already_have_an_account">Already have an Account? </string>
     <string name="sign_in">Sign in</string>
 
+    <!-- Home Fragment -->
+    <string name="meal_of_the_day">Meal of the day</string>
+
     <!-- Content Descriptions -->
     <string name="email_content_description">Email</string>
     <string name="password_content_description">Password</string>

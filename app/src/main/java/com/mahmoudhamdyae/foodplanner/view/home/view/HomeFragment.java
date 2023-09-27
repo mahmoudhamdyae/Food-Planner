@@ -8,6 +8,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,9 +20,13 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mahmoudhamdyae.foodplanner.R;
+import com.mahmoudhamdyae.foodplanner.model.Category;
+import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
@@ -34,7 +40,8 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
     private HomeAdapter mAdapter;
     private FirebaseAuth mAuth;
 
-    private HomePresenter presenter;
+    private ImageView imageView;
+    private TextView title, desc;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,8 +69,13 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
-        presenter = new HomePresenter(this, RepositoryImpl.getInstance(ApiClient.getInstance()));
+        imageView = view.findViewById(R.id.image_view);
+        title = view.findViewById(R.id.title);
+        desc = view.findViewById(R.id.desc);
+
+        HomePresenter presenter = new HomePresenter(this, RepositoryImpl.getInstance(ApiClient.getInstance()));
         presenter.getMeals();
+        presenter.getMealOfTheDay();
 
         setHasOptionsMenu(true);
     }
@@ -112,17 +124,31 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
     }
 
     @Override
-    public void onMealClicked(Meal meal) {
-        Toast.makeText(getContext(), "Clicked: " + meal.getStrCategory(), Toast.LENGTH_SHORT).show();
+    public void onMealClicked(Category category) {
+        Toast.makeText(getContext(), "Clicked: " + category.getStrCategory(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onGetMealsSuccess(MealsResponse mealsResponse) {
-        mAdapter.setList(mealsResponse.getCategories());
+    public void onGetMealsSuccess(CategoryResponse categoryResponse) {
+        mAdapter.setList(categoryResponse.getCategories());
     }
 
     @Override
-    public void onGetMealsFail(String errorMsg) {
+    public void onGetMealOfTheDaySuccess(MealsResponse mealsResponse) {
+        Meal meal = mealsResponse.getMeals().get(0);
+        Glide.with(requireContext())
+                .load(meal.getStrMealThumb())
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.loading_img)
+                        .error(R.drawable.ic_broken_image))
+                .into(imageView);
+
+        title.setText(meal.getStrMeal());
+        desc.setText(meal.getStrInstructions());
+    }
+
+    @Override
+    public void onNetworkFail(String errorMsg) {
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 }

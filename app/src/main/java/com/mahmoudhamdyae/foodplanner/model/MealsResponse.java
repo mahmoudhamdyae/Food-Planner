@@ -4,17 +4,17 @@ import java.util.List;
 
 public class MealsResponse {
 
-    private List<Meal> categories;
+    private List<Meal> meals;
 
-    public MealsResponse(List<Meal> categories) {
-        this.categories = categories;
+    public MealsResponse(List<Meal> meals) {
+        this.meals = meals;
     }
 
-    public List<Meal> getCategories() {
-        return categories;
+    public void setMeals(List<Meal> meals) {
+        this.meals = meals;
     }
 
-    public void setCategories(List<Meal> categories) {
-        this.categories = categories;
+    public List<Meal> getMeals() {
+        return meals;
     }
 }

@@ -1,8 +1,8 @@
 package com.mahmoudhamdyae.foodplanner.view.search.view;
 
-import com.mahmoudhamdyae.foodplanner.model.Search;
+import com.mahmoudhamdyae.foodplanner.model.Meal;
 
 public interface OnMealClickListener {
 
-    void onMealClicked(Search meal);
+    void onMealClicked(Meal meal);
 }

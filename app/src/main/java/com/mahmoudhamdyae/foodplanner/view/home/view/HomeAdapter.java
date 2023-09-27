@@ -15,26 +15,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mahmoudhamdyae.foodplanner.R;
-import com.mahmoudhamdyae.foodplanner.model.Meal;
+import com.mahmoudhamdyae.foodplanner.model.Category;
 
 import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
-    private List<Meal> items;
+    private List<Category> items;
     private final Context context;
     private final OnMealClickListener listener;
 
     private static final String TAG = "RecyclerView";
 
-    public HomeAdapter(Context context, List<Meal> items, OnMealClickListener listener) {
+    public HomeAdapter(Context context, List<Category> items, OnMealClickListener listener) {
         super();
         this.items = items;
         this.context = context;
         this.listener = listener;
     }
 
-    public void setList(List<Meal> products) {
+    public void setList(List<Category> products) {
         this.items = products;
         notifyDataSetChanged();
     }

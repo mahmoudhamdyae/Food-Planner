@@ -4,7 +4,9 @@ import com.mahmoudhamdyae.network.NetworkCallback;
 
 public interface Repository {
 
-    void getMeals(NetworkCallback networkCallback);
+    void getCategories(NetworkCallback networkCallback);
 
     void searchMeal(String name, NetworkCallback networkCallback);
+
+    void getMealOfTheDay(NetworkCallback networkCallback);
 }

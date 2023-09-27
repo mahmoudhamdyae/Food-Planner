@@ -1,7 +1,7 @@
 package com.mahmoudhamdyae.foodplanner.view.search.presenter;
 
 import com.mahmoudhamdyae.foodplanner.model.Repository;
-import com.mahmoudhamdyae.foodplanner.model.SearchResponse;
+import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.view.search.view.ISearchView;
 import com.mahmoudhamdyae.network.NetworkCallback;
 
@@ -22,7 +22,7 @@ public class SearchPresenter implements ISearchPresenter, NetworkCallback {
 
     @Override
     public void onSuccessResult(Object object) {
-        view.onGetMealsSuccess((SearchResponse) object);
+        view.onGetMealsSuccess((MealsResponse) object);
     }
 
     @Override

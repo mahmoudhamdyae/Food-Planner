@@ -21,12 +21,17 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void getMeals(NetworkCallback networkCallback) {
-        remoteSource.getMeals(networkCallback);
+    public void getCategories(NetworkCallback networkCallback) {
+        remoteSource.getCategories(networkCallback);
     }
 
     @Override
     public void searchMeal(String name, NetworkCallback networkCallback) {
         remoteSource.searchMeal(name, networkCallback);
+    }
+
+    @Override
+    public void getMealOfTheDay(NetworkCallback networkCallback) {
+        remoteSource.getMealOfTheDay(networkCallback);
     }
 }

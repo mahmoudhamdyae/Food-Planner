@@ -2,12 +2,10 @@ package com.mahmoudhamdyae.network;
 
 import android.util.Log;
 
-import com.mahmoudhamdyae.foodplanner.model.Meal;
-import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
-import com.mahmoudhamdyae.foodplanner.model.SearchResponse;
+import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
+import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,13 +17,10 @@ public class ApiClient implements RemoteSource {
 
     public static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     public static final String TAG = "Api_Client";
-    private List<Meal> meals;
 
     private static ApiClient client = null;
 
-    private ApiClient() {
-        meals = new ArrayList<>();
-    }
+    private ApiClient() { }
 
     public static ApiClient getInstance() {
         if (client == null) {
@@ -35,17 +30,17 @@ public class ApiClient implements RemoteSource {
     }
 
     @Override
-    public void getMeals(NetworkCallback networkCallback) {
+    public void getCategories(NetworkCallback networkCallback) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService apiService = retrofit.create(ApiService.class);
-        Call<MealsResponse> call = apiService.getMeals();
-        call.enqueue(new Callback<MealsResponse>() {
+        Call<CategoryResponse> call = apiService.getMeals();
+        call.enqueue(new Callback<CategoryResponse>() {
 
             @Override
-            public void onResponse(Call<MealsResponse> call, Response<MealsResponse> response) {
+            public void onResponse(@NonNull Call<CategoryResponse> call, @NonNull Response<CategoryResponse> response) {
                 if (response.isSuccessful()) {
                     Log.i(TAG, "onResponse: CallBack " + response.raw() + response.body().getCategories());
                     networkCallback.onSuccessResult(response.body());
@@ -53,7 +48,7 @@ public class ApiClient implements RemoteSource {
             }
 
             @Override
-            public void onFailure(Call<MealsResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<CategoryResponse> call, @NonNull Throwable t) {
                 Log.i(TAG, "onFailure: CallBack");
                 networkCallback.onFailureResult(t.getMessage());
                 t.printStackTrace();
@@ -68,11 +63,11 @@ public class ApiClient implements RemoteSource {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService apiService = retrofit.create(ApiService.class);
-        Call<SearchResponse> call = apiService.searchMealsByName(name);
-        call.enqueue(new Callback<SearchResponse>() {
+        Call<MealsResponse> call = apiService.searchMealsByName(name);
+        call.enqueue(new Callback<MealsResponse>() {
 
             @Override
-            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+            public void onResponse(@NonNull Call<MealsResponse> call, @NonNull Response<MealsResponse> response) {
                 if (response.isSuccessful()) {
                     Log.i(TAG, "onResponse: CallBack " + response.raw() + response.body().getMeals());
                     networkCallback.onSuccessResult(response.body());
@@ -80,7 +75,33 @@ public class ApiClient implements RemoteSource {
             }
 
             @Override
-            public void onFailure(Call<SearchResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<MealsResponse> call, @NonNull Throwable t) {
+                Log.i(TAG, "onFailure: CallBack");
+                networkCallback.onFailureResult(t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void getMealOfTheDay(NetworkCallback networkCallback) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiService apiService = retrofit.create(ApiService.class);
+        Call<MealsResponse> call = apiService.getMealOfTheDay();
+        call.enqueue(new Callback<MealsResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<MealsResponse> call, @NonNull Response<MealsResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, "onResponse: CallBack " + response.raw() + response.body().getMeals());
+                    networkCallback.onSuccessResult(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MealsResponse> call, @NonNull Throwable t) {
                 Log.i(TAG, "onFailure: CallBack");
                 networkCallback.onFailureResult(t.getMessage());
                 t.printStackTrace();
