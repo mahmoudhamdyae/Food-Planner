@@ -45,10 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (destination.getId() == R.id.homeFragment) {
+                getSupportActionBar().show();
                 findViewById(R.id.bottom_nav).setVisibility(View.VISIBLE);
             } else if (destination.getId() == R.id.searchFragment) {
+                getSupportActionBar().show();
                 findViewById(R.id.bottom_nav).setVisibility(View.VISIBLE);
             } else {
+                getSupportActionBar().hide();
                 findViewById(R.id.bottom_nav).setVisibility(View.GONE);
             }
         });
