@@ -2,6 +2,9 @@ package com.mahmoudhamdyae.foodplanner.view.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -9,6 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,10 +63,13 @@ public class HomeFragment extends Fragment implements NetworkCallback {
 
         client = ApiClient.getInstance();
         client.makeNetworkCall(this);
+
+        setHasOptionsMenu(true);
     }
 
     private void signOut() {
         mAuth.signOut();
+        navigateToHomeScreen();
     }
 
     @Override
@@ -72,5 +80,28 @@ public class HomeFragment extends Fragment implements NetworkCallback {
     @Override
     public void onFailureResult(String errorMsg) {
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.log_out:
+                signOut();
+                return true;
+            default:
+                break;
+        }
+        return false;
+    }
+
+    private void navigateToHomeScreen() {
+        NavDirections action = HomeFragmentDirections.actionHomeFragmentToLoginFragment();
+        Navigation.findNavController(getView()).navigate(action);
     }
 }

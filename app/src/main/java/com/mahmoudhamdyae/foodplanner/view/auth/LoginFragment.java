@@ -77,7 +77,7 @@ public class LoginFragment extends Fragment {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(view.getContext(), gso);
         SignInButton googleButton = view.findViewById(R.id.google_sign_in_button);
         googleButton.setOnClickListener(v -> signInWithGoogle());
 
@@ -166,7 +166,6 @@ public class LoginFragment extends Fragment {
     }
 
     private void navigateToHomeScreen() {
-        // Navigate to Home Screen
         NavDirections action = LoginFragmentDirections.actionLoginFragmentToHomeFragment();
         Navigation.findNavController(getView()).navigate(action);
     }

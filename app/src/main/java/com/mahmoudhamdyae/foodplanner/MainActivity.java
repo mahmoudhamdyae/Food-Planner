@@ -16,8 +16,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         NavGraph graph = inflater.inflate(R.navigation.nav_graph);
 
         // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -47,11 +45,11 @@ public class MainActivity extends AppCompatActivity {
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (destination.getId() == R.id.homeFragment) {
-                findViewById(R.id.nav_host_fragment).setVisibility(View.VISIBLE);
+                findViewById(R.id.bottom_nav).setVisibility(View.VISIBLE);
             } else if (destination.getId() == R.id.searchFragment) {
-                findViewById(R.id.nav_host_fragment).setVisibility(View.VISIBLE);
+                findViewById(R.id.bottom_nav).setVisibility(View.VISIBLE);
             } else {
-                findViewById(R.id.nav_host_fragment).setVisibility(View.GONE);
+                findViewById(R.id.bottom_nav).setVisibility(View.GONE);
             }
         });
     }

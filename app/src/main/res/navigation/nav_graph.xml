@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph">
-<!--    app:startDestination="@id/homeFragment">-->
 
     <fragment
         android:id="@+id/homeFragment"
@@ -62,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.mahmoudhamdyae.foodplanner.SearchFragment"
+        android:name="com.mahmoudhamdyae.foodplanner.view.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
 </navigation>
