@@ -46,6 +46,10 @@
     <!-- Home Fragment -->
     <string name="meal_of_the_day">Meal of the day</string>
 
+    <!-- Meal Fragment -->
+    <string name="from">From: </string>
+    <string name="add_to_cart">Add to Cart</string>
+
     <!-- Content Descriptions -->
     <string name="email_content_description">Email</string>
     <string name="password_content_description">Password</string>
