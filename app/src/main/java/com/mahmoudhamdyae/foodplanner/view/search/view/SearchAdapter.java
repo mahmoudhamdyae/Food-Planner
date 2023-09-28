@@ -59,7 +59,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                         .error(R.drawable.ic_broken_image))
                 .into(holder.imageView);
 
-        holder.titleView.setText(items.get(position).getStrCategory());
+        holder.titleView.setText(items.get(position).getStrMeal());
         holder.descriptionView.setText(items.get(position).getStrInstructions());
 
         holder.row.setOnClickListener(v -> listener.onMealClicked(items.get(position)));
