@@ -12,13 +12,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mahmoudhamdyae.foodplanner.R;
-import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
+import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
 import com.mahmoudhamdyae.foodplanner.view.search.presenter.ISearchPresenter;
 import com.mahmoudhamdyae.foodplanner.view.search.presenter.SearchPresenter;
 import com.mahmoudhamdyae.network.ApiClient;
@@ -82,6 +84,11 @@ public class SearchFragment extends Fragment implements ISearchView, OnMealClick
 
     @Override
     public void onMealClicked(Meal meal) {
-        Toast.makeText(getContext(), "Clicked: " + meal.getStrCategory(), Toast.LENGTH_SHORT).show();
+        navigateToMealScreen(meal);
+    }
+
+    private void navigateToMealScreen(Meal meal) {
+        NavDirections action = SearchFragmentDirections.actionSearchFragmentToMealFragment(meal);
+        Navigation.findNavController(requireView()).navigate(action);
     }
 }

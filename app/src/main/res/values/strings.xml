@@ -6,6 +6,8 @@
     <string name="log_in_screen_title">Food Planner</string>
     <string name="sign_up_screen_title">Food Planner</string>
     <string name="welcome_screen_title">Food Planner</string>
+    <string name="search_screen_title">Search</string>
+    <string name="meal_screen_title">Meal</string>
 
     <!-- OnBoarding Screen -->
     <!--    <string name="on_boarding_title_1"></string>-->

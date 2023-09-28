@@ -62,7 +62,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         holder.titleView.setText(items.get(position).getStrCategory());
         holder.descriptionView.setText(items.get(position).getStrCategoryDescription());
 
-        holder.row.setOnClickListener(v -> listener.onMealClicked(items.get(position)));
+        holder.row.setOnClickListener(v -> listener.onCategoryClicked(items.get(position)));
         Log.i(TAG, "********* onBindViewHolder ***********");
     }
 

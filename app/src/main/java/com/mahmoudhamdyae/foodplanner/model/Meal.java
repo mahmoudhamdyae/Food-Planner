@@ -1,6 +1,9 @@
 package com.mahmoudhamdyae.foodplanner.model;
 
-public class Meal {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Meal implements Parcelable {
 
     private String idMeal;
     private String strMeal;
@@ -287,4 +290,115 @@ public class Meal {
     }
 
     private String strIngredient20;
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.idMeal);
+        dest.writeString(this.strMeal);
+        dest.writeString(this.strCategory);
+        dest.writeString(this.strArea);
+        dest.writeString(this.strInstructions);
+        dest.writeString(this.strMealThumb);
+        dest.writeString(this.strTags);
+        dest.writeString(this.strYoutube);
+        dest.writeString(this.strIngredient1);
+        dest.writeString(this.strIngredient2);
+        dest.writeString(this.strIngredient3);
+        dest.writeString(this.strIngredient4);
+        dest.writeString(this.strIngredient5);
+        dest.writeString(this.strIngredient6);
+        dest.writeString(this.strIngredient7);
+        dest.writeString(this.strIngredient8);
+        dest.writeString(this.strIngredient9);
+        dest.writeString(this.strIngredient10);
+        dest.writeString(this.strIngredient11);
+        dest.writeString(this.strIngredient12);
+        dest.writeString(this.strIngredient13);
+        dest.writeString(this.strIngredient14);
+        dest.writeString(this.strIngredient15);
+        dest.writeString(this.strIngredient16);
+        dest.writeString(this.strIngredient17);
+        dest.writeString(this.strIngredient18);
+        dest.writeString(this.strIngredient19);
+        dest.writeString(this.strIngredient20);
+    }
+
+    public void readFromParcel(Parcel source) {
+        this.idMeal = source.readString();
+        this.strMeal = source.readString();
+        this.strCategory = source.readString();
+        this.strArea = source.readString();
+        this.strInstructions = source.readString();
+        this.strMealThumb = source.readString();
+        this.strTags = source.readString();
+        this.strYoutube = source.readString();
+        this.strIngredient1 = source.readString();
+        this.strIngredient2 = source.readString();
+        this.strIngredient3 = source.readString();
+        this.strIngredient4 = source.readString();
+        this.strIngredient5 = source.readString();
+        this.strIngredient6 = source.readString();
+        this.strIngredient7 = source.readString();
+        this.strIngredient8 = source.readString();
+        this.strIngredient9 = source.readString();
+        this.strIngredient10 = source.readString();
+        this.strIngredient11 = source.readString();
+        this.strIngredient12 = source.readString();
+        this.strIngredient13 = source.readString();
+        this.strIngredient14 = source.readString();
+        this.strIngredient15 = source.readString();
+        this.strIngredient16 = source.readString();
+        this.strIngredient17 = source.readString();
+        this.strIngredient18 = source.readString();
+        this.strIngredient19 = source.readString();
+        this.strIngredient20 = source.readString();
+    }
+
+    protected Meal(Parcel in) {
+        this.idMeal = in.readString();
+        this.strMeal = in.readString();
+        this.strCategory = in.readString();
+        this.strArea = in.readString();
+        this.strInstructions = in.readString();
+        this.strMealThumb = in.readString();
+        this.strTags = in.readString();
+        this.strYoutube = in.readString();
+        this.strIngredient1 = in.readString();
+        this.strIngredient2 = in.readString();
+        this.strIngredient3 = in.readString();
+        this.strIngredient4 = in.readString();
+        this.strIngredient5 = in.readString();
+        this.strIngredient6 = in.readString();
+        this.strIngredient7 = in.readString();
+        this.strIngredient8 = in.readString();
+        this.strIngredient9 = in.readString();
+        this.strIngredient10 = in.readString();
+        this.strIngredient11 = in.readString();
+        this.strIngredient12 = in.readString();
+        this.strIngredient13 = in.readString();
+        this.strIngredient14 = in.readString();
+        this.strIngredient15 = in.readString();
+        this.strIngredient16 = in.readString();
+        this.strIngredient17 = in.readString();
+        this.strIngredient18 = in.readString();
+        this.strIngredient19 = in.readString();
+        this.strIngredient20 = in.readString();
+    }
+
+    public static final Parcelable.Creator<Meal> CREATOR = new Parcelable.Creator<Meal>() {
+        @Override
+        public Meal createFromParcel(Parcel source) {
+            return new Meal(source);
+        }
+
+        @Override
+        public Meal[] newArray(int size) {
+            return new Meal[size];
+        }
+    };
 }

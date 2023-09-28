@@ -4,5 +4,5 @@ import com.mahmoudhamdyae.foodplanner.model.Category;
 
 public interface OnMealClickListener {
 
-    void onMealClicked(Category category);
+    void onCategoryClicked(Category category);
 }

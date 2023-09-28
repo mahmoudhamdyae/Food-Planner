@@ -41,6 +41,8 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
 
     private ImageView imageView;
     private TextView title, desc;
+    private View row;
+    private Meal mealOfTheDay;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,8 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
         imageView = view.findViewById(R.id.image_view);
         title = view.findViewById(R.id.title);
         desc = view.findViewById(R.id.desc);
+        row = view.findViewById(R.id.meal_of_the_day);
+        row.setOnClickListener(v -> navigateToMealScreen());
 
         HomePresenter presenter = new HomePresenter(this, RepositoryImpl.getInstance(ApiClient.getInstance()));
         presenter.getMeals();
@@ -141,8 +145,15 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
         Navigation.findNavController(requireView()).navigate(action);
     }
 
+    private void navigateToMealScreen() {
+        if (mealOfTheDay != null) {
+            NavDirections action = HomeFragmentDirections.actionHomeFragmentToMealFragment(mealOfTheDay);
+            Navigation.findNavController(requireView()).navigate(action);
+        }
+    }
+
     @Override
-    public void onMealClicked(Category category) {
+    public void onCategoryClicked(Category category) {
         Toast.makeText(getContext(), "Clicked: " + category.getStrCategory(), Toast.LENGTH_SHORT).show();
     }
 
@@ -153,16 +164,16 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
 
     @Override
     public void onGetMealOfTheDaySuccess(MealsResponse mealsResponse) {
-        Meal meal = mealsResponse.getMeals().get(0);
+        mealOfTheDay = mealsResponse.getMeals().get(0);
         Glide.with(requireContext())
-                .load(meal.getStrMealThumb())
+                .load(mealOfTheDay.getStrMealThumb())
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.loading_img)
                         .error(R.drawable.ic_broken_image))
                 .into(imageView);
 
-        title.setText(meal.getStrMeal());
-        desc.setText(meal.getStrInstructions());
+        title.setText(mealOfTheDay.getStrMeal());
+        desc.setText(mealOfTheDay.getStrInstructions());
     }
 
     @Override
