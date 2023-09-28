@@ -23,6 +23,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,10 +61,7 @@ public class LoginFragment extends Fragment {
 
         // Skip - Navigate to home screen
         Button skipButton = view.findViewById(R.id.skip_button);
-        skipButton.setOnClickListener(v -> {
-            NavDirections action = LoginFragmentDirections.actionLoginFragmentToHomeFragment();
-            Navigation.findNavController(view).navigate(action);
-        });
+        skipButton.setOnClickListener(v -> skipAuth());
 
         // Signup - Navigate to signup screen
         TextView signupTextView = view.findViewById(R.id.signup_free);
@@ -163,6 +161,20 @@ public class LoginFragment extends Fragment {
                 Toast.makeText(getContext(), "Authentication Failed.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void skipAuth() {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.dialog_skip_title)
+                .setMessage(R.string.dialog_skip_msg)
+                .setPositiveButton(R.string.dialog_skip_yes, (dialog, id) -> {
+                    navigateToHomeScreen();
+                    dialog.dismiss();
+                })
+                .setNegativeButton(R.string.dialog_skip_cancel, (dialog, id) -> {
+                    // User cancelled the dialog
+                    dialog.dismiss();
+                }).show();
     }
 
     private void navigateToHomeScreen() {

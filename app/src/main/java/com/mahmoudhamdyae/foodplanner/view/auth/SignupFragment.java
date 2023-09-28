@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mahmoudhamdyae.foodplanner.R;
@@ -48,10 +49,7 @@ public class SignupFragment extends Fragment {
 
         // Skip - Navigate to home screen
         Button skipButton = view.findViewById(R.id.skip_button);
-        skipButton.setOnClickListener(v -> {
-            NavDirections action = SignupFragmentDirections.actionSignupFragmentToHomeFragment();
-            Navigation.findNavController(view).navigate(action);
-        });
+        skipButton.setOnClickListener(v -> { skipAuth(); });
 
         // Signup - Navigate to signup screen
         Button signupTextView = view.findViewById(R.id.signup_button);
@@ -125,9 +123,23 @@ public class SignupFragment extends Fragment {
                 });
     }
 
+    private void skipAuth() {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.dialog_skip_title)
+                .setMessage(R.string.dialog_skip_msg)
+                .setPositiveButton(R.string.dialog_skip_yes, (dialog, id) -> {
+                    navigateToHomeScreen();
+                    dialog.dismiss();
+                })
+                .setNegativeButton(R.string.dialog_skip_cancel, (dialog, id) -> {
+                    // User cancelled the dialog
+                    dialog.dismiss();
+                }).show();
+    }
+
     private void navigateToHomeScreen() {
         // Navigate to Home Screen
-        NavDirections action = LoginFragmentDirections.actionLoginFragmentToHomeFragment();
+        NavDirections action = SignupFragmentDirections.actionSignupFragmentToHomeFragment();
         Navigation.findNavController(requireView()).navigate(action);
     }
 }

@@ -1,6 +1,5 @@
 package com.mahmoudhamdyae.foodplanner.view.home.view;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -83,13 +82,13 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
     private void signOut() {
         new MaterialAlertDialogBuilder(requireContext())
                 .setMessage(R.string.dialog_sign_out_msg)
-                .setPositiveButton(R.string.dialog_sign_out, (DialogInterface.OnClickListener) (dialog, id) -> {
+                .setPositiveButton(R.string.dialog_sign_out, (dialog, id) -> {
                     // Sign out
                     mAuth.signOut();
                     navigateToLoginScreen();
                     dialog.dismiss();
                 })
-                .setNegativeButton(R.string.dialog_cancel, (DialogInterface.OnClickListener) (dialog, id) -> {
+                .setNegativeButton(R.string.dialog_cancel, (dialog, id) -> {
                     // User cancelled the dialog
                     dialog.dismiss();
                 }).show();
@@ -110,7 +109,7 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
                 signOut();
                 return true;
             case R.id.sign_in:
-                navigateToLoginScreen();
+                signUp();
                 return true;
             default:
                 break;
@@ -118,8 +117,27 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
         return false;
     }
 
+    private void signUp() {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.dialog_log_in_title)
+                .setMessage(R.string.dialog_log_in_msg)
+                .setPositiveButton(R.string.dialog_log_in_yes, (dialog, id) -> {
+                    navigateToSignUpScreen();
+                    dialog.dismiss();
+                })
+                .setNegativeButton(R.string.dialog_log_in_cancel, (dialog, id) -> {
+                    // User cancelled the dialog
+                    dialog.dismiss();
+                }).show();
+    }
+
     private void navigateToLoginScreen() {
         NavDirections action = HomeFragmentDirections.actionHomeFragmentToLoginFragment();
+        Navigation.findNavController(requireView()).navigate(action);
+    }
+
+    private void navigateToSignUpScreen() {
+        NavDirections action = HomeFragmentDirections.actionHomeFragmentToSignupFragment();
         Navigation.findNavController(requireView()).navigate(action);
     }
 
