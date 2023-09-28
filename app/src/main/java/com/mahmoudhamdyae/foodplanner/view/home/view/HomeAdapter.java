@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -58,6 +59,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                         .placeholder(R.drawable.loading_img)
                         .error(R.drawable.ic_broken_image))
                 .into(holder.imageView);
+        ViewCompat.setTransitionName(holder.imageView, "meal_image");
 
         holder.titleView.setText(items.get(position).getStrCategory());
         holder.descriptionView.setText(items.get(position).getStrCategoryDescription());

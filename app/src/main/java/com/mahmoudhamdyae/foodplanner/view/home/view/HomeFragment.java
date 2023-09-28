@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -41,7 +42,6 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
 
     private ImageView imageView;
     private TextView title, desc;
-    private View row;
     private Meal mealOfTheDay;
 
     @Override
@@ -73,8 +73,9 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
         imageView = view.findViewById(R.id.image_view);
         title = view.findViewById(R.id.title);
         desc = view.findViewById(R.id.desc);
-        row = view.findViewById(R.id.meal_of_the_day);
+        View row = view.findViewById(R.id.meal_of_the_day);
         row.setOnClickListener(v -> navigateToMealScreen());
+        ViewCompat.setTransitionName(imageView, "meal_image");
 
         HomePresenter presenter = new HomePresenter(this, RepositoryImpl.getInstance(ApiClient.getInstance()));
         presenter.getMeals();
