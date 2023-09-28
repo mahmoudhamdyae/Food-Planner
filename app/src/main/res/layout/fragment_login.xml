@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/log_in_screen_title"
-        android:textColor="@color/md_theme_light_primary"
+        android:textColor="@android:color/primary_text_dark"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,7 @@
             android:paddingStart="6dp"
             android:paddingEnd="6dp"
             android:text="@string/sign_up_for_free"
-            android:textColor="@color/md_theme_light_primary"
+            android:textColor="@color/md_theme_primary"
             app:layout_constraintStart_toEndOf="@id/login_new"
             app:layout_constraintTop_toTopOf="@id/login_new" />
 
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_baseline_lock_24"
                 android:drawablePadding="8dp"
-                android:drawableTint="@color/md_theme_light_primary"
+                android:drawableTint="@color/md_theme_primary"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:padding="16dp"
