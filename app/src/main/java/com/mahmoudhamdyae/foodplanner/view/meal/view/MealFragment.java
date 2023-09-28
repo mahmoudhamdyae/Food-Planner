@@ -64,26 +64,28 @@ public class MealFragment extends Fragment {
 
         // Ingredients
         ingredients = new ArrayList<>();
-        if (meal.getStrIngredient1() != null) ingredients.add(meal.getStrIngredient1());
-        if (meal.getStrIngredient2() != null) ingredients.add(meal.getStrIngredient2());
-        if (meal.getStrIngredient3() != null) ingredients.add(meal.getStrIngredient3());
-        if (meal.getStrIngredient4() != null) ingredients.add(meal.getStrIngredient4());
-        if (meal.getStrIngredient5() != null) ingredients.add(meal.getStrIngredient5());
-        if (meal.getStrIngredient6() != null) ingredients.add(meal.getStrIngredient6());
-        if (meal.getStrIngredient7() != null) ingredients.add(meal.getStrIngredient7());
-        if (meal.getStrIngredient8() != null) ingredients.add(meal.getStrIngredient8());
-        if (meal.getStrIngredient9() != null) ingredients.add(meal.getStrIngredient9());
-        if (meal.getStrIngredient10() != null) ingredients.add(meal.getStrIngredient10());
-        if (meal.getStrIngredient11() != null) ingredients.add(meal.getStrIngredient11());
-        if (meal.getStrIngredient12() != null) ingredients.add(meal.getStrIngredient12());
-        if (meal.getStrIngredient13() != null) ingredients.add(meal.getStrIngredient13());
-        if (meal.getStrIngredient14() != null) ingredients.add(meal.getStrIngredient14());
-        if (meal.getStrIngredient15() != null) ingredients.add(meal.getStrIngredient15());
-        if (meal.getStrIngredient16() != null) ingredients.add(meal.getStrIngredient16());
-        if (meal.getStrIngredient17() != null) ingredients.add(meal.getStrIngredient17());
-        if (meal.getStrIngredient18() != null) ingredients.add(meal.getStrIngredient18());
-        if (meal.getStrIngredient19() != null) ingredients.add(meal.getStrIngredient19());
-        if (meal.getStrIngredient20() != null) ingredients.add(meal.getStrIngredient20());
+        try {
+            if (!meal.getStrIngredient1().equals("")) ingredients.add(meal.getStrIngredient1());
+            if (!meal.getStrIngredient2().equals("")) ingredients.add(meal.getStrIngredient2());
+            if (!meal.getStrIngredient3().equals("")) ingredients.add(meal.getStrIngredient3());
+            if (!meal.getStrIngredient4().equals("")) ingredients.add(meal.getStrIngredient4());
+            if (!meal.getStrIngredient5().equals("")) ingredients.add(meal.getStrIngredient5());
+            if (!meal.getStrIngredient6().equals("")) ingredients.add(meal.getStrIngredient6());
+            if (!meal.getStrIngredient7().equals("")) ingredients.add(meal.getStrIngredient7());
+            if (!meal.getStrIngredient8().equals("")) ingredients.add(meal.getStrIngredient8());
+            if (!meal.getStrIngredient9().equals("")) ingredients.add(meal.getStrIngredient9());
+            if (!meal.getStrIngredient10().equals("")) ingredients.add(meal.getStrIngredient10());
+            if (!meal.getStrIngredient11() .equals("")) ingredients.add(meal.getStrIngredient11());
+            if (!meal.getStrIngredient12().equals("")) ingredients.add(meal.getStrIngredient12());
+            if (!meal.getStrIngredient13().equals("")) ingredients.add(meal.getStrIngredient13());
+            if (!meal.getStrIngredient14().equals("")) ingredients.add(meal.getStrIngredient14());
+            if (!meal.getStrIngredient15().equals("")) ingredients.add(meal.getStrIngredient15());
+            if (!meal.getStrIngredient16().equals("")) ingredients.add(meal.getStrIngredient16());
+            if (!meal.getStrIngredient17().equals("")) ingredients.add(meal.getStrIngredient17());
+            if (!meal.getStrIngredient18().equals("")) ingredients.add(meal.getStrIngredient18());
+            if (!meal.getStrIngredient19().equals("")) ingredients.add(meal.getStrIngredient19());
+            if (!meal.getStrIngredient20().equals("")) ingredients.add(meal.getStrIngredient20());
+        } catch (NullPointerException e) { e.printStackTrace(); }
 
         IngredientsAdapter mAdapter = new IngredientsAdapter(requireContext(), ingredients);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
