@@ -19,6 +19,7 @@ public class ApiClient implements RemoteSource {
     public static final String TAG = "Api_Client";
 
     private static ApiClient client = null;
+    private ApiService apiService;
 
     private ApiClient() { }
 
@@ -29,13 +30,17 @@ public class ApiClient implements RemoteSource {
         return client;
     }
 
-    @Override
-    public void getCategories(NetworkCallback networkCallback) {
+    private void makeNetworkCall() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        ApiService apiService = retrofit.create(ApiService.class);
+        apiService = retrofit.create(ApiService.class);
+    }
+
+    @Override
+    public void getCategories(NetworkCallback networkCallback) {
+        makeNetworkCall();
         Call<CategoryResponse> call = apiService.getMeals();
         call.enqueue(new Callback<CategoryResponse>() {
 
@@ -58,11 +63,7 @@ public class ApiClient implements RemoteSource {
 
     @Override
     public void searchMeal(String name, NetworkCallback networkCallback) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ApiService apiService = retrofit.create(ApiService.class);
+        makeNetworkCall();
         Call<MealsResponse> call = apiService.searchMealsByName(name);
         call.enqueue(new Callback<MealsResponse>() {
 
@@ -85,11 +86,7 @@ public class ApiClient implements RemoteSource {
 
     @Override
     public void getMealOfTheDay(NetworkCallback networkCallback) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ApiService apiService = retrofit.create(ApiService.class);
+        makeNetworkCall();
         Call<MealsResponse> call = apiService.getMealOfTheDay();
         call.enqueue(new Callback<MealsResponse>() {
             @Override
