@@ -31,8 +31,10 @@ public class Meal implements Parcelable {
     private String strIngredient16;
     private String strIngredient17;
     private String strIngredient18;
+    private String strIngredient19;
+    private String strIngredient20;
 
-    public Meal(String idMeal, String strMeal, String strCategory, String strArea, String strInstructions, String strMealThumb, String strTags, String strYoutube, String strIngredient1, String strIngredient2, String strIngredient3, String strIngredient4, String strIngredient5, String strIngredient6, String strIngredient7, String strIngredient8, String strIngredient9, String strIngredient10, String strIngredient11, String strIngredient12, String strIngredient13, String strIngredient14, String strIngredient15, String strIngredient16, String strIngredient17, String strIngredient18, String strIngredient19, String strIngredient20) {
+    public Meal(String idMeal, String strMeal, String strCategory, String strArea, String strInstructions, String strMealThumb, String strTags, String strYoutube, String strIngredient1, String strIngredient2, String strIngredient3, String strIngredient4, String strIngredient5, String strIngredient6, String strIngredient7, String strIngredient8, String strIngredient9, String strIngredient10, String strIngredient11, String strIngredient12, String strIngredient13, String strIngredient14, String strIngredient15, String strIngredient16, String strIngredient17, String strIngredient18, String strIngredient19, String strIngredient20, String strIngredient191, String strIngredient201) {
         this.idMeal = idMeal;
         this.strMeal = strMeal;
         this.strCategory = strCategory;
@@ -62,8 +64,6 @@ public class Meal implements Parcelable {
         this.strIngredient19 = strIngredient19;
         this.strIngredient20 = strIngredient20;
     }
-
-    private String strIngredient19;
 
     public String getIdMeal() {
         return idMeal;
@@ -288,8 +288,6 @@ public class Meal implements Parcelable {
     public void setStrIngredient20(String strIngredient20) {
         this.strIngredient20 = strIngredient20;
     }
-
-    private String strIngredient20;
 
     @Override
     public int describeContents() {

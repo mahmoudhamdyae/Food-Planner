@@ -1,7 +1,6 @@
 package com.mahmoudhamdyae.foodplanner.view.home.view;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +25,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     private final Context context;
     private final OnMealClickListener listener;
 
-    private static final String TAG = "RecyclerView";
-
     public HomeAdapter(Context context, List<Category> items, OnMealClickListener listener) {
         super();
         this.items = items;
@@ -43,12 +40,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Create a new view
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.meal_row, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        Log.i(TAG, "========= onCreateViewHolder ===========");
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -65,7 +59,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         holder.descriptionView.setText(items.get(position).getStrCategoryDescription());
 
         holder.row.setOnClickListener(v -> listener.onCategoryClicked(items.get(position)));
-        Log.i(TAG, "********* onBindViewHolder ***********");
     }
 
     @Override

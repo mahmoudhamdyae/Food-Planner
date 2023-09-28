@@ -80,7 +80,7 @@
     </fragment>
     <fragment
         android:id="@+id/mealFragment"
-        android:name="com.mahmoudhamdyae.foodplanner.view.meal.MealFragment"
+        android:name="com.mahmoudhamdyae.foodplanner.view.meal.view.MealFragment"
         android:label="@string/meal_screen_title"
         tools:layout="@layout/fragment_meal" >
         <argument
