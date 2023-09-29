@@ -3,290 +3,292 @@ package com.mahmoudhamdyae.foodplanner.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Meal implements Parcelable {
 
-    private String idMeal;
-    private String strMeal;
-    private String strCategory;
-    private String strArea;
-    private String strInstructions;
-    private String strMealThumb;
-    private String strTags;
-    private String strYoutube;
-    private String strIngredient1;
-    private String strIngredient2;
-    private String strIngredient3;
-    private String strIngredient4;
-    private String strIngredient5;
-    private String strIngredient6;
-    private String strIngredient7;
-    private String strIngredient8;
-    private String strIngredient9;
-    private String strIngredient10;
-    private String strIngredient11;
-    private String strIngredient12;
-    private String strIngredient13;
-    private String strIngredient14;
-    private String strIngredient15;
-    private String strIngredient16;
-    private String strIngredient17;
-    private String strIngredient18;
-    private String strIngredient19;
-    private String strIngredient20;
+    @SerializedName("idMeal") private String id;
+    @SerializedName("strMeal") private String name;
+    @SerializedName("strCategory") private String category;
+    @SerializedName("strArea") private String area;
+    @SerializedName("strInstructions") private String instructions;
+    @SerializedName("strMealThumb") private String imageUrl;
+    @SerializedName("strTags") private String tags;
+    @SerializedName("strYoutube") private String youtubeUrl;
+    @SerializedName("strIngredient1") private String ingredient1;
+    @SerializedName("strIngredient2") private String ingredient2;
+    @SerializedName("strIngredient3") private String ingredient3;
+    @SerializedName("strIngredient4") private String ingredient4;
+    @SerializedName("strIngredient5") private String ingredient5;
+    @SerializedName("strIngredient6") private String ingredient6;
+    @SerializedName("strIngredient7") private String ingredient7;
+    @SerializedName("strIngredient8") private String ingredient8;
+    @SerializedName("strIngredient9") private String ingredient9;
+    @SerializedName("strIngredient10") private String ingredient10;
+    @SerializedName("strIngredient11") private String ingredient11;
+    @SerializedName("strIngredient12") private String ingredient12;
+    @SerializedName("strIngredient13") private String ingredient13;
+    @SerializedName("strIngredient14") private String ingredient14;
+    @SerializedName("strIngredient15") private String ingredient15;
+    @SerializedName("strIngredient16") private String ingredient16;
+    @SerializedName("strIngredient17") private String ingredient17;
+    @SerializedName("strIngredient18") private String ingredient18;
+    @SerializedName("strIngredient19") private String ingredient19;
+    @SerializedName("strIngredient20") private String ingredient20;
 
-    public Meal(String idMeal, String strMeal, String strCategory, String strArea, String strInstructions, String strMealThumb, String strTags, String strYoutube, String strIngredient1, String strIngredient2, String strIngredient3, String strIngredient4, String strIngredient5, String strIngredient6, String strIngredient7, String strIngredient8, String strIngredient9, String strIngredient10, String strIngredient11, String strIngredient12, String strIngredient13, String strIngredient14, String strIngredient15, String strIngredient16, String strIngredient17, String strIngredient18, String strIngredient19, String strIngredient20, String strIngredient191, String strIngredient201) {
-        this.idMeal = idMeal;
-        this.strMeal = strMeal;
-        this.strCategory = strCategory;
-        this.strArea = strArea;
-        this.strInstructions = strInstructions;
-        this.strMealThumb = strMealThumb;
-        this.strTags = strTags;
-        this.strYoutube = strYoutube;
-        this.strIngredient1 = strIngredient1;
-        this.strIngredient2 = strIngredient2;
-        this.strIngredient3 = strIngredient3;
-        this.strIngredient4 = strIngredient4;
-        this.strIngredient5 = strIngredient5;
-        this.strIngredient6 = strIngredient6;
-        this.strIngredient7 = strIngredient7;
-        this.strIngredient8 = strIngredient8;
-        this.strIngredient9 = strIngredient9;
-        this.strIngredient10 = strIngredient10;
-        this.strIngredient11 = strIngredient11;
-        this.strIngredient12 = strIngredient12;
-        this.strIngredient13 = strIngredient13;
-        this.strIngredient14 = strIngredient14;
-        this.strIngredient15 = strIngredient15;
-        this.strIngredient16 = strIngredient16;
-        this.strIngredient17 = strIngredient17;
-        this.strIngredient18 = strIngredient18;
-        this.strIngredient19 = strIngredient19;
-        this.strIngredient20 = strIngredient20;
+    public Meal(String id, String name, String category, String area, String instructions, String imageUrl, String tags, String youtubeUrl, String ingredient1, String ingredient2, String ingredient3, String ingredient4, String ingredient5, String ingredient6, String ingredient7, String ingredient8, String ingredient9, String ingredient10, String ingredient11, String ingredient12, String ingredient13, String ingredient14, String ingredient15, String ingredient16, String ingredient17, String ingredient18, String ingredient19, String ingredient20, String strIngredient191, String strIngredient201) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.area = area;
+        this.instructions = instructions;
+        this.imageUrl = imageUrl;
+        this.tags = tags;
+        this.youtubeUrl = youtubeUrl;
+        this.ingredient1 = ingredient1;
+        this.ingredient2 = ingredient2;
+        this.ingredient3 = ingredient3;
+        this.ingredient4 = ingredient4;
+        this.ingredient5 = ingredient5;
+        this.ingredient6 = ingredient6;
+        this.ingredient7 = ingredient7;
+        this.ingredient8 = ingredient8;
+        this.ingredient9 = ingredient9;
+        this.ingredient10 = ingredient10;
+        this.ingredient11 = ingredient11;
+        this.ingredient12 = ingredient12;
+        this.ingredient13 = ingredient13;
+        this.ingredient14 = ingredient14;
+        this.ingredient15 = ingredient15;
+        this.ingredient16 = ingredient16;
+        this.ingredient17 = ingredient17;
+        this.ingredient18 = ingredient18;
+        this.ingredient19 = ingredient19;
+        this.ingredient20 = ingredient20;
     }
 
-    public String getIdMeal() {
-        return idMeal;
+    public String getId() {
+        return id;
     }
 
-    public void setIdMeal(String idMeal) {
-        this.idMeal = idMeal;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getStrMeal() {
-        return strMeal;
+    public String getName() {
+        return name;
     }
 
-    public void setStrMeal(String strMeal) {
-        this.strMeal = strMeal;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getStrCategory() {
-        return strCategory;
+    public String getCategory() {
+        return category;
     }
 
-    public void setStrCategory(String strCategory) {
-        this.strCategory = strCategory;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getStrArea() {
-        return strArea;
+    public String getArea() {
+        return area;
     }
 
-    public void setStrArea(String strArea) {
-        this.strArea = strArea;
+    public void setArea(String area) {
+        this.area = area;
     }
 
-    public String getStrInstructions() {
-        return strInstructions;
+    public String getInstructions() {
+        return instructions;
     }
 
-    public void setStrInstructions(String strInstructions) {
-        this.strInstructions = strInstructions;
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
     }
 
-    public String getStrMealThumb() {
-        return strMealThumb;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setStrMealThumb(String strMealThumb) {
-        this.strMealThumb = strMealThumb;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public String getStrTags() {
-        return strTags;
+    public String getTags() {
+        return tags;
     }
 
-    public void setStrTags(String strTags) {
-        this.strTags = strTags;
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
-    public String getStrYoutube() {
-        return strYoutube;
+    public String getYoutubeUrl() {
+        return youtubeUrl;
     }
 
-    public void setStrYoutube(String strYoutube) {
-        this.strYoutube = strYoutube;
+    public void setYoutubeUrl(String youtubeUrl) {
+        this.youtubeUrl = youtubeUrl;
     }
 
-    public String getStrIngredient1() {
-        return strIngredient1;
+    public String getIngredient1() {
+        return ingredient1;
     }
 
-    public void setStrIngredient1(String strIngredient1) {
-        this.strIngredient1 = strIngredient1;
+    public void setIngredient1(String ingredient1) {
+        this.ingredient1 = ingredient1;
     }
 
-    public String getStrIngredient2() {
-        return strIngredient2;
+    public String getIngredient2() {
+        return ingredient2;
     }
 
-    public void setStrIngredient2(String strIngredient2) {
-        this.strIngredient2 = strIngredient2;
+    public void setIngredient2(String ingredient2) {
+        this.ingredient2 = ingredient2;
     }
 
-    public String getStrIngredient3() {
-        return strIngredient3;
+    public String getIngredient3() {
+        return ingredient3;
     }
 
-    public void setStrIngredient3(String strIngredient3) {
-        this.strIngredient3 = strIngredient3;
+    public void setIngredient3(String ingredient3) {
+        this.ingredient3 = ingredient3;
     }
 
-    public String getStrIngredient4() {
-        return strIngredient4;
+    public String getIngredient4() {
+        return ingredient4;
     }
 
-    public void setStrIngredient4(String strIngredient4) {
-        this.strIngredient4 = strIngredient4;
+    public void setIngredient4(String ingredient4) {
+        this.ingredient4 = ingredient4;
     }
 
-    public String getStrIngredient5() {
-        return strIngredient5;
+    public String getIngredient5() {
+        return ingredient5;
     }
 
-    public void setStrIngredient5(String strIngredient5) {
-        this.strIngredient5 = strIngredient5;
+    public void setIngredient5(String ingredient5) {
+        this.ingredient5 = ingredient5;
     }
 
-    public String getStrIngredient6() {
-        return strIngredient6;
+    public String getIngredient6() {
+        return ingredient6;
     }
 
-    public void setStrIngredient6(String strIngredient6) {
-        this.strIngredient6 = strIngredient6;
+    public void setIngredient6(String ingredient6) {
+        this.ingredient6 = ingredient6;
     }
 
-    public String getStrIngredient7() {
-        return strIngredient7;
+    public String getIngredient7() {
+        return ingredient7;
     }
 
-    public void setStrIngredient7(String strIngredient7) {
-        this.strIngredient7 = strIngredient7;
+    public void setIngredient7(String ingredient7) {
+        this.ingredient7 = ingredient7;
     }
 
-    public String getStrIngredient8() {
-        return strIngredient8;
+    public String getIngredient8() {
+        return ingredient8;
     }
 
-    public void setStrIngredient8(String strIngredient8) {
-        this.strIngredient8 = strIngredient8;
+    public void setIngredient8(String ingredient8) {
+        this.ingredient8 = ingredient8;
     }
 
-    public String getStrIngredient9() {
-        return strIngredient9;
+    public String getIngredient9() {
+        return ingredient9;
     }
 
-    public void setStrIngredient9(String strIngredient9) {
-        this.strIngredient9 = strIngredient9;
+    public void setIngredient9(String ingredient9) {
+        this.ingredient9 = ingredient9;
     }
 
-    public String getStrIngredient10() {
-        return strIngredient10;
+    public String getIngredient10() {
+        return ingredient10;
     }
 
-    public void setStrIngredient10(String strIngredient10) {
-        this.strIngredient10 = strIngredient10;
+    public void setIngredient10(String ingredient10) {
+        this.ingredient10 = ingredient10;
     }
 
-    public String getStrIngredient11() {
-        return strIngredient11;
+    public String getIngredient11() {
+        return ingredient11;
     }
 
-    public void setStrIngredient11(String strIngredient11) {
-        this.strIngredient11 = strIngredient11;
+    public void setIngredient11(String ingredient11) {
+        this.ingredient11 = ingredient11;
     }
 
-    public String getStrIngredient12() {
-        return strIngredient12;
+    public String getIngredient12() {
+        return ingredient12;
     }
 
-    public void setStrIngredient12(String strIngredient12) {
-        this.strIngredient12 = strIngredient12;
+    public void setIngredient12(String ingredient12) {
+        this.ingredient12 = ingredient12;
     }
 
-    public String getStrIngredient13() {
-        return strIngredient13;
+    public String getIngredient13() {
+        return ingredient13;
     }
 
-    public void setStrIngredient13(String strIngredient13) {
-        this.strIngredient13 = strIngredient13;
+    public void setIngredient13(String ingredient13) {
+        this.ingredient13 = ingredient13;
     }
 
-    public String getStrIngredient14() {
-        return strIngredient14;
+    public String getIngredient14() {
+        return ingredient14;
     }
 
-    public void setStrIngredient14(String strIngredient14) {
-        this.strIngredient14 = strIngredient14;
+    public void setIngredient14(String ingredient14) {
+        this.ingredient14 = ingredient14;
     }
 
-    public String getStrIngredient15() {
-        return strIngredient15;
+    public String getIngredient15() {
+        return ingredient15;
     }
 
-    public void setStrIngredient15(String strIngredient15) {
-        this.strIngredient15 = strIngredient15;
+    public void setIngredient15(String ingredient15) {
+        this.ingredient15 = ingredient15;
     }
 
-    public String getStrIngredient16() {
-        return strIngredient16;
+    public String getIngredient16() {
+        return ingredient16;
     }
 
-    public void setStrIngredient16(String strIngredient16) {
-        this.strIngredient16 = strIngredient16;
+    public void setIngredient16(String ingredient16) {
+        this.ingredient16 = ingredient16;
     }
 
-    public String getStrIngredient17() {
-        return strIngredient17;
+    public String getIngredient17() {
+        return ingredient17;
     }
 
-    public void setStrIngredient17(String strIngredient17) {
-        this.strIngredient17 = strIngredient17;
+    public void setIngredient17(String ingredient17) {
+        this.ingredient17 = ingredient17;
     }
 
-    public String getStrIngredient18() {
-        return strIngredient18;
+    public String getIngredient18() {
+        return ingredient18;
     }
 
-    public void setStrIngredient18(String strIngredient18) {
-        this.strIngredient18 = strIngredient18;
+    public void setIngredient18(String ingredient18) {
+        this.ingredient18 = ingredient18;
     }
 
-    public String getStrIngredient19() {
-        return strIngredient19;
+    public String getIngredient19() {
+        return ingredient19;
     }
 
-    public void setStrIngredient19(String strIngredient19) {
-        this.strIngredient19 = strIngredient19;
+    public void setIngredient19(String ingredient19) {
+        this.ingredient19 = ingredient19;
     }
 
-    public String getStrIngredient20() {
-        return strIngredient20;
+    public String getIngredient20() {
+        return ingredient20;
     }
 
-    public void setStrIngredient20(String strIngredient20) {
-        this.strIngredient20 = strIngredient20;
+    public void setIngredient20(String ingredient20) {
+        this.ingredient20 = ingredient20;
     }
 
     @Override
@@ -296,96 +298,96 @@ public class Meal implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.idMeal);
-        dest.writeString(this.strMeal);
-        dest.writeString(this.strCategory);
-        dest.writeString(this.strArea);
-        dest.writeString(this.strInstructions);
-        dest.writeString(this.strMealThumb);
-        dest.writeString(this.strTags);
-        dest.writeString(this.strYoutube);
-        dest.writeString(this.strIngredient1);
-        dest.writeString(this.strIngredient2);
-        dest.writeString(this.strIngredient3);
-        dest.writeString(this.strIngredient4);
-        dest.writeString(this.strIngredient5);
-        dest.writeString(this.strIngredient6);
-        dest.writeString(this.strIngredient7);
-        dest.writeString(this.strIngredient8);
-        dest.writeString(this.strIngredient9);
-        dest.writeString(this.strIngredient10);
-        dest.writeString(this.strIngredient11);
-        dest.writeString(this.strIngredient12);
-        dest.writeString(this.strIngredient13);
-        dest.writeString(this.strIngredient14);
-        dest.writeString(this.strIngredient15);
-        dest.writeString(this.strIngredient16);
-        dest.writeString(this.strIngredient17);
-        dest.writeString(this.strIngredient18);
-        dest.writeString(this.strIngredient19);
-        dest.writeString(this.strIngredient20);
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.category);
+        dest.writeString(this.area);
+        dest.writeString(this.instructions);
+        dest.writeString(this.imageUrl);
+        dest.writeString(this.tags);
+        dest.writeString(this.youtubeUrl);
+        dest.writeString(this.ingredient1);
+        dest.writeString(this.ingredient2);
+        dest.writeString(this.ingredient3);
+        dest.writeString(this.ingredient4);
+        dest.writeString(this.ingredient5);
+        dest.writeString(this.ingredient6);
+        dest.writeString(this.ingredient7);
+        dest.writeString(this.ingredient8);
+        dest.writeString(this.ingredient9);
+        dest.writeString(this.ingredient10);
+        dest.writeString(this.ingredient11);
+        dest.writeString(this.ingredient12);
+        dest.writeString(this.ingredient13);
+        dest.writeString(this.ingredient14);
+        dest.writeString(this.ingredient15);
+        dest.writeString(this.ingredient16);
+        dest.writeString(this.ingredient17);
+        dest.writeString(this.ingredient18);
+        dest.writeString(this.ingredient19);
+        dest.writeString(this.ingredient20);
     }
 
     public void readFromParcel(Parcel source) {
-        this.idMeal = source.readString();
-        this.strMeal = source.readString();
-        this.strCategory = source.readString();
-        this.strArea = source.readString();
-        this.strInstructions = source.readString();
-        this.strMealThumb = source.readString();
-        this.strTags = source.readString();
-        this.strYoutube = source.readString();
-        this.strIngredient1 = source.readString();
-        this.strIngredient2 = source.readString();
-        this.strIngredient3 = source.readString();
-        this.strIngredient4 = source.readString();
-        this.strIngredient5 = source.readString();
-        this.strIngredient6 = source.readString();
-        this.strIngredient7 = source.readString();
-        this.strIngredient8 = source.readString();
-        this.strIngredient9 = source.readString();
-        this.strIngredient10 = source.readString();
-        this.strIngredient11 = source.readString();
-        this.strIngredient12 = source.readString();
-        this.strIngredient13 = source.readString();
-        this.strIngredient14 = source.readString();
-        this.strIngredient15 = source.readString();
-        this.strIngredient16 = source.readString();
-        this.strIngredient17 = source.readString();
-        this.strIngredient18 = source.readString();
-        this.strIngredient19 = source.readString();
-        this.strIngredient20 = source.readString();
+        this.id = source.readString();
+        this.name = source.readString();
+        this.category = source.readString();
+        this.area = source.readString();
+        this.instructions = source.readString();
+        this.imageUrl = source.readString();
+        this.tags = source.readString();
+        this.youtubeUrl = source.readString();
+        this.ingredient1 = source.readString();
+        this.ingredient2 = source.readString();
+        this.ingredient3 = source.readString();
+        this.ingredient4 = source.readString();
+        this.ingredient5 = source.readString();
+        this.ingredient6 = source.readString();
+        this.ingredient7 = source.readString();
+        this.ingredient8 = source.readString();
+        this.ingredient9 = source.readString();
+        this.ingredient10 = source.readString();
+        this.ingredient11 = source.readString();
+        this.ingredient12 = source.readString();
+        this.ingredient13 = source.readString();
+        this.ingredient14 = source.readString();
+        this.ingredient15 = source.readString();
+        this.ingredient16 = source.readString();
+        this.ingredient17 = source.readString();
+        this.ingredient18 = source.readString();
+        this.ingredient19 = source.readString();
+        this.ingredient20 = source.readString();
     }
 
     protected Meal(Parcel in) {
-        this.idMeal = in.readString();
-        this.strMeal = in.readString();
-        this.strCategory = in.readString();
-        this.strArea = in.readString();
-        this.strInstructions = in.readString();
-        this.strMealThumb = in.readString();
-        this.strTags = in.readString();
-        this.strYoutube = in.readString();
-        this.strIngredient1 = in.readString();
-        this.strIngredient2 = in.readString();
-        this.strIngredient3 = in.readString();
-        this.strIngredient4 = in.readString();
-        this.strIngredient5 = in.readString();
-        this.strIngredient6 = in.readString();
-        this.strIngredient7 = in.readString();
-        this.strIngredient8 = in.readString();
-        this.strIngredient9 = in.readString();
-        this.strIngredient10 = in.readString();
-        this.strIngredient11 = in.readString();
-        this.strIngredient12 = in.readString();
-        this.strIngredient13 = in.readString();
-        this.strIngredient14 = in.readString();
-        this.strIngredient15 = in.readString();
-        this.strIngredient16 = in.readString();
-        this.strIngredient17 = in.readString();
-        this.strIngredient18 = in.readString();
-        this.strIngredient19 = in.readString();
-        this.strIngredient20 = in.readString();
+        this.id = in.readString();
+        this.name = in.readString();
+        this.category = in.readString();
+        this.area = in.readString();
+        this.instructions = in.readString();
+        this.imageUrl = in.readString();
+        this.tags = in.readString();
+        this.youtubeUrl = in.readString();
+        this.ingredient1 = in.readString();
+        this.ingredient2 = in.readString();
+        this.ingredient3 = in.readString();
+        this.ingredient4 = in.readString();
+        this.ingredient5 = in.readString();
+        this.ingredient6 = in.readString();
+        this.ingredient7 = in.readString();
+        this.ingredient8 = in.readString();
+        this.ingredient9 = in.readString();
+        this.ingredient10 = in.readString();
+        this.ingredient11 = in.readString();
+        this.ingredient12 = in.readString();
+        this.ingredient13 = in.readString();
+        this.ingredient14 = in.readString();
+        this.ingredient15 = in.readString();
+        this.ingredient16 = in.readString();
+        this.ingredient17 = in.readString();
+        this.ingredient18 = in.readString();
+        this.ingredient19 = in.readString();
+        this.ingredient20 = in.readString();
     }
 
     public static final Parcelable.Creator<Meal> CREATOR = new Parcelable.Creator<Meal>() {

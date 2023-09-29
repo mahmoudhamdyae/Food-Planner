@@ -155,7 +155,7 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
 
     @Override
     public void onCategoryClicked(Category category) {
-        Toast.makeText(getContext(), "Clicked: " + category.getStrCategory(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Clicked: " + category.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -167,14 +167,14 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
     public void onGetMealOfTheDaySuccess(MealsResponse mealsResponse) {
         mealOfTheDay = mealsResponse.getMeals().get(0);
         Glide.with(requireContext())
-                .load(mealOfTheDay.getStrMealThumb())
+                .load(mealOfTheDay.getImageUrl())
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.loading_img)
                         .error(R.drawable.ic_broken_image))
                 .into(imageView);
 
-        title.setText(mealOfTheDay.getStrMeal());
-        desc.setText(mealOfTheDay.getStrInstructions());
+        title.setText(mealOfTheDay.getName());
+        desc.setText(mealOfTheDay.getInstructions());
     }
 
     @Override

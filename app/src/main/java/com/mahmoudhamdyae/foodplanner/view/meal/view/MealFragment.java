@@ -48,7 +48,7 @@ public class MealFragment extends Fragment {
         ImageView imageView = view.findViewById(R.id.image_view);
         ViewCompat.setTransitionName(imageView, "meal_image"); // Transition
         Glide.with(requireContext())
-                .load(meal.getStrMealThumb())
+                .load(meal.getImageUrl())
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.loading_img)
                         .error(R.drawable.ic_broken_image))
@@ -58,33 +58,33 @@ public class MealFragment extends Fragment {
         TextView titleTextView = view.findViewById(R.id.title);
         TextView fromTextView = view.findViewById(R.id.from);
         TextView instTextView = view.findViewById(R.id.inst);
-        titleTextView.setText(meal.getStrMeal());
-        fromTextView.setText(meal.getStrArea());
-        instTextView.setText(meal.getStrInstructions());
+        titleTextView.setText(meal.getName());
+        fromTextView.setText(meal.getArea());
+        instTextView.setText(meal.getInstructions());
 
         // Ingredients
         ingredients = new ArrayList<>();
         try {
-            if (!meal.getStrIngredient1().equals("")) ingredients.add(meal.getStrIngredient1());
-            if (!meal.getStrIngredient2().equals("")) ingredients.add(meal.getStrIngredient2());
-            if (!meal.getStrIngredient3().equals("")) ingredients.add(meal.getStrIngredient3());
-            if (!meal.getStrIngredient4().equals("")) ingredients.add(meal.getStrIngredient4());
-            if (!meal.getStrIngredient5().equals("")) ingredients.add(meal.getStrIngredient5());
-            if (!meal.getStrIngredient6().equals("")) ingredients.add(meal.getStrIngredient6());
-            if (!meal.getStrIngredient7().equals("")) ingredients.add(meal.getStrIngredient7());
-            if (!meal.getStrIngredient8().equals("")) ingredients.add(meal.getStrIngredient8());
-            if (!meal.getStrIngredient9().equals("")) ingredients.add(meal.getStrIngredient9());
-            if (!meal.getStrIngredient10().equals("")) ingredients.add(meal.getStrIngredient10());
-            if (!meal.getStrIngredient11() .equals("")) ingredients.add(meal.getStrIngredient11());
-            if (!meal.getStrIngredient12().equals("")) ingredients.add(meal.getStrIngredient12());
-            if (!meal.getStrIngredient13().equals("")) ingredients.add(meal.getStrIngredient13());
-            if (!meal.getStrIngredient14().equals("")) ingredients.add(meal.getStrIngredient14());
-            if (!meal.getStrIngredient15().equals("")) ingredients.add(meal.getStrIngredient15());
-            if (!meal.getStrIngredient16().equals("")) ingredients.add(meal.getStrIngredient16());
-            if (!meal.getStrIngredient17().equals("")) ingredients.add(meal.getStrIngredient17());
-            if (!meal.getStrIngredient18().equals("")) ingredients.add(meal.getStrIngredient18());
-            if (!meal.getStrIngredient19().equals("")) ingredients.add(meal.getStrIngredient19());
-            if (!meal.getStrIngredient20().equals("")) ingredients.add(meal.getStrIngredient20());
+            if (!meal.getIngredient1().equals("")) ingredients.add(meal.getIngredient1());
+            if (!meal.getIngredient2().equals("")) ingredients.add(meal.getIngredient2());
+            if (!meal.getIngredient3().equals("")) ingredients.add(meal.getIngredient3());
+            if (!meal.getIngredient4().equals("")) ingredients.add(meal.getIngredient4());
+            if (!meal.getIngredient5().equals("")) ingredients.add(meal.getIngredient5());
+            if (!meal.getIngredient6().equals("")) ingredients.add(meal.getIngredient6());
+            if (!meal.getIngredient7().equals("")) ingredients.add(meal.getIngredient7());
+            if (!meal.getIngredient8().equals("")) ingredients.add(meal.getIngredient8());
+            if (!meal.getIngredient9().equals("")) ingredients.add(meal.getIngredient9());
+            if (!meal.getIngredient10().equals("")) ingredients.add(meal.getIngredient10());
+            if (!meal.getIngredient11() .equals("")) ingredients.add(meal.getIngredient11());
+            if (!meal.getIngredient12().equals("")) ingredients.add(meal.getIngredient12());
+            if (!meal.getIngredient13().equals("")) ingredients.add(meal.getIngredient13());
+            if (!meal.getIngredient14().equals("")) ingredients.add(meal.getIngredient14());
+            if (!meal.getIngredient15().equals("")) ingredients.add(meal.getIngredient15());
+            if (!meal.getIngredient16().equals("")) ingredients.add(meal.getIngredient16());
+            if (!meal.getIngredient17().equals("")) ingredients.add(meal.getIngredient17());
+            if (!meal.getIngredient18().equals("")) ingredients.add(meal.getIngredient18());
+            if (!meal.getIngredient19().equals("")) ingredients.add(meal.getIngredient19());
+            if (!meal.getIngredient20().equals("")) ingredients.add(meal.getIngredient20());
         } catch (NullPointerException e) { e.printStackTrace(); }
 
         IngredientsAdapter mAdapter = new IngredientsAdapter(requireContext(), ingredients);

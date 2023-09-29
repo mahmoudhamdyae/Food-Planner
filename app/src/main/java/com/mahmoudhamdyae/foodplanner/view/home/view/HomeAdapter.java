@@ -48,15 +48,15 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Glide.with(context)
-                .load(items.get(position).getStrCategoryThumb())
+                .load(items.get(position).getImageUrl())
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.loading_img)
                         .error(R.drawable.ic_broken_image))
                 .into(holder.imageView);
         ViewCompat.setTransitionName(holder.imageView, "meal_image");
 
-        holder.titleView.setText(items.get(position).getStrCategory());
-        holder.descriptionView.setText(items.get(position).getStrCategoryDescription());
+        holder.titleView.setText(items.get(position).getName());
+        holder.descriptionView.setText(items.get(position).getDescription());
 
         holder.row.setOnClickListener(v -> listener.onCategoryClicked(items.get(position)));
     }

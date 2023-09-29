@@ -53,14 +53,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Glide.with(context)
-                .load(items.get(position).getStrMealThumb())
+                .load(items.get(position).getImageUrl())
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.loading_img)
                         .error(R.drawable.ic_broken_image))
                 .into(holder.imageView);
 
-        holder.titleView.setText(items.get(position).getStrMeal());
-        holder.descriptionView.setText(items.get(position).getStrInstructions());
+        holder.titleView.setText(items.get(position).getName());
+        holder.descriptionView.setText(items.get(position).getInstructions());
 
         holder.row.setOnClickListener(v -> listener.onMealClicked(items.get(position)));
         Log.i(TAG, "********* onBindViewHolder ***********");

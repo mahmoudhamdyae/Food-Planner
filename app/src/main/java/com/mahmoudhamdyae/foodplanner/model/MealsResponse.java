@@ -1,10 +1,12 @@
 package com.mahmoudhamdyae.foodplanner.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class MealsResponse {
 
-    private List<Meal> meals;
+    @SerializedName("meals") private List<Meal> meals;
 
     public MealsResponse(List<Meal> meals) {
         this.meals = meals;

@@ -1,48 +1,50 @@
 package com.mahmoudhamdyae.foodplanner.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Category {
 
-    private String idCategory;
-    private String strCategory;
-    private String strCategoryDescription;
-    private String strCategoryThumb;
+    @SerializedName("idCategory") private String id;
+    @SerializedName("strCategory") private String name;
+    @SerializedName("strCategoryDescription") private String description;
+    @SerializedName("strCategoryThumb") private String imageUrl;
 
-    public Category(String idCategory, String strCategory, String strCategoryDescription, String strCategoryThumb) {
-        this.idCategory = idCategory;
-        this.strCategory = strCategory;
-        this.strCategoryDescription = strCategoryDescription;
-        this.strCategoryThumb = strCategoryThumb;
+    public Category(String id, String name, String description, String imageUrl) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.imageUrl = imageUrl;
     }
 
-    public String getIdCategory() {
-        return idCategory;
+    public String getId() {
+        return id;
     }
 
-    public void setIdCategory(String idCategory) {
-        this.idCategory = idCategory;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getStrCategory() {
-        return strCategory;
+    public String getName() {
+        return name;
     }
 
-    public void setStrCategory(String strCategory) {
-        this.strCategory = strCategory;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getStrCategoryDescription() {
-        return strCategoryDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setStrCategoryDescription(String strCategoryDescription) {
-        this.strCategoryDescription = strCategoryDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getStrCategoryThumb() {
-        return strCategoryThumb;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setStrCategoryThumb(String strCategoryThumb) {
-        this.strCategoryThumb = strCategoryThumb;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
