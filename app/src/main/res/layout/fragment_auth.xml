@@ -9,7 +9,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha=".5"
+        android:alpha=".4"
         android:contentDescription="@string/image"
         android:scaleType="centerCrop"
         android:src="@drawable/background" />
@@ -22,6 +22,16 @@
         android:text="@string/skip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/signup_button"
+        app:layout_constraintTop_toBottomOf="@id/skip_button"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="auth_anim.json"
+        app:lottie_loop="true" />
 
     <Button
         android:id="@+id/signup_button"
