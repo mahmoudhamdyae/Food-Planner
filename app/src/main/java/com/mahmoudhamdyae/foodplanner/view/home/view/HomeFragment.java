@@ -1,5 +1,6 @@
 package com.mahmoudhamdyae.foodplanner.view.home.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +26,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mahmoudhamdyae.foodplanner.R;
+import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
+import com.mahmoudhamdyae.foodplanner.account.OnResult;
 import com.mahmoudhamdyae.foodplanner.model.Category;
 import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
@@ -35,14 +38,15 @@ import com.mahmoudhamdyae.network.ApiClient;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment implements OnMealClickListener, IHomeView {
+public class HomeFragment extends Fragment implements OnMealClickListener, IHomeView, OnResult {
 
     private HomeAdapter mAdapter;
-    private FirebaseAuth mAuth;
 
     private ImageView imageView;
     private TextView title, desc;
     private Meal mealOfTheDay;
+
+    private HomePresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,9 +63,6 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
-
         mAdapter = new HomeAdapter(getContext(), new ArrayList<>(), this);
         RecyclerView recyclerView = view.findViewById(R.id.categories_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -77,7 +78,7 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
         row.setOnClickListener(v -> navigateToMealScreen());
         ViewCompat.setTransitionName(imageView, "meal_image");
 
-        HomePresenter presenter = new HomePresenter(this, RepositoryImpl.getInstance(ApiClient.getInstance()));
+        presenter = new HomePresenter(this, RepositoryImpl.getInstance(ApiClient.getInstance()), AccountServiceImpl.getInstance(requireContext(), this));
         presenter.getMeals();
         presenter.getMealOfTheDay();
 
@@ -89,7 +90,7 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
                 .setMessage(R.string.dialog_sign_out_msg)
                 .setPositiveButton(R.string.dialog_sign_out, (dialog, id) -> {
                     // Sign out
-                    mAuth.signOut();
+                    presenter.signOut();
                     navigateToLoginScreen();
                     dialog.dismiss();
                 })
@@ -101,7 +102,7 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        if (mAuth.getCurrentUser() != null) inflater.inflate(R.menu.menu_main, menu);
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) inflater.inflate(R.menu.menu_main, menu);
         else inflater.inflate(R.menu.menu_main_not_signed, menu);
 
         super.onCreateOptionsMenu(menu, inflater);
@@ -166,12 +167,14 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
     @Override
     public void onGetMealOfTheDaySuccess(MealsResponse mealsResponse) {
         mealOfTheDay = mealsResponse.getMeals().get(0);
-        Glide.with(requireContext())
-                .load(mealOfTheDay.getImageUrl())
-                .apply(new RequestOptions()
-                        .placeholder(R.drawable.loading_img)
-                        .error(R.drawable.ic_broken_image))
-                .into(imageView);
+        try {
+            Glide.with(requireContext())
+                    .load(mealOfTheDay.getImageUrl())
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.loading_img)
+                            .error(R.drawable.ic_broken_image))
+                    .into(imageView);
+        } catch (IllegalStateException e) { e.printStackTrace(); }
 
         title.setText(mealOfTheDay.getName());
         desc.setText(mealOfTheDay.getInstructions());
@@ -181,4 +184,13 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
     public void onNetworkFail(String errorMsg) {
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onAuthSuccess() { }
+
+    @Override
+    public void onGoogleAuthSuccess(Intent signInIntent) { }
+
+    @Override
+    public void onFailure(String errorMsg) { }
 }
