@@ -1,10 +1,8 @@
 package com.mahmoudhamdyae.foodplanner.account;
 
 import android.app.Activity;
-<<<<<<< HEAD
-=======
+
 import android.content.Context;
->>>>>>> origin/master
 import android.content.Intent;
 import android.util.Log;
 
@@ -25,19 +23,11 @@ public class AccountServiceImpl implements AccountService {
     private final OnResult listener;
 
     private final FirebaseAuth mAuth;
-<<<<<<< HEAD
-    private final Activity context;
+    private final Context context;
 
     private final GoogleSignInClient mGoogleSignInClient;
 
-    private AccountServiceImpl(@NonNull Activity context, OnResult listener) {
-=======
-    private final Context context;
-
-    private GoogleSignInClient mGoogleSignInClient;
-
     private AccountServiceImpl(@NonNull Context context, OnResult listener) {
->>>>>>> origin/master
         this.context = context;
         this.listener = listener;
         // Initialize Firebase Auth
@@ -50,11 +40,7 @@ public class AccountServiceImpl implements AccountService {
         mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
     }
 
-<<<<<<< HEAD
-    public static AccountService getInstance(@NonNull Activity context, OnResult listener) {
-=======
     public static AccountService getInstance(@NonNull Context context, OnResult listener) {
->>>>>>> origin/master
         if (accountService == null) accountService = new AccountServiceImpl(context, listener);
         return accountService;
     }
