@@ -48,7 +48,7 @@ public class SearchFragment extends Fragment implements ISearchView, OnMealClick
         super.onViewCreated(view, savedInstanceState);
 
         mAdapter = new SearchAdapter(getContext(), new ArrayList<>(), this);
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.meals_recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);

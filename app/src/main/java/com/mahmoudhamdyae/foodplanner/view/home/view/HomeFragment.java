@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
         mAuth = FirebaseAuth.getInstance();
 
         mAdapter = new HomeAdapter(getContext(), new ArrayList<>(), this);
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.categories_recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);

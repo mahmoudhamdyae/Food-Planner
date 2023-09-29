@@ -59,7 +59,7 @@ public class MealFragment extends Fragment {
         TextView fromTextView = view.findViewById(R.id.from);
         TextView instTextView = view.findViewById(R.id.inst);
         titleTextView.setText(meal.getName());
-        fromTextView.setText(meal.getArea());
+        fromTextView.setText(getString(R.string.from, meal.getArea()));
         instTextView.setText(meal.getInstructions());
 
         // Ingredients
@@ -88,7 +88,7 @@ public class MealFragment extends Fragment {
         } catch (NullPointerException e) { e.printStackTrace(); }
 
         IngredientsAdapter mAdapter = new IngredientsAdapter(requireContext(), ingredients);
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.ingredients_recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
