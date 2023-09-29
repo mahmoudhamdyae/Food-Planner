@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,6 +37,7 @@ public class MealFragment extends Fragment implements IMealView {
     private Meal meal;
     private Boolean isFav = false;
     private Button addToCartButton;
+    private WebView youtube;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,6 +127,14 @@ public class MealFragment extends Fragment implements IMealView {
                 isFav = true;
             }
         });
+
+        // YouTube Player
+        youtube = view.findViewById(R.id.youtube);
+        String videoUrl = meal.getYoutubeUrl().replace("watch?v=", "embed/");
+        String video = "<iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl + "\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
+        youtube.loadData(video, "text/html","utf-8");
+        youtube.getSettings().setJavaScriptEnabled(true);
+        youtube.setWebChromeClient(new WebChromeClient());
     }
 
     @Override
