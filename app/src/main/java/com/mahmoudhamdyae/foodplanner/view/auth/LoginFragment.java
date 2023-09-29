@@ -2,7 +2,6 @@ package com.mahmoudhamdyae.foodplanner.view.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,7 +147,6 @@ public class LoginFragment extends Fragment implements OnResult {
     public void onAuthSuccess() {
         // Log in success
         navigateToHomeScreen();
-        Log.i("hahahhahaha", "onAuthSuccess: ");
     }
 
 
