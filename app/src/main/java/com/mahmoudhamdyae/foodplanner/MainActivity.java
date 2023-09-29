@@ -25,16 +25,23 @@ public class MainActivity extends AppCompatActivity {
         NavInflater inflater = navHostFragment.getNavController().getNavInflater();
         NavGraph graph = inflater.inflate(R.navigation.nav_graph);
 
-        // Initialize Firebase Auth
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
-            graph.setStartDestination(R.id.authFragment);
+        // Set Start Destination (WelcomeFragment, AuthFragment or HomeFragment)
+        SharedPref sharedPref = new SharedPref(this);
+        if (sharedPref.isFirstTime()) {
+            graph.setStartDestination(R.id.welcomeFragment);
         } else {
-            graph.setStartDestination(R.id.homeFragment);
+            // Initialize Firebase Auth
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+            // Check if user is signed in (non-null) and update UI accordingly.
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            if (currentUser == null) {
+                graph.setStartDestination(R.id.authFragment);
+            } else {
+                graph.setStartDestination(R.id.homeFragment);
+            }
         }
+
 
         NavController navController = navHostFragment.getNavController();
         navController.setGraph(graph);
