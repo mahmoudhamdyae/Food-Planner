@@ -37,7 +37,6 @@ public class MealFragment extends Fragment implements IMealView {
     private Meal meal;
     private Boolean isFav = false;
     private Button addToCartButton;
-    private WebView youtube;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -129,7 +128,7 @@ public class MealFragment extends Fragment implements IMealView {
         });
 
         // YouTube Player
-        youtube = view.findViewById(R.id.youtube);
+        WebView youtube = view.findViewById(R.id.youtube);
         String videoUrl = meal.getYoutubeUrl().replace("watch?v=", "embed/");
         String video = "<iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl + "\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
         youtube.loadData(video, "text/html","utf-8");
