@@ -66,4 +66,34 @@ public class RepositoryImpl implements Repository {
     public void removeMealFromFav(Meal meal) {
         localDataSource.removeMealFromFav(meal);
     }
+
+    @Override
+    public void getAreas(NetworkCallback networkCallback) {
+        remoteDataSource.getAreas(networkCallback);
+    }
+
+    @Override
+    public void getIngredients(NetworkCallback networkCallback) {
+        remoteDataSource.getIngredients(networkCallback);
+    }
+
+    @Override
+    public void getCategoriesNames(NetworkCallback networkCallback) {
+        remoteDataSource.getCategoriesNames(networkCallback);
+    }
+
+    @Override
+    public void getMealsByArea(String area, NetworkCallback networkCallback) {
+        remoteDataSource.getMealsByArea(area, networkCallback);
+    }
+
+    @Override
+    public void getMealsByCategory(String category, NetworkCallback networkCallback) {
+        remoteDataSource.getMealsByCategory(category, networkCallback);
+    }
+
+    @Override
+    public void getMealsByIngredient(String ingredient, NetworkCallback networkCallback) {
+        remoteDataSource.getMealsByIngredient(ingredient, networkCallback);
+    }
 }

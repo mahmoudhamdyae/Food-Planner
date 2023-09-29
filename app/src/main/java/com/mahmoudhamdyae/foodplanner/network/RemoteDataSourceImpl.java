@@ -4,7 +4,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.mahmoudhamdyae.foodplanner.model.CategoryNamesResponse;
 import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
+import com.mahmoudhamdyae.foodplanner.model.AreaResponse;
+import com.mahmoudhamdyae.foodplanner.model.IngredientResponse;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 
 import retrofit2.Call;
@@ -41,7 +44,7 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
     @Override
     public void getCategories(NetworkCallback networkCallback) {
         makeNetworkCall();
-        Call<CategoryResponse> call = apiService.getMeals();
+        Call<CategoryResponse> call = apiService.getCategories();
         call.enqueue(new Callback<CategoryResponse>() {
 
             @Override
@@ -88,6 +91,138 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
     public void getMealOfTheDay(NetworkCallback networkCallback) {
         makeNetworkCall();
         Call<MealsResponse> call = apiService.getMealOfTheDay();
+        call.enqueue(new Callback<MealsResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<MealsResponse> call, @NonNull Response<MealsResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, "onResponse: CallBack " + response.raw() + response.body().getMeals());
+                    networkCallback.onSuccessResult(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MealsResponse> call, @NonNull Throwable t) {
+                Log.i(TAG, "onFailure: CallBack");
+                networkCallback.onFailureResult(t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void getAreas(NetworkCallback networkCallback) {
+        makeNetworkCall();
+        Call<AreaResponse> call = apiService.getAreas();
+        call.enqueue(new Callback<AreaResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<AreaResponse> call, @NonNull Response<AreaResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, "onResponse: CallBack " + response.raw() + response.body().getCountries());
+                    networkCallback.onSuccessResult(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AreaResponse> call, @NonNull Throwable t) {
+                Log.i(TAG, "onFailure: CallBack");
+                networkCallback.onFailureResult(t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void getIngredients(NetworkCallback networkCallback) {
+        makeNetworkCall();
+        Call<IngredientResponse> call = apiService.getIngredients();
+        call.enqueue(new Callback<IngredientResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<IngredientResponse> call, @NonNull Response<IngredientResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, "onResponse: CallBack " + response.raw() + response.body().getIngredients());
+                    networkCallback.onSuccessResult(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<IngredientResponse> call, @NonNull Throwable t) {
+                Log.i(TAG, "onFailure: CallBack");
+                networkCallback.onFailureResult(t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void getCategoriesNames(NetworkCallback networkCallback) {
+        makeNetworkCall();
+        Call<CategoryNamesResponse> call = apiService.getCategoriesNames();
+        call.enqueue(new Callback<CategoryNamesResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<CategoryNamesResponse> call, @NonNull Response<CategoryNamesResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, "onResponse: CallBack " + response.raw() + response.body().getCategories());
+                    networkCallback.onSuccessResult(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CategoryNamesResponse> call, @NonNull Throwable t) {
+                Log.i(TAG, "onFailure: CallBack");
+                networkCallback.onFailureResult(t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void getMealsByArea(String area, NetworkCallback networkCallback) {
+        makeNetworkCall();
+        Call<MealsResponse> call = apiService.getMealsByArea(area);
+        call.enqueue(new Callback<MealsResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<MealsResponse> call, @NonNull Response<MealsResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, "onResponse: CallBack " + response.raw() + response.body().getMeals());
+                    networkCallback.onSuccessResult(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MealsResponse> call, @NonNull Throwable t) {
+                Log.i(TAG, "onFailure: CallBack");
+                networkCallback.onFailureResult(t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void getMealsByCategory(String category, NetworkCallback networkCallback) {
+        makeNetworkCall();
+        Call<MealsResponse> call = apiService.getMealsByCategory(category);
+        call.enqueue(new Callback<MealsResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<MealsResponse> call, @NonNull Response<MealsResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, "onResponse: CallBack " + response.raw() + response.body().getMeals());
+                    networkCallback.onSuccessResult(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MealsResponse> call, @NonNull Throwable t) {
+                Log.i(TAG, "onFailure: CallBack");
+                networkCallback.onFailureResult(t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void getMealsByIngredient(String ingredient, NetworkCallback networkCallback) {
+        makeNetworkCall();
+        Call<MealsResponse> call = apiService.getMealsByIngredient(ingredient);
         call.enqueue(new Callback<MealsResponse>() {
             @Override
             public void onResponse(@NonNull Call<MealsResponse> call, @NonNull Response<MealsResponse> response) {
