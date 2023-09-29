@@ -5,7 +5,7 @@ import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.model.Repository;
 import com.mahmoudhamdyae.foodplanner.view.home.view.IHomeView;
-import com.mahmoudhamdyae.network.NetworkCallback;
+import com.mahmoudhamdyae.foodplanner.network.NetworkCallback;
 
 public class HomePresenter implements IHomePresenter, NetworkCallback {
 

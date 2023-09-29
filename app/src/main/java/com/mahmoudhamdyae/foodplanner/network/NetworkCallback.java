@@ -1,4 +1,4 @@
-package com.mahmoudhamdyae.network;
+package com.mahmoudhamdyae.foodplanner.network;
 
 public interface NetworkCallback {
 

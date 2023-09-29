@@ -3,7 +3,7 @@ package com.mahmoudhamdyae.foodplanner.view.search.presenter;
 import com.mahmoudhamdyae.foodplanner.model.Repository;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.view.search.view.ISearchView;
-import com.mahmoudhamdyae.network.NetworkCallback;
+import com.mahmoudhamdyae.foodplanner.network.NetworkCallback;
 
 public class SearchPresenter implements ISearchPresenter, NetworkCallback {
 

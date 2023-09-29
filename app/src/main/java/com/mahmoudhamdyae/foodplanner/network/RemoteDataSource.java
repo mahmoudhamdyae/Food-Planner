@@ -1,6 +1,6 @@
-package com.mahmoudhamdyae.network;
+package com.mahmoudhamdyae.foodplanner.network;
 
-public interface RemoteSource {
+public interface RemoteDataSource {
 
     void getCategories(NetworkCallback networkCallback);
     void searchMeal(String name, NetworkCallback networkCallback);

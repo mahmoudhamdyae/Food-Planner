@@ -1,37 +1,69 @@
 package com.mahmoudhamdyae.foodplanner.model;
 
-import com.mahmoudhamdyae.network.NetworkCallback;
-import com.mahmoudhamdyae.network.RemoteSource;
+import androidx.lifecycle.LiveData;
+
+import com.mahmoudhamdyae.foodplanner.db.LocalDataSource;
+import com.mahmoudhamdyae.foodplanner.network.NetworkCallback;
+import com.mahmoudhamdyae.foodplanner.network.RemoteDataSource;
+import com.mahmoudhamdyae.foodplanner.view.meal.view.IMealView;
+
+import java.util.List;
 
 public class RepositoryImpl implements Repository {
 
     private static RepositoryImpl repo = null;
 
-    private final RemoteSource remoteSource;
+    private final RemoteDataSource remoteDataSource;
+    private final LocalDataSource localDataSource;
 
-    private RepositoryImpl(RemoteSource remoteSource) {
-        this.remoteSource = remoteSource;
+    private RepositoryImpl(RemoteDataSource remoteDataSource, LocalDataSource localDataSource) {
+        this.remoteDataSource = remoteDataSource;
+        this.localDataSource = localDataSource;
     }
 
-    public static RepositoryImpl getInstance(RemoteSource remoteSource) {
+    public static RepositoryImpl getInstance(RemoteDataSource remoteDataSource, LocalDataSource localDataSource) {
         if (repo == null) {
-            repo = new RepositoryImpl(remoteSource);
+            repo = new RepositoryImpl(remoteDataSource, localDataSource);
         }
         return repo;
     }
 
+    // Remote Data Source
+
     @Override
     public void getCategories(NetworkCallback networkCallback) {
-        remoteSource.getCategories(networkCallback);
+        remoteDataSource.getCategories(networkCallback);
     }
 
     @Override
     public void searchMeal(String name, NetworkCallback networkCallback) {
-        remoteSource.searchMeal(name, networkCallback);
+        remoteDataSource.searchMeal(name, networkCallback);
     }
+
+    // Local Data Source
 
     @Override
     public void getMealOfTheDay(NetworkCallback networkCallback) {
-        remoteSource.getMealOfTheDay(networkCallback);
+        remoteDataSource.getMealOfTheDay(networkCallback);
+    }
+
+    @Override
+    public LiveData<List<Meal>> observeFavMeals() {
+        return localDataSource.observeFavMeals();
+    }
+
+    @Override
+    public void getFavMeals(IMealView view) {
+        localDataSource.getFavMeals(view);
+    }
+
+    @Override
+    public void addMealToFav(Meal meal) {
+        localDataSource.addMealToFav(meal);
+    }
+
+    @Override
+    public void removeMealFromFav(Meal meal) {
+        localDataSource.removeMealFromFav(meal);
     }
 }

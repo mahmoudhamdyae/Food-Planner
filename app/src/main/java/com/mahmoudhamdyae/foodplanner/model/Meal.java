@@ -3,11 +3,19 @@ package com.mahmoudhamdyae.foodplanner.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "meal_table")
 public class Meal implements Parcelable {
 
-    @SerializedName("idMeal") private String id;
+    @SerializedName("idMeal")
+    @PrimaryKey
+    @NonNull
+    private String id;
     @SerializedName("strMeal") private String name;
     @SerializedName("strCategory") private String category;
     @SerializedName("strArea") private String area;
@@ -35,6 +43,8 @@ public class Meal implements Parcelable {
     @SerializedName("strIngredient18") private String ingredient18;
     @SerializedName("strIngredient19") private String ingredient19;
     @SerializedName("strIngredient20") private String ingredient20;
+
+    public Meal() { }
 
     public Meal(String id, String name, String category, String area, String instructions, String imageUrl, String tags, String youtubeUrl, String ingredient1, String ingredient2, String ingredient3, String ingredient4, String ingredient5, String ingredient6, String ingredient7, String ingredient8, String ingredient9, String ingredient10, String ingredient11, String ingredient12, String ingredient13, String ingredient14, String ingredient15, String ingredient16, String ingredient17, String ingredient18, String ingredient19, String ingredient20, String strIngredient191, String strIngredient201) {
         this.id = id;

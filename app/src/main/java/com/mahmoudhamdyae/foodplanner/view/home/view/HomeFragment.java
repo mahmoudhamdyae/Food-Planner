@@ -28,13 +28,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
 import com.mahmoudhamdyae.foodplanner.account.OnResult;
+import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.model.Category;
 import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
 import com.mahmoudhamdyae.foodplanner.view.home.presenter.HomePresenter;
-import com.mahmoudhamdyae.network.ApiClient;
+import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
 
 import java.util.ArrayList;
 
@@ -78,7 +79,7 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
         row.setOnClickListener(v -> navigateToMealScreen());
         ViewCompat.setTransitionName(imageView, "meal_image");
 
-        presenter = new HomePresenter(this, RepositoryImpl.getInstance(ApiClient.getInstance()), AccountServiceImpl.getInstance(requireContext(), this));
+        presenter = new HomePresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())), AccountServiceImpl.getInstance(requireContext(), this));
         presenter.getMeals();
         presenter.getMealOfTheDay();
 

@@ -1,4 +1,4 @@
-package com.mahmoudhamdyae.network;
+package com.mahmoudhamdyae.foodplanner.network;
 
 import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;

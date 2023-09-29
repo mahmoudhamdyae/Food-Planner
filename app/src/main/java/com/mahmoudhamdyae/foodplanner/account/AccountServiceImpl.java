@@ -62,8 +62,10 @@ public class AccountServiceImpl implements AccountService {
         mAuth.signInWithCredential(credential).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 // Sign in success, update UI with the signed-in user's information
+                Log.w(TAG, "signInWithGoogle:success");
                 listener.onAuthSuccess();
             } else {
+                Log.w(TAG, "signInWithGoogle:failure", task.getException());
                 // If sign in fails, display a message to the user.
                 listener.onFailure("Authentication Failed.");
             }
@@ -105,5 +107,6 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void signOut() {
         mAuth.signOut();
+        Log.w(TAG, "signOut");
     }
 }

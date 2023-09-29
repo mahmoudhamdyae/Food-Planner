@@ -1,6 +1,7 @@
 package com.mahmoudhamdyae.foodplanner.view.meal.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mahmoudhamdyae.foodplanner.R;
+import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
+import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
+import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
+import com.mahmoudhamdyae.foodplanner.view.meal.presenter.IMealPresenter;
+import com.mahmoudhamdyae.foodplanner.view.meal.presenter.MealPresenter;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MealFragment extends Fragment {
+public class MealFragment extends Fragment implements IMealView {
 
-    private ArrayList<String> ingredients;
+    private IMealPresenter presenter;
+    private Meal meal;
+    private Boolean isFav = false;
+    private Button addToCartButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +52,7 @@ public class MealFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Meal meal = MealFragmentArgs.fromBundle(getArguments()).getMeal();
+        meal = MealFragmentArgs.fromBundle(getArguments()).getMeal();
 
         // Image
         ImageView imageView = view.findViewById(R.id.image_view);
@@ -63,7 +73,7 @@ public class MealFragment extends Fragment {
         instTextView.setText(meal.getInstructions());
 
         // Ingredients
-        ingredients = new ArrayList<>();
+        ArrayList<String> ingredients = new ArrayList<>();
         try {
             if (!meal.getIngredient1().equals("")) ingredients.add(meal.getIngredient1());
             if (!meal.getIngredient2().equals("")) ingredients.add(meal.getIngredient2());
@@ -95,10 +105,36 @@ public class MealFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
+        presenter = new MealPresenter(this,
+                RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(),
+                        LocalDataSourceImpl.getInstance(requireContext())));
+        presenter.getFavMeals();
+
         // Button
-        Button addToCartButton = view.findViewById(R.id.add_to_cart);
+        addToCartButton = view.findViewById(R.id.add_to_cart);
         addToCartButton.setOnClickListener(v -> {
-            Toast.makeText(requireContext(), "Add To Cart Clicked", Toast.LENGTH_SHORT).show();
+            if (isFav) {
+                presenter.removeMealFromFav(meal);
+                Toast.makeText(requireContext(), getString(R.string.added_toast, meal.getName()), Toast.LENGTH_SHORT).show();
+                addToCartButton.setText(getString(R.string.remove_from_cart));
+                isFav = false;
+            } else {
+                presenter.addMealToFav(meal);
+                Toast.makeText(requireContext(), getString(R.string.removed_toast, meal.getName()), Toast.LENGTH_SHORT).show();
+                addToCartButton.setText(getString(R.string.add_to_cart));
+                isFav = true;
+            }
         });
+    }
+
+    @Override
+    public void showData(List<Meal> meals) {
+        if (meals.contains(meal)) {
+            isFav = true;
+            addToCartButton.setText(getString(R.string.remove_from_cart));
+        } else {
+            isFav = false;
+            addToCartButton.setText(getString(R.string.add_to_cart));
+        }
     }
 }

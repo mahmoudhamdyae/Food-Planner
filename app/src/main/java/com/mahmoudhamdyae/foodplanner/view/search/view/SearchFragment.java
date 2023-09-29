@@ -18,12 +18,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mahmoudhamdyae.foodplanner.R;
+import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
 import com.mahmoudhamdyae.foodplanner.view.search.presenter.ISearchPresenter;
 import com.mahmoudhamdyae.foodplanner.view.search.presenter.SearchPresenter;
-import com.mahmoudhamdyae.network.ApiClient;
+import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
 
 import java.util.ArrayList;
 
@@ -55,7 +56,7 @@ public class SearchFragment extends Fragment implements ISearchView, OnMealClick
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
-        presenter = new SearchPresenter(this, RepositoryImpl.getInstance(ApiClient.getInstance()));
+        presenter = new SearchPresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())));
 
         EditText searchEditText = view.findViewById(R.id.search_edit_text);
         searchEditText.addTextChangedListener(new TextWatcher() {
