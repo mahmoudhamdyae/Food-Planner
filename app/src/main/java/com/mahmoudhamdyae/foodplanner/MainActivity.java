@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
-            graph.setStartDestination(R.id.loginFragment);
+            graph.setStartDestination(R.id.authFragment);
         } else {
             graph.setStartDestination(R.id.homeFragment);
         }

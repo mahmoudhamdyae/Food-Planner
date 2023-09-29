@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,18 +14,20 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.TextInputLayout;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.account.AccountService;
 import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
 import com.mahmoudhamdyae.foodplanner.account.OnResult;
-import com.mahmoudhamdyae.foodplanner.utils.Validation;
 
-public class LoginFragment extends Fragment implements OnResult {
+public class AuthFragment extends Fragment implements OnResult {
 
-    private TextInputLayout emailEditText, passwordEditText;
-
+    private static final int RC_SIGN_IN = 1;
     private AccountService accountService;
 
     @Override
@@ -37,7 +38,7 @@ public class LoginFragment extends Fragment implements OnResult {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        return inflater.inflate(R.layout.fragment_auth, container, false);
     }
 
     @Override
@@ -46,54 +47,36 @@ public class LoginFragment extends Fragment implements OnResult {
 
         accountService = AccountServiceImpl.getInstance(requireContext(), this);
 
-        // Login
-        Button loginButton = view.findViewById(R.id.login_button);
-        loginButton.setOnClickListener(v -> validateAndLogin());
-
-        // Skip - Navigate to home screen
+        // Skip button
         Button skipButton = view.findViewById(R.id.skip_button);
         skipButton.setOnClickListener(v -> skipAuth());
 
-        // Signup - Navigate to signup screen
-        TextView signupTextView = view.findViewById(R.id.signup_free);
-        signupTextView.setOnClickListener(v -> {
-            navigateToSignupScreen();
-        });
+        // Log in button
+        Button loginButton = view.findViewById(R.id.login_button);
+        loginButton.setOnClickListener(v -> navigateToLoginScreen());
 
-        // TextInputs
-        emailEditText = view.findViewById(R.id.email);
-        passwordEditText = view.findViewById(R.id.password);
+        // Sign up button
+        Button signupButton = view.findViewById(R.id.signup_button);
+        signupButton.setOnClickListener(v -> navigateToSignupScreen());
+
+        // Google Sign in
+        SignInButton googleButton = view.findViewById(R.id.google_sign_in_button);
+        googleButton.setOnClickListener(v -> accountService.signInWithGoogle());
     }
 
-    private void validateAndLogin() {
-        passwordEditText.setError(null);
-        emailEditText.setError(null);
-        if (validateEmail() && validatePassword()) login();
-    }
-
-    private boolean validateEmail() {
-        String email = emailEditText.getEditText().getText().toString();
-        Validation validation = new Validation();
-        if (!validation.isValidEmail(email)) {
-            emailEditText.setError(getResources().getString(R.string.email_error));
-            return false;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                accountService.firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+            }
         }
-        return true;
-    }
-
-    private boolean validatePassword() {
-        String password = passwordEditText.getEditText().getText().toString();
-        if (password.isEmpty()) {
-            passwordEditText.setError(getResources().getString(R.string.empty_password_error));
-            return false;
-        }
-        return true;
-    }
-
-    private void login() {
-        String email = emailEditText.getEditText().getText().toString();
-        String password = passwordEditText.getEditText().getText().toString();
-        accountService.login(email, password);
     }
 
     private void skipAuth() {
@@ -110,26 +93,33 @@ public class LoginFragment extends Fragment implements OnResult {
                 }).show();
     }
 
-    private void navigateToSignupScreen() {
-        NavDirections action = LoginFragmentDirections.actionLoginFragmentToSignupFragment();
+    private void navigateToHomeScreen() {
+        NavDirections action = AuthFragmentDirections.actionAuthFragmentToHomeFragment();
         Navigation.findNavController(requireView()).navigate(action);
     }
 
-    private void navigateToHomeScreen() {
-        NavDirections action = LoginFragmentDirections.actionLoginFragmentToHomeFragment();
+    private void navigateToLoginScreen() {
+        NavDirections action = AuthFragmentDirections.actionAuthFragmentToLoginFragment();
+        Navigation.findNavController(requireView()).navigate(action);
+    }
+
+    private void navigateToSignupScreen() {
+        NavDirections action = AuthFragmentDirections.actionAuthFragmentToSignupFragment();
         Navigation.findNavController(requireView()).navigate(action);
     }
 
     @Override
     public void onAuthSuccess() {
-        // Log in success
+        // Google Log in success
         navigateToHomeScreen();
     }
 
 
 
     @Override
-    public void onGoogleAuthSuccess(Intent signInIntent) { }
+    public void onGoogleAuthSuccess(Intent signInIntent) {
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
 
     @Override
     public void onFailure(String errorMsg) {

@@ -127,7 +127,6 @@ public class SignupFragment extends Fragment implements OnResult {
     }
 
     private void navigateToHomeScreen() {
-        // Navigate to Home Screen
         NavDirections action = SignupFragmentDirections.actionSignupFragmentToHomeFragment();
         Navigation.findNavController(requireView()).navigate(action);
     }

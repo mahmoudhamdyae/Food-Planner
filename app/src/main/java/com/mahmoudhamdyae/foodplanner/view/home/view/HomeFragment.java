@@ -92,7 +92,7 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
                 .setPositiveButton(R.string.dialog_sign_out, (dialog, id) -> {
                     // Sign out
                     presenter.signOut();
-                    navigateToLoginScreen();
+                    navigateToAuthScreen();
                     dialog.dismiss();
                 })
                 .setNegativeButton(R.string.dialog_cancel, (dialog, id) -> {
@@ -129,7 +129,7 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
                 .setTitle(R.string.dialog_log_in_title)
                 .setMessage(R.string.dialog_log_in_msg)
                 .setPositiveButton(R.string.dialog_log_in_yes, (dialog, id) -> {
-                    navigateToSignUpScreen();
+                    navigateToAuthScreen();
                     dialog.dismiss();
                 })
                 .setNegativeButton(R.string.dialog_log_in_cancel, (dialog, id) -> {
@@ -138,13 +138,8 @@ public class HomeFragment extends Fragment implements OnMealClickListener, IHome
                 }).show();
     }
 
-    private void navigateToLoginScreen() {
-        NavDirections action = HomeFragmentDirections.actionHomeFragmentToLoginFragment();
-        Navigation.findNavController(requireView()).navigate(action);
-    }
-
-    private void navigateToSignUpScreen() {
-        NavDirections action = HomeFragmentDirections.actionHomeFragmentToSignupFragment();
+    private void navigateToAuthScreen() {
+        NavDirections action = HomeFragmentDirections.actionHomeFragmentToAuthFragment();
         Navigation.findNavController(requireView()).navigate(action);
     }
 
