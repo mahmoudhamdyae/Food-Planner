@@ -2,7 +2,6 @@ package com.mahmoudhamdyae.foodplanner.view.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,27 +17,23 @@ import androidx.navigation.Navigation;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.mahmoudhamdyae.foodplanner.R;
+import com.mahmoudhamdyae.foodplanner.account.AccountService;
+import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
+import com.mahmoudhamdyae.foodplanner.account.OnResult;
 import com.mahmoudhamdyae.foodplanner.utils.Validation;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements OnResult {
 
     private static final int RC_SIGN_IN = 1;
-    private final String TAG = "LoginFragment";
     private TextInputLayout emailEditText, passwordEditText;
 
-    private FirebaseAuth mAuth;
-    private GoogleSignInClient mGoogleSignInClient;
+    private AccountService accountService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +49,8 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        accountService = AccountServiceImpl.getInstance(requireContext(), this);
 
         // Login
         Button loginButton = view.findViewById(R.id.login_button);
@@ -71,20 +68,12 @@ public class LoginFragment extends Fragment {
         });
 
         // Google Sign in
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(view.getContext(), gso);
         SignInButton googleButton = view.findViewById(R.id.google_sign_in_button);
-        googleButton.setOnClickListener(v -> signInWithGoogle());
+        googleButton.setOnClickListener(v -> accountService.signInWithGoogle());
 
         // TextInputs
         emailEditText = view.findViewById(R.id.email);
         passwordEditText = view.findViewById(R.id.password);
-
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
     }
 
     private void validateAndLogin() {
@@ -115,24 +104,7 @@ public class LoginFragment extends Fragment {
     private void login() {
         String email = emailEditText.getEditText().getText().toString();
         String password = passwordEditText.getEditText().getText().toString();
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(requireActivity(), task -> {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInWithEmail:success");
-                        navigateToHomeScreen();
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithEmail:failure", task.getException());
-                        Toast.makeText(getActivity(), "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    private void signInWithGoogle() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        accountService.login(email, password);
     }
 
     @Override
@@ -143,24 +115,11 @@ public class LoginFragment extends Fragment {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account.getIdToken());
+                accountService.firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
             }
         }
-    }
-
-    private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        mAuth.signInWithCredential(credential).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                // Sign in success, update UI with the signed-in user's information
-                navigateToHomeScreen();
-            } else {
-                // If sign in fails, display a message to the user.
-                Toast.makeText(getContext(), "Authentication Failed.", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void skipAuth() {
@@ -179,6 +138,30 @@ public class LoginFragment extends Fragment {
 
     private void navigateToHomeScreen() {
         NavDirections action = LoginFragmentDirections.actionLoginFragmentToHomeFragment();
-        Navigation.findNavController(requireView()).navigate(action);
+        try {
+            Navigation.findNavController(requireView()).navigate(action);
+        } catch (IllegalStateException e) { e.printStackTrace(); }
+    }
+
+    @Override
+    public void onAuthSuccess() {
+        // Log in success
+        navigateToHomeScreen();
+    }
+
+
+
+    @Override
+    public void onGoogleAuthSuccess(Intent signInIntent) {
+        try {
+            startActivityForResult(signInIntent, RC_SIGN_IN);
+        } catch (IllegalStateException e) { e.printStackTrace(); }
+    }
+
+    @Override
+    public void onFailure(String errorMsg) {
+        // Failed to log in
+        Toast.makeText(getActivity(), "Authentication failed.",
+                Toast.LENGTH_SHORT).show();
     }
 }

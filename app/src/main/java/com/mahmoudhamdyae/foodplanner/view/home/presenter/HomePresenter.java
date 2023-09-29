@@ -1,5 +1,6 @@
 package com.mahmoudhamdyae.foodplanner.view.home.presenter;
 
+import com.mahmoudhamdyae.foodplanner.account.AccountService;
 import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.model.Repository;
@@ -10,10 +11,12 @@ public class HomePresenter implements IHomePresenter, NetworkCallback {
 
     private final IHomeView view;
     private final Repository repo;
+    private final AccountService accountService;
 
-    public HomePresenter(IHomeView view, Repository repo) {
+    public HomePresenter(IHomeView view, Repository repo, AccountService accountService) {
         this.view = view;
         this.repo = repo;
+        this.accountService = accountService;
     }
 
     @Override
@@ -24,6 +27,11 @@ public class HomePresenter implements IHomePresenter, NetworkCallback {
     @Override
     public void getMealOfTheDay() {
         repo.getMealOfTheDay(this);
+    }
+
+    @Override
+    public void signOut() {
+        accountService.signOut();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.mahmoudhamdyae.foodplanner.view.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,16 +18,17 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
 import com.mahmoudhamdyae.foodplanner.R;
+import com.mahmoudhamdyae.foodplanner.account.AccountService;
+import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
+import com.mahmoudhamdyae.foodplanner.account.OnResult;
 import com.mahmoudhamdyae.foodplanner.utils.Validation;
 
-public class SignupFragment extends Fragment {
+public class SignupFragment extends Fragment implements OnResult {
 
-    private final String TAG = "SignupFragment";
     private TextInputLayout emailEditText, passwordEditText, repeatPasswordEditText;
 
-    private FirebaseAuth mAuth;
+    private AccountService accountService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,13 +45,15 @@ public class SignupFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        accountService = AccountServiceImpl.getInstance(requireContext(), this);
+
         // Login - Navigate Back
         TextView loginButton = view.findViewById(R.id.login);
         loginButton.setOnClickListener(v -> Navigation.findNavController(view).navigateUp());
 
         // Skip - Navigate to home screen
         Button skipButton = view.findViewById(R.id.skip_button);
-        skipButton.setOnClickListener(v -> { skipAuth(); });
+        skipButton.setOnClickListener(v -> skipAuth());
 
         // Signup - Navigate to signup screen
         Button signupTextView = view.findViewById(R.id.signup_button);
@@ -59,9 +63,6 @@ public class SignupFragment extends Fragment {
         emailEditText = view.findViewById(R.id.email);
         passwordEditText = view.findViewById(R.id.password);
         repeatPasswordEditText = view.findViewById(R.id.repeat_password);
-
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
     }
 
     private void validateAndSignup() {
@@ -108,19 +109,7 @@ public class SignupFragment extends Fragment {
     private void signup() {
         String email = emailEditText.getEditText().getText().toString();
         String password = passwordEditText.getEditText().getText().toString();
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(requireActivity(), task -> {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "createUserWithEmail:success");
-                        navigateToHomeScreen();
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                        Toast.makeText(getActivity(), "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+        accountService.signup(email, password);
     }
 
     private void skipAuth() {
@@ -141,5 +130,23 @@ public class SignupFragment extends Fragment {
         // Navigate to Home Screen
         NavDirections action = SignupFragmentDirections.actionSignupFragmentToHomeFragment();
         Navigation.findNavController(requireView()).navigate(action);
+    }
+
+    @Override
+    public void onAuthSuccess() {
+        // Sign up success
+        navigateToHomeScreen();
+    }
+
+    @Override
+    public void onGoogleAuthSuccess(Intent signInIntent) {
+        Log.e("SignupFragment", "onGoogleAuthSuccess: Not Implemented");
+    }
+
+    @Override
+    public void onFailure(String errorMsg) {
+        // Failed to sign up
+        Toast.makeText(getActivity(), "Authentication failed.",
+                Toast.LENGTH_SHORT).show();
     }
 }

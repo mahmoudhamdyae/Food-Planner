@@ -4,4 +4,6 @@ public interface IHomePresenter {
 
     void getMeals();
     void getMealOfTheDay();
+
+    void signOut();
 }
