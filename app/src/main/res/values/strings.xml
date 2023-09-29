@@ -9,6 +9,7 @@
     <string name="welcome_screen_title">Food Planner</string>
     <string name="search_screen_title">Search</string>
     <string name="meal_screen_title">Meal</string>
+    <string name="fav_screen_title">Favourites</string>
 
     <!-- Welcome Screen -->
     <string name="welcome_next_button">Next</string>
@@ -70,6 +71,7 @@
     <!-- NavBar -->
     <string name="home">Home</string>
     <string name="search">Search</string>
+    <string name="fav">Favourites</string>
 
     <!-- Menus -->
     <string name="menu_sign_out">Sign out</string>

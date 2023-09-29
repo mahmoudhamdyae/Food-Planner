@@ -39,7 +39,7 @@ import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment implements OnMealClickListener, IHomeView, OnResult {
+public class HomeFragment extends Fragment implements OnCategoryClickListener, IHomeView, OnResult {
 
     private HomeAdapter mAdapter;
 

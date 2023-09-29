@@ -97,4 +97,13 @@
             app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true"/>
     </fragment>
+    <fragment
+        android:id="@+id/favFragment"
+        android:name="com.mahmoudhamdyae.foodplanner.view.fav.view.FavFragment"
+        android:label="@string/fav_screen_title"
+        tools:layout="@layout/fragment_fav" >
+        <action
+            android:id="@+id/action_favFragment_to_mealFragment"
+            app:destination="@id/mealFragment" />
+    </fragment>
 </navigation>

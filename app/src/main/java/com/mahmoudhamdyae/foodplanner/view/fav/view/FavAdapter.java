@@ -1,6 +1,7 @@
-package com.mahmoudhamdyae.foodplanner.view.home.view;
+package com.mahmoudhamdyae.foodplanner.view.fav.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,30 +10,32 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mahmoudhamdyae.foodplanner.R;
-import com.mahmoudhamdyae.foodplanner.model.Category;
+import com.mahmoudhamdyae.foodplanner.model.Meal;
+import com.mahmoudhamdyae.foodplanner.view.search.view.OnMealClickListener;
 
 import java.util.List;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
+public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
 
-    private List<Category> items;
+    private List<Meal> items;
     private final Context context;
-    private final OnCategoryClickListener listener;
+    private final OnMealClickListener listener;
 
-    public HomeAdapter(Context context, List<Category> items, OnCategoryClickListener listener) {
+    private static final String TAG = "RecyclerView";
+
+    public FavAdapter(Context context, List<Meal> items, OnMealClickListener listener) {
         super();
         this.items = items;
         this.context = context;
         this.listener = listener;
     }
 
-    public void setList(List<Category> products) {
+    public void setList(List<Meal> products) {
         this.items = products;
         notifyDataSetChanged();
     }
@@ -40,9 +43,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Create a new view
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.meal_row, parent, false);
-        return new ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view);
+        Log.i(TAG, "========= onCreateViewHolder ===========");
+        return viewHolder;
     }
 
     @Override
@@ -53,17 +59,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                         .placeholder(R.drawable.loading_img)
                         .error(R.drawable.ic_broken_image))
                 .into(holder.imageView);
-        ViewCompat.setTransitionName(holder.imageView, "meal_image");
 
         holder.titleView.setText(items.get(position).getName());
-        holder.descriptionView.setText(items.get(position).getDescription());
+        holder.descriptionView.setText(items.get(position).getInstructions());
 
-        holder.row.setOnClickListener(v -> listener.onCategoryClicked(items.get(position)));
+        holder.row.setOnClickListener(v -> listener.onMealClicked(items.get(position)));
+        Log.i(TAG, "********* onBindViewHolder ***********");
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return items != null ? items.size() : 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
