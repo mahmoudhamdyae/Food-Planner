@@ -138,12 +138,15 @@ public class MealFragment extends Fragment implements IMealView {
 
     @Override
     public void showData(List<Meal> meals) {
-        if (meals.contains(meal)) {
-            isFav = true;
-            addToCartButton.setText(getString(R.string.remove_from_cart));
-        } else {
-            isFav = false;
-            addToCartButton.setText(getString(R.string.add_to_cart));
+        for (int i = 0; i < meals.size(); i++) {
+            if (meals.get(i).getId().equals(meal.getId())) {
+                isFav = true;
+                addToCartButton.setText(getString(R.string.remove_from_cart));
+                break;
+            } else {
+                isFav = false;
+                addToCartButton.setText(getString(R.string.add_to_cart));
+            }
         }
     }
 }
