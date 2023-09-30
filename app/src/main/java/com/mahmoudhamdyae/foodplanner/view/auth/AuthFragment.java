@@ -45,7 +45,7 @@ public class AuthFragment extends Fragment implements OnResult {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        accountService = AccountServiceImpl.getInstance(requireContext(), this);
+        accountService = new AccountServiceImpl(requireContext(), this);
 
         // Skip button
         Button skipButton = view.findViewById(R.id.skip_button);
@@ -124,7 +124,6 @@ public class AuthFragment extends Fragment implements OnResult {
     @Override
     public void onFailure(String errorMsg) {
         // Failed to log in
-        Toast.makeText(getActivity(), "Authentication failed.",
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
     }
 }

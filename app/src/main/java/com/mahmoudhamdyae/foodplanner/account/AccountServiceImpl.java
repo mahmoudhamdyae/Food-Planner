@@ -19,7 +19,6 @@ import com.mahmoudhamdyae.foodplanner.R;
 public class AccountServiceImpl implements AccountService {
 
     private static final String TAG = "Account_Service";
-    private static AccountService accountService = null;
     private final OnResult listener;
 
     private final FirebaseAuth mAuth;
@@ -27,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
 
     private final GoogleSignInClient mGoogleSignInClient;
 
-    private AccountServiceImpl(@NonNull Context context, OnResult listener) {
+    public AccountServiceImpl(@NonNull Context context, OnResult listener) {
         this.context = context;
         this.listener = listener;
         // Initialize Firebase Auth
@@ -38,11 +37,6 @@ public class AccountServiceImpl implements AccountService {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
-    }
-
-    public static AccountService getInstance(@NonNull Context context, OnResult listener) {
-        if (accountService == null) accountService = new AccountServiceImpl(context, listener);
-        return accountService;
     }
 
     @Override

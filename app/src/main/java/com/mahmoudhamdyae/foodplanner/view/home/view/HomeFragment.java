@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         row.setOnClickListener(v -> navigateToMealScreen());
         ViewCompat.setTransitionName(imageView, "meal_image");
 
-        presenter = new HomePresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())), AccountServiceImpl.getInstance(requireContext(), this));
+        presenter = new HomePresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())), new AccountServiceImpl(requireContext(), this));
         presenter.getMeals();
         presenter.getMealOfTheDay();
 

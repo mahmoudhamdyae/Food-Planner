@@ -45,7 +45,7 @@ public class SignupFragment extends Fragment implements OnResult {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        accountService = AccountServiceImpl.getInstance(requireContext(), this);
+        accountService = new AccountServiceImpl(requireContext(), this);
 
         // Login - Navigate Back
         TextView loginButton = view.findViewById(R.id.login);

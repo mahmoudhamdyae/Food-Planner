@@ -44,7 +44,7 @@ public class LoginFragment extends Fragment implements OnResult {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        accountService = AccountServiceImpl.getInstance(requireContext(), this);
+        accountService = new AccountServiceImpl(requireContext(), this);
 
         // Login
         Button loginButton = view.findViewById(R.id.login_button);
@@ -125,8 +125,6 @@ public class LoginFragment extends Fragment implements OnResult {
         // Log in success
         navigateToHomeScreen();
     }
-
-
 
     @Override
     public void onGoogleAuthSuccess(Intent signInIntent) { }
