@@ -55,10 +55,10 @@
 
     <!-- Meal Fragment -->
     <string name="from">From: %1$s</string>
-    <string name="add_to_cart">Add to Cart</string>
-    <string name="remove_from_cart">Remove from Cart</string>
-    <string name="added_toast">%1$s added to cart</string>
-    <string name="removed_toast">%1$s removed from cart</string>
+    <string name="add_to_cart">Add to Favourites</string>
+    <string name="remove_from_cart">Remove from Favourites</string>
+    <string name="added_toast">%1$s added to Favourites</string>
+    <string name="removed_toast">%1$s removed from Favourites</string>
     <string name="ingredients">Ingredients</string>
     <string name="inst">How to make</string>
 

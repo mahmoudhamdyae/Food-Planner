@@ -21,7 +21,8 @@
                 android:contentDescription="@string/image"
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_height="150dp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view"
@@ -37,25 +38,28 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="12dp">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <TextView
                         android:id="@+id/title"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal"
                         android:lines="1"
-                        tools:text="Title" />
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/md_theme_primary"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        tools:text="Koshari" />
 
                     <TextView
                         android:id="@+id/from"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal"
                         android:lines="1"
-                        tools:text="Egypt" />
+                        tools:text="From: Egypt" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -66,6 +70,7 @@
                 android:paddingHorizontal="8dp"
                 android:paddingTop="32dp"
                 android:text="@string/inst"
+                android:textColor="@color/md_theme_primary"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -76,8 +81,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="8dp"
+                android:paddingBottom="12dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inst_label" />
+                app:layout_constraintTop_toBottomOf="@id/inst_label"
+                tools:maxLines="7"
+                tools:text="@tools:sample/lorem/random" />
 
             <WebView
                 android:id="@+id/youtube"
@@ -85,7 +93,7 @@
                 android:layout_height="250dp"
                 android:paddingTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inst"/>
+                app:layout_constraintTop_toBottomOf="@id/inst" />
 
             <TextView
                 android:id="@+id/ingredients_label"
@@ -94,6 +102,7 @@
                 android:paddingHorizontal="8dp"
                 android:paddingTop="16dp"
                 android:text="@string/ingredients"
+                android:textColor="@color/md_theme_primary"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -111,11 +120,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/add_to_cart"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_margin="8dp"
+        app:icon="@drawable/ic_baseline_favorite_border_24"
+        android:paddingHorizontal="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="@string/add_to_cart" />

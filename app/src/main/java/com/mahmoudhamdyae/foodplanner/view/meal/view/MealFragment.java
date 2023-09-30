@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.button.MaterialButton;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
@@ -36,7 +36,7 @@ public class MealFragment extends Fragment implements IMealView {
     private IMealPresenter presenter;
     private Meal meal;
     private Boolean isFav = false;
-    private Button addToCartButton;
+    private MaterialButton addToCartButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,11 +98,12 @@ public class MealFragment extends Fragment implements IMealView {
             if (!meal.getIngredient20().equals("")) ingredients.add(meal.getIngredient20());
         } catch (NullPointerException e) { e.printStackTrace(); }
 
+        // Recycler View
         IngredientsAdapter mAdapter = new IngredientsAdapter(requireContext(), ingredients);
         RecyclerView recyclerView = view.findViewById(R.id.ingredients_recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
@@ -118,11 +119,13 @@ public class MealFragment extends Fragment implements IMealView {
                 presenter.removeMealFromFav(meal);
                 Toast.makeText(requireContext(), getString(R.string.removed_toast, meal.getName()), Toast.LENGTH_SHORT).show();
                 addToCartButton.setText(getString(R.string.add_to_cart));
+                addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_border_24));
                 isFav = false;
             } else {
                 presenter.addMealToFav(meal);
                 Toast.makeText(requireContext(), getString(R.string.added_toast, meal.getName()), Toast.LENGTH_SHORT).show();
                 addToCartButton.setText(getString(R.string.remove_from_cart));
+                addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_24));
                 isFav = true;
             }
         });
@@ -142,10 +145,12 @@ public class MealFragment extends Fragment implements IMealView {
             if (meals.get(i).getId().equals(meal.getId())) {
                 isFav = true;
                 addToCartButton.setText(getString(R.string.remove_from_cart));
+                addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_24));
                 break;
             } else {
                 isFav = false;
                 addToCartButton.setText(getString(R.string.add_to_cart));
+                addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_border_24));
             }
         }
     }
