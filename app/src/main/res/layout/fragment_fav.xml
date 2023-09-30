@@ -10,6 +10,7 @@
         android:id="@+id/fav_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="30dp"
         tools:listitem="@layout/meal_row" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
