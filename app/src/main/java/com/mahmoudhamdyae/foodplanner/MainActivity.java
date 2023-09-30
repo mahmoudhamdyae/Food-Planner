@@ -34,15 +34,10 @@ public class MainActivity extends AppCompatActivity {
         if (sharedPref.isFirstTime()) {
             graph.setStartDestination(R.id.welcomeFragment);
         } else {
-            // Initialize Firebase Auth
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-            // Check if user is signed in (non-null) and update UI accordingly.
-            FirebaseUser currentUser = mAuth.getCurrentUser();
-            if (currentUser == null) {
-                graph.setStartDestination(R.id.authFragment);
-            } else {
+            if (hasUser()) {
                 graph.setStartDestination(R.id.homeFragment);
+            } else {
+                graph.setStartDestination(R.id.authFragment);
             }
         }
 
@@ -71,5 +66,14 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.bottom_nav).setVisibility(View.GONE);
             }
         });
+    }
+
+    private Boolean hasUser() {
+        // Initialize Firebase Auth
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        return currentUser != null;
     }
 }
