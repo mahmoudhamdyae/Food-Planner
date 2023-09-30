@@ -49,7 +49,7 @@ public class SignupFragment extends Fragment implements OnResult {
 
         // Login - Navigate Back
         TextView loginButton = view.findViewById(R.id.login);
-        loginButton.setOnClickListener(v -> Navigation.findNavController(view).navigateUp());
+        loginButton.setOnClickListener(v -> navigateToLoginScreen());
 
         // Skip - Navigate to home screen
         Button skipButton = view.findViewById(R.id.skip_button);
@@ -128,6 +128,11 @@ public class SignupFragment extends Fragment implements OnResult {
 
     private void navigateToHomeScreen() {
         NavDirections action = SignupFragmentDirections.actionSignupFragmentToHomeFragment();
+        Navigation.findNavController(requireView()).navigate(action);
+    }
+
+    private void navigateToLoginScreen() {
+        NavDirections action = SignupFragmentDirections.actionSignupFragmentToLoginFragment2();
         Navigation.findNavController(requireView()).navigate(action);
     }
 
