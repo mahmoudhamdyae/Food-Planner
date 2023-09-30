@@ -116,13 +116,13 @@ public class MealFragment extends Fragment implements IMealView {
         addToCartButton.setOnClickListener(v -> {
             if (isFav) {
                 presenter.removeMealFromFav(meal);
-                Toast.makeText(requireContext(), getString(R.string.added_toast, meal.getName()), Toast.LENGTH_SHORT).show();
-                addToCartButton.setText(getString(R.string.remove_from_cart));
+                Toast.makeText(requireContext(), getString(R.string.removed_toast, meal.getName()), Toast.LENGTH_SHORT).show();
+                addToCartButton.setText(getString(R.string.add_to_cart));
                 isFav = false;
             } else {
                 presenter.addMealToFav(meal);
-                Toast.makeText(requireContext(), getString(R.string.removed_toast, meal.getName()), Toast.LENGTH_SHORT).show();
-                addToCartButton.setText(getString(R.string.add_to_cart));
+                Toast.makeText(requireContext(), getString(R.string.added_toast, meal.getName()), Toast.LENGTH_SHORT).show();
+                addToCartButton.setText(getString(R.string.remove_from_cart));
                 isFav = true;
             }
         });
