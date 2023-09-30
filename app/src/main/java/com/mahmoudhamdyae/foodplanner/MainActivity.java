@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        NavInflater inflater = navHostFragment.getNavController().getNavInflater();
+        NavController navController = navHostFragment.getNavController();
+        NavInflater inflater = navController.getNavInflater();
         NavGraph graph = inflater.inflate(R.navigation.nav_graph);
 
         // Set Start Destination (WelcomeFragment, AuthFragment or HomeFragment)
@@ -42,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-
-        NavController navController = navHostFragment.getNavController();
         navController.setGraph(graph);
 
         // Bottom Navigation
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (destination.getId() == R.id.searchFragment) {
                 getSupportActionBar().show();
                 findViewById(R.id.bottom_nav).setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 getSupportActionBar().hide();
                 findViewById(R.id.bottom_nav).setVisibility(View.GONE);
             }
