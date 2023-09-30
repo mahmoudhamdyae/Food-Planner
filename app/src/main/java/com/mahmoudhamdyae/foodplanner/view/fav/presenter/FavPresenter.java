@@ -14,7 +14,7 @@ public class FavPresenter implements IFavPresenter {
     }
 
     @Override
-    public void getFavMeals() {
+    public void observeFavMeals() {
         listener.showData(repo.observeFavMeals());
     }
 }

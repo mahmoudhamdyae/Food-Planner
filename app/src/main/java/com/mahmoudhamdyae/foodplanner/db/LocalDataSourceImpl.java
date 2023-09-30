@@ -35,14 +35,14 @@ public class LocalDataSourceImpl implements LocalDataSource {
 
     @Override
     public LiveData<List<Meal>> observeFavMeals() {
-        Log.i(TAG, "getStoredMeals");
+        Log.i(TAG, "observeFavMeals");
         return favMeals;
     }
 
     @Override
     public void getFavMeals(IMealView view) {
         new Thread(() -> {
-            Log.i(TAG, "addMealToFav");
+            Log.i(TAG, "getFavMeals");
             view.showData(dao.getFavMeals());
         }).start();
     }

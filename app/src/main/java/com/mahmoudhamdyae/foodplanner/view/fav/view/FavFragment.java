@@ -46,7 +46,7 @@ public class FavFragment extends Fragment implements IFavView, OnMealClickListen
         super.onViewCreated(view, savedInstanceState);
 
         IFavPresenter presenter = new FavPresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())));
-        presenter.getFavMeals();
+        presenter.observeFavMeals();
 
         mAdapter = new FavAdapter(getContext(), new ArrayList<>(), this);
         RecyclerView recyclerView = view.findViewById(R.id.fav_recycler_view);

@@ -36,35 +36,13 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void searchMeal(String name, NetworkCallback networkCallback) {
-        remoteDataSource.searchMeal(name, networkCallback);
-    }
-
-    // Local Data Source
-
-    @Override
     public void getMealOfTheDay(NetworkCallback networkCallback) {
         remoteDataSource.getMealOfTheDay(networkCallback);
     }
 
     @Override
-    public LiveData<List<Meal>> observeFavMeals() {
-        return localDataSource.observeFavMeals();
-    }
-
-    @Override
-    public void getFavMeals(IMealView view) {
-        localDataSource.getFavMeals(view);
-    }
-
-    @Override
-    public void addMealToFav(Meal meal) {
-        localDataSource.addMealToFav(meal);
-    }
-
-    @Override
-    public void removeMealFromFav(Meal meal) {
-        localDataSource.removeMealFromFav(meal);
+    public void searchMeal(String name, NetworkCallback networkCallback) {
+        remoteDataSource.searchMeal(name, networkCallback);
     }
 
     @Override
@@ -95,5 +73,27 @@ public class RepositoryImpl implements Repository {
     @Override
     public void getMealsByIngredient(String ingredient, NetworkCallback networkCallback) {
         remoteDataSource.getMealsByIngredient(ingredient, networkCallback);
+    }
+
+    // Local Data Source
+
+    @Override
+    public LiveData<List<Meal>> observeFavMeals() {
+        return localDataSource.observeFavMeals();
+    }
+
+    @Override
+    public void getFavMeals(IMealView view) {
+        localDataSource.getFavMeals(view);
+    }
+
+    @Override
+    public void addMealToFav(Meal meal) {
+        localDataSource.addMealToFav(meal);
+    }
+
+    @Override
+    public void removeMealFromFav(Meal meal) {
+        localDataSource.removeMealFromFav(meal);
     }
 }
