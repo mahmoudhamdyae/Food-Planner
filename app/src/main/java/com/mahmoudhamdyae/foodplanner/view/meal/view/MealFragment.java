@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
@@ -85,6 +87,7 @@ public class MealFragment extends Fragment implements IMealView {
 
         // Button
         addToCartButton = view.findViewById(R.id.add_to_cart);
+        if (!hasUser()) addToCartButton.setVisibility(View.GONE);
 
         // YouTube Player
         youtube = view.findViewById(R.id.youtube);
@@ -179,5 +182,13 @@ public class MealFragment extends Fragment implements IMealView {
     @Override
     public void onGetMealFail(String errorMsg) {
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    private Boolean hasUser() {
+        // Initialize Firebase Auth
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        return currentUser != null;
     }
 }

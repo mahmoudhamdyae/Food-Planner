@@ -43,6 +43,6 @@ public class MealPresenter implements IMealPresenter, NetworkCallback {
 
     @Override
     public void onFailureResult(String errorMsg) {
-
+        view.onGetMealFail(errorMsg);
     }
 }
