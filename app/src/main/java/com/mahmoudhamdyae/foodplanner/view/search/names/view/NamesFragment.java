@@ -1,4 +1,4 @@
-package com.mahmoudhamdyae.foodplanner.view.search.view;
+package com.mahmoudhamdyae.foodplanner.view.search.names.view;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,16 +22,16 @@ import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
-import com.mahmoudhamdyae.foodplanner.view.search.presenter.ISearchPresenter;
-import com.mahmoudhamdyae.foodplanner.view.search.presenter.SearchPresenter;
 import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
+import com.mahmoudhamdyae.foodplanner.view.search.names.presenter.INamesPresenter;
+import com.mahmoudhamdyae.foodplanner.view.search.names.presenter.NamesPresenter;
 
 import java.util.ArrayList;
 
-public class SearchFragment extends Fragment implements ISearchView, OnMealClickListener {
+public class NamesFragment extends Fragment implements INamesView, OnMealClickListener {
 
-    private SearchAdapter mAdapter;
-    private ISearchPresenter presenter;
+    private NamesAdapter mAdapter;
+    private INamesPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,14 +41,14 @@ public class SearchFragment extends Fragment implements ISearchView, OnMealClick
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        return inflater.inflate(R.layout.fragment_names, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mAdapter = new SearchAdapter(getContext(), new ArrayList<>(), this);
+        mAdapter = new NamesAdapter(getContext(), new ArrayList<>(), this);
         RecyclerView recyclerView = view.findViewById(R.id.meals_recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -56,7 +56,7 @@ public class SearchFragment extends Fragment implements ISearchView, OnMealClick
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
-        presenter = new SearchPresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())));
+        presenter = new NamesPresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())));
 
         EditText searchEditText = view.findViewById(R.id.search_edit_text);
         searchEditText.addTextChangedListener(new TextWatcher() {
@@ -89,7 +89,7 @@ public class SearchFragment extends Fragment implements ISearchView, OnMealClick
     }
 
     private void navigateToMealScreen(Meal meal) {
-        NavDirections action = SearchFragmentDirections.actionSearchFragmentToMealFragment(meal);
+        NavDirections action = NamesFragmentDirections.actionNamesFragmentToMealFragment(meal);
         Navigation.findNavController(requireView()).navigate(action);
     }
 }

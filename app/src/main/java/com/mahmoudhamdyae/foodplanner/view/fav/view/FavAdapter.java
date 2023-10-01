@@ -1,7 +1,6 @@
 package com.mahmoudhamdyae.foodplanner.view.fav.view;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
-import com.mahmoudhamdyae.foodplanner.view.search.view.OnMealClickListener;
 
 import java.util.List;
 
@@ -25,8 +23,6 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
     private List<Meal> items;
     private final Context context;
     private final OnMealClickListener listener;
-
-    private static final String TAG = "RecyclerView";
 
     public FavAdapter(Context context, List<Meal> items, OnMealClickListener listener) {
         super();
@@ -46,9 +42,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
         // Create a new view
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.meal_row, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        Log.i(TAG, "========= onCreateViewHolder ===========");
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -64,7 +58,6 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
         holder.descriptionView.setText(items.get(position).getInstructions());
 
         holder.row.setOnClickListener(v -> listener.onMealClicked(items.get(position)));
-        Log.i(TAG, "********* onBindViewHolder ***********");
     }
 
     @Override

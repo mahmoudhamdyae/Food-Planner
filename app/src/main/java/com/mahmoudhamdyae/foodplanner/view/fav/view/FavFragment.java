@@ -24,7 +24,6 @@ import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
 import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.view.fav.presenter.FavPresenter;
 import com.mahmoudhamdyae.foodplanner.view.fav.presenter.IFavPresenter;
-import com.mahmoudhamdyae.foodplanner.view.search.view.OnMealClickListener;
 
 import java.util.ArrayList;
 import java.util.List;

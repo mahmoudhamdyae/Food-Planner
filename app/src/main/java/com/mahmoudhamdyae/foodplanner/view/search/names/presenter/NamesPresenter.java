@@ -1,22 +1,22 @@
-package com.mahmoudhamdyae.foodplanner.view.search.presenter;
+package com.mahmoudhamdyae.foodplanner.view.search.names.presenter;
 
-import com.mahmoudhamdyae.foodplanner.model.Repository;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
-import com.mahmoudhamdyae.foodplanner.view.search.view.ISearchView;
+import com.mahmoudhamdyae.foodplanner.model.Repository;
 import com.mahmoudhamdyae.foodplanner.network.NetworkCallback;
+import com.mahmoudhamdyae.foodplanner.view.search.names.view.INamesView;
 
-public class SearchPresenter implements ISearchPresenter, NetworkCallback {
+public class NamesPresenter implements INamesPresenter, NetworkCallback {
 
-    private final ISearchView view;
+    private final INamesView view;
     private final Repository repo;
 
-    public SearchPresenter(ISearchView view, Repository repo) {
+    public NamesPresenter(INamesView view, Repository repo) {
         this.view = view;
         this.repo = repo;
     }
 
     @Override
-    public void searchMeal(String mealName) {
+    public void searchMealByName(String mealName) {
         repo.searchMeal(mealName, this);
     }
 

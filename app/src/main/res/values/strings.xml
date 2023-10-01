@@ -9,6 +9,7 @@
     <string name="welcome_screen_title">Food Planner</string>
     <string name="search_screen_title">Search</string>
     <string name="meal_screen_title">Meal</string>
+    <string name="names_screen_title">Search Meals by Name</string>
     <string name="fav_screen_title">Favourites</string>
 
     <!-- Welcome Screen -->
@@ -61,6 +62,12 @@
     <string name="removed_toast">%1$s removed from Favourites</string>
     <string name="ingredients">Ingredients</string>
     <string name="inst">How to make</string>
+
+    <!-- Search Fragment -->
+    <string name="search_by_name_button">Search By Name</string>
+    <string name="search_by_category_button">Search By Category</string>
+    <string name="search_by_area_button">Search By Area</string>
+    <string name="search_by_ingredient_button">Search By Ingredient</string>
 
     <!-- Content Descriptions -->
     <string name="email_content_description">Email</string>

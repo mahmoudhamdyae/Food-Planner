@@ -1,4 +1,4 @@
-package com.mahmoudhamdyae.foodplanner.view.search.view;
+package com.mahmoudhamdyae.foodplanner.view.search.names.view;
 
 import android.content.Context;
 import android.util.Log;
@@ -19,7 +19,7 @@ import com.mahmoudhamdyae.foodplanner.model.Meal;
 
 import java.util.List;
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
+public class NamesAdapter extends RecyclerView.Adapter<NamesAdapter.ViewHolder> {
 
     private List<Meal> items;
     private final Context context;
@@ -27,7 +27,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     private static final String TAG = "RecyclerView";
 
-    public SearchAdapter(Context context, List<Meal> items, OnMealClickListener listener) {
+    public NamesAdapter(Context context, List<Meal> items, OnMealClickListener listener) {
         super();
         this.items = items;
         this.context = context;

@@ -66,12 +66,12 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.mahmoudhamdyae.foodplanner.view.search.view.SearchFragment"
+        android:name="com.mahmoudhamdyae.foodplanner.view.search.search.SearchFragment"
         android:label="@string/search_screen_title"
         tools:layout="@layout/fragment_search">
         <action
-            android:id="@+id/action_searchFragment_to_mealFragment"
-            app:destination="@id/mealFragment" />
+            android:id="@+id/action_searchFragment_to_namesFragment"
+            app:destination="@id/namesFragment" />
     </fragment>
     <fragment
         android:id="@+id/mealFragment"
@@ -118,5 +118,14 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/favFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/namesFragment"
+        android:name="com.mahmoudhamdyae.foodplanner.view.search.names.view.NamesFragment"
+        android:label="@string/names_screen_title"
+        tools:layout="@layout/fragment_names" >
+        <action
+            android:id="@+id/action_namesFragment_to_mealFragment"
+            app:destination="@id/mealFragment" />
     </fragment>
 </navigation>
