@@ -69,10 +69,11 @@
     <string name="inst">How to make</string>
 
     <!-- Search Fragment -->
-    <string name="search_by_name_button">Search By Name</string>
-    <string name="search_by_category_button">Search By Category</string>
-    <string name="search_by_area_button">Search By Area</string>
-    <string name="search_by_ingredient_button">Search By Ingredient</string>
+    <string name="search_by">Search By</string>
+    <string name="search_by_name_button">Name</string>
+    <string name="search_by_category_button">Category</string>
+    <string name="search_by_area_button">Area</string>
+    <string name="search_by_ingredient_button">Ingredient</string>
 
     <!-- Content Descriptions -->
     <string name="email_content_description">Email</string>
