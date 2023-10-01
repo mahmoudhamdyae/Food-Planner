@@ -61,8 +61,7 @@ public class IngredientsFragment extends Fragment implements IIngredientView, On
 
     @Override
     public void onGetIngredientsSuccess(IngredientResponse ingredientResponse) {
-        // todo Adapter
-//        mAdapter.setList(ingredientResponse.getIngredients());
+        mAdapter.setList(ingredientResponse.getIngredients());
     }
 
     @Override

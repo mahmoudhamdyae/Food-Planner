@@ -46,7 +46,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String imageUrl = "https://222.themealdb.com/images/ingredients/" + items.get(position).getName() + "-Small.png";
+        String imageUrl = "https://www.themealdb.com/images/ingredients/" + items.get(position).getName() + "-Small.png";
         Glide.with(context)
                 .load(imageUrl)
                 .apply(new RequestOptions()
