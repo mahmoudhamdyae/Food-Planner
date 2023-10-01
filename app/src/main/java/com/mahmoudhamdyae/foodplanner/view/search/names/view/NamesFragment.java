@@ -92,7 +92,7 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
     }
 
     private void navigateToMealScreen(Meal meal) {
-        NavDirections action = NamesFragmentDirections.actionNamesFragmentToMealFragment(meal);
+        NavDirections action = NamesFragmentDirections.actionNamesFragmentToMealFragment(meal.getId());
         Navigation.findNavController(requireView()).navigate(action);
     }
 }

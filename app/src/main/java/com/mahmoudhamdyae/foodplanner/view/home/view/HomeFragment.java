@@ -145,7 +145,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
 
     private void navigateToMealScreen() {
         if (mealOfTheDay != null) {
-            NavDirections action = HomeFragmentDirections.actionHomeFragmentToMealFragment(mealOfTheDay);
+            NavDirections action = HomeFragmentDirections.actionHomeFragmentToMealFragment(mealOfTheDay.getId());
             Navigation.findNavController(requireView()).navigate(action);
         }
     }

@@ -18,7 +18,7 @@ import java.util.List;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.ViewHolder> {
 
-    private final List<String> items;
+    private List<String> items;
     private final Context context;
 
     public IngredientsAdapter(@NonNull Context context, List<String> items) {
@@ -33,6 +33,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.ingredient_row, parent, false);
         return new ViewHolder(view);
+    }
+
+    public void setList(List<String> items) {
+        this.items = items;
+        notifyDataSetChanged();
     }
 
     @Override

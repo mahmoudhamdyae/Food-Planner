@@ -1,8 +1,8 @@
 package com.mahmoudhamdyae.foodplanner.network;
 
+import com.mahmoudhamdyae.foodplanner.model.AreaResponse;
 import com.mahmoudhamdyae.foodplanner.model.CategoryNamesResponse;
 import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
-import com.mahmoudhamdyae.foodplanner.model.AreaResponse;
 import com.mahmoudhamdyae.foodplanner.model.IngredientResponse;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 
@@ -38,4 +38,7 @@ public interface ApiService {
 
     @GET("filter.php") //
     Call<MealsResponse> getMealsByIngredient(@Query("i") String ingredient);
+
+    @GET("lookup.php")
+    Call<MealsResponse> getMealById(@Query("i") String mealId);
 }

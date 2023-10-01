@@ -88,8 +88,8 @@
         android:label="@string/meal_screen_title"
         tools:layout="@layout/fragment_meal">
         <argument
-            android:name="meal"
-            app:argType="com.mahmoudhamdyae.foodplanner.model.Meal" />
+            android:name="meal_id"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/authFragment"

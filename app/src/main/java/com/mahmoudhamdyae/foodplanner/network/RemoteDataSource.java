@@ -11,4 +11,6 @@ public interface RemoteDataSource {
     void getMealsByArea(String area, NetworkCallback networkCallback);
     void getMealsByCategory(String category, NetworkCallback networkCallback);
     void getMealsByIngredient(String ingredient, NetworkCallback networkCallback);
+
+    void getMealById(String mealId, NetworkCallback networkCallback);
 }

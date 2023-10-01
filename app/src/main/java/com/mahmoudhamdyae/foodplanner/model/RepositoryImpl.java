@@ -75,6 +75,11 @@ public class RepositoryImpl implements Repository {
         remoteDataSource.getMealsByIngredient(ingredient, networkCallback);
     }
 
+    @Override
+    public void getMealById(String mealId, NetworkCallback networkCallback) {
+        remoteDataSource.getMealById(mealId, networkCallback);
+    }
+
     // Local Data Source
 
     @Override

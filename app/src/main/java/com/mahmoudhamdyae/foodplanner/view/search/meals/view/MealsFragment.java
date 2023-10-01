@@ -79,7 +79,7 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
     }
 
     private void navigateToMealScreen(Meal meal) {
-        NavDirections action = MealsFragmentDirections.actionMealsFragmentToMealFragment(meal);
+        NavDirections action = MealsFragmentDirections.actionMealsFragmentToMealFragment(meal.getId());
         Navigation.findNavController(requireView()).navigate(action);
     }
 }

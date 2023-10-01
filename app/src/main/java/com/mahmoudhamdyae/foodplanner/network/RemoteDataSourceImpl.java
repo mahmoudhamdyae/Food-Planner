@@ -240,4 +240,26 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
             }
         });
     }
+
+    @Override
+    public void getMealById(String mealId, NetworkCallback networkCallback) {
+        makeNetworkCall();
+        Call<MealsResponse> call = apiService.getMealById(mealId);
+        call.enqueue(new Callback<MealsResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<MealsResponse> call, @NonNull Response<MealsResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, "onResponse: CallBack " + response.raw() + response.body().getMeals());
+                    networkCallback.onSuccessResult(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MealsResponse> call, @NonNull Throwable t) {
+                Log.i(TAG, "onFailure: CallBack");
+                networkCallback.onFailureResult(t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
 }
