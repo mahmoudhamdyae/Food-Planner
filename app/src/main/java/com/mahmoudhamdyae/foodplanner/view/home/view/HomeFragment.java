@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     private HomeAdapter mAdapter;
 
     private ImageView imageView;
-    private TextView title, desc;
+    private TextView title;
     private Meal mealOfTheDay;
 
     private HomePresenter presenter;
@@ -64,6 +64,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Recycler view
         mAdapter = new HomeAdapter(getContext(), new ArrayList<>(), this);
         RecyclerView recyclerView = view.findViewById(R.id.categories_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -72,13 +73,14 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
+        // View Items
         imageView = view.findViewById(R.id.image_view);
         title = view.findViewById(R.id.title);
-        desc = view.findViewById(R.id.desc);
         View row = view.findViewById(R.id.meal_of_the_day);
         row.setOnClickListener(v -> navigateToMealScreen());
         ViewCompat.setTransitionName(imageView, "meal_image");
 
+        // Presenter
         presenter = new HomePresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())), new AccountServiceImpl(requireContext(), this));
         presenter.getMeals();
         presenter.getMealOfTheDay();
@@ -173,7 +175,6 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         } catch (IllegalStateException e) { e.printStackTrace(); }
 
         title.setText(mealOfTheDay.getName());
-        desc.setText(mealOfTheDay.getInstructions());
     }
 
     @Override

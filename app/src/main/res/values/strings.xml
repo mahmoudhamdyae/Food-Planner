@@ -57,6 +57,7 @@
 
     <!-- Home Fragment -->
     <string name="meal_of_the_day">Meal of the day</string>
+    <string name="categories_label">Categories</string>
 
     <!-- Meal Fragment -->
     <string name="from">From: %1$s</string>
