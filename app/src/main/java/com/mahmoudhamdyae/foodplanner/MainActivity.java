@@ -49,19 +49,35 @@ public class MainActivity extends AppCompatActivity {
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             Log.i(TAG, "onCreate: " + destination.getDisplayName());
+            int destinationId = destination.getId();
+
+            // Screens Action Bar and Navigation Button Visibility
             if (
-                    destination.getId() == R.id.authFragment ||
-                            destination.getId() == R.id.loginFragment ||
-                            destination.getId() == R.id.signupFragment
+                    destinationId == R.id.authFragment ||
+                            destinationId == R.id.loginFragment ||
+                            destinationId == R.id.signupFragment ||
+                            destinationId == R.id.mealFragment
             ) {
-                getSupportActionBar().hide();
-                findViewById(R.id.bottom_nav).setVisibility(View.GONE);
-            } else if (destination.getId() == R.id.mealFragment) {
                 getSupportActionBar().hide();
                 findViewById(R.id.bottom_nav).setVisibility(View.GONE);
             } else {
                 getSupportActionBar().show();
                 findViewById(R.id.bottom_nav).setVisibility(View.VISIBLE);
+            }
+
+            // Screen Labels
+            if (destinationId == R.id.searchFragment) {
+                getSupportActionBar().setTitle(R.string.search_screen_title);
+            } else if (destinationId == R.id.search_by_name) {
+                getSupportActionBar().setTitle(R.string.names_screen_title);
+            } else if (destinationId == R.id.search_by_category) {
+                getSupportActionBar().setTitle(R.string.categories_screen_title);
+            } else if (destinationId == R.id.search_by_area) {
+                getSupportActionBar().setTitle(R.string.areas_screen_title);
+            } else if (destinationId == R.id.search_by_ingredient) {
+                getSupportActionBar().setTitle(R.string.ingredients_screen_title);
+            } else if (destinationId == R.id.favFragment) {
+                getSupportActionBar().setTitle(R.string.fav_screen_title);
             }
         });
     }
