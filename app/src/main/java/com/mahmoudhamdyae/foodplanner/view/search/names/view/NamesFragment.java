@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -47,6 +48,9 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Set Action Bar Title
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.names_screen_title);
 
         // Recycler View
         mAdapter = new NamesAdapter(getContext(), new ArrayList<>(), this);

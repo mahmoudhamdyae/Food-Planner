@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -23,7 +24,6 @@ import com.mahmoudhamdyae.foodplanner.model.SearchType;
 import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.view.search.areas.presenter.AreaPresenter;
 import com.mahmoudhamdyae.foodplanner.view.search.areas.presenter.IAreaPresenter;
-import com.mahmoudhamdyae.foodplanner.view.search.categories.view.CategoriesAdapter;
 
 import java.util.ArrayList;
 
@@ -45,6 +45,9 @@ public class AreasFragment extends Fragment implements IAreaView, OnAreaClickLis
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Set Action Bar Title
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.areas_screen_title);
 
         // Recycler View
         mAdapter = new AreasAdapter(getContext(), new ArrayList<>(), this);

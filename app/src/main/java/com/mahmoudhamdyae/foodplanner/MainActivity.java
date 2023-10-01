@@ -68,16 +68,10 @@ public class MainActivity extends AppCompatActivity {
             // Screen Labels
             if (destinationId == R.id.searchFragment) {
                 getSupportActionBar().setTitle(R.string.search_screen_title);
-            } else if (destinationId == R.id.search_by_name) {
-                getSupportActionBar().setTitle(R.string.names_screen_title);
-            } else if (destinationId == R.id.search_by_category) {
-                getSupportActionBar().setTitle(R.string.categories_screen_title);
-            } else if (destinationId == R.id.search_by_area) {
-                getSupportActionBar().setTitle(R.string.areas_screen_title);
-            } else if (destinationId == R.id.search_by_ingredient) {
-                getSupportActionBar().setTitle(R.string.ingredients_screen_title);
             } else if (destinationId == R.id.favFragment) {
                 getSupportActionBar().setTitle(R.string.fav_screen_title);
+            } else if (destinationId == R.id.homeFragment) {
+                getSupportActionBar().setTitle(R.string.home_screen_title);
             }
         });
     }
