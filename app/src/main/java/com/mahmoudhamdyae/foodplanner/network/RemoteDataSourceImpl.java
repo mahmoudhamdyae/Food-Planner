@@ -117,7 +117,7 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
             @Override
             public void onResponse(@NonNull Call<AreaResponse> call, @NonNull Response<AreaResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.i(TAG, "onResponse: CallBack " + response.raw() + response.body().getCountries());
+                    Log.i(TAG, "onResponse: CallBack " + response.raw() + response.body().getAreas());
                     networkCallback.onSuccessResult(response.body());
                 }
             }

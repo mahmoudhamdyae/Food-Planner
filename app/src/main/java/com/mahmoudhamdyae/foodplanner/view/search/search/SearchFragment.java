@@ -37,22 +37,34 @@ public class SearchFragment extends Fragment {
 
         // Search By Category Button
         Button searchCategoryButton = view.findViewById(R.id.search_by_category);
-        searchCategoryButton.setOnClickListener(v -> {
-        });
+        searchCategoryButton.setOnClickListener(v -> navigateToCategoriesScreen());
 
         // Search By Area Button
         Button searchAreaButton = view.findViewById(R.id.search_by_area);
-        searchAreaButton.setOnClickListener(v -> {
-        });
+        searchAreaButton.setOnClickListener(v -> navigateToAreaScreen());
 
         // Search By Ingredient Button
         Button searchIngredientButton = view.findViewById(R.id.search_by_ingredient);
-        searchIngredientButton.setOnClickListener(v -> {
-        });
+        searchIngredientButton.setOnClickListener(v -> navigateToIngredientScreen());
     }
 
     private void navigateToNamesScreen() {
         NavDirections action = SearchFragmentDirections.actionSearchFragmentToNamesFragment();
+        Navigation.findNavController(requireView()).navigate(action);
+    }
+
+    private void navigateToCategoriesScreen() {
+        NavDirections action = SearchFragmentDirections.actionSearchFragmentToCategoriesFragment();
+        Navigation.findNavController(requireView()).navigate(action);
+    }
+
+    private void navigateToAreaScreen() {
+        NavDirections action = SearchFragmentDirections.actionSearchFragmentToAreasFragment();
+        Navigation.findNavController(requireView()).navigate(action);
+    }
+
+    private void navigateToIngredientScreen() {
+        NavDirections action = SearchFragmentDirections.actionSearchFragmentToIngredientsFragment();
         Navigation.findNavController(requireView()).navigate(action);
     }
 }

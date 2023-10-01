@@ -1,4 +1,4 @@
-package com.mahmoudhamdyae.foodplanner.view.search.names.view;
+package com.mahmoudhamdyae.foodplanner.view.search.meals.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -18,13 +18,13 @@ import com.mahmoudhamdyae.foodplanner.model.Meal;
 
 import java.util.List;
 
-public class NamesAdapter extends RecyclerView.Adapter<NamesAdapter.ViewHolder> {
+public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> {
 
     private List<Meal> items;
     private final Context context;
     private final OnMealClickListener listener;
 
-    public NamesAdapter(Context context, List<Meal> items, OnMealClickListener listener) {
+    public MealsAdapter(Context context, List<Meal> items, OnMealClickListener listener) {
         super();
         this.items = items;
         this.context = context;
@@ -53,8 +53,7 @@ public class NamesAdapter extends RecyclerView.Adapter<NamesAdapter.ViewHolder> 
                         .error(R.drawable.ic_broken_image))
                 .into(holder.imageView);
 
-        holder.titleView.setText(items.get(position).getName());
-        holder.descriptionView.setText(items.get(position).getInstructions());
+        holder.name.setText(items.get(position).getName());
 
         holder.row.setOnClickListener(v -> listener.onMealClicked(items.get(position)));
     }
@@ -67,14 +66,13 @@ public class NamesAdapter extends RecyclerView.Adapter<NamesAdapter.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView titleView, descriptionView;
+        TextView name;
         CardView row;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.image_view);
-            titleView = itemView.findViewById(R.id.title);
-            descriptionView = itemView.findViewById(R.id.desc);
+            imageView = itemView.findViewById(R.id.image);
+            name = itemView.findViewById(R.id.name);
             row = itemView.findViewById(R.id.row);
         }
     }

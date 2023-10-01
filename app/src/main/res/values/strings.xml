@@ -9,7 +9,11 @@
     <string name="welcome_screen_title">Food Planner</string>
     <string name="search_screen_title">Search</string>
     <string name="meal_screen_title">Meal</string>
+    <string name="meals_screen_title">Meals</string>
     <string name="names_screen_title">Search Meals by Name</string>
+    <string name="categories_screen_title">Search Meals by Categories</string>
+    <string name="areas_screen_title">Search Meals by Areas</string>
+    <string name="ingredients_screen_title">Search Meals by Ingredients</string>
     <string name="fav_screen_title">Favourites</string>
 
     <!-- Welcome Screen -->

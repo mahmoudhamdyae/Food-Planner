@@ -49,21 +49,19 @@ public class MainActivity extends AppCompatActivity {
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             Log.i(TAG, "onCreate: " + destination.getDisplayName());
-            if (destination.getId() == R.id.homeFragment) {
-                getSupportActionBar().show();
-                getSupportActionBar().setTitle(R.string.home_screen_title);
-                findViewById(R.id.bottom_nav).setVisibility(View.VISIBLE);
-            } else if (destination.getId() == R.id.searchFragment) {
-                getSupportActionBar().show();
-                getSupportActionBar().setTitle(R.string.search_screen_title);
-                findViewById(R.id.bottom_nav).setVisibility(View.VISIBLE);
-            } else if (destination.getId() == R.id.favFragment) {
-                getSupportActionBar().show();
-                getSupportActionBar().setTitle(R.string.fav_screen_title);
-                findViewById(R.id.bottom_nav).setVisibility(View.VISIBLE);
-            } else {
+            if (
+                    destination.getId() == R.id.authFragment ||
+                            destination.getId() == R.id.loginFragment ||
+                            destination.getId() == R.id.signupFragment
+            ) {
                 getSupportActionBar().hide();
                 findViewById(R.id.bottom_nav).setVisibility(View.GONE);
+            } else if (destination.getId() == R.id.mealFragment) {
+                getSupportActionBar().hide();
+                findViewById(R.id.bottom_nav).setVisibility(View.GONE);
+            } else {
+                getSupportActionBar().show();
+                findViewById(R.id.bottom_nav).setVisibility(View.VISIBLE);
             }
         });
     }

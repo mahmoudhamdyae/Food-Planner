@@ -72,6 +72,15 @@
         <action
             android:id="@+id/action_searchFragment_to_namesFragment"
             app:destination="@id/namesFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_ingredientsFragment"
+            app:destination="@id/ingredientsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_areasFragment"
+            app:destination="@id/areasFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
     </fragment>
     <fragment
         android:id="@+id/mealFragment"
@@ -126,6 +135,48 @@
         tools:layout="@layout/fragment_names" >
         <action
             android:id="@+id/action_namesFragment_to_mealFragment"
+            app:destination="@id/mealFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ingredientsFragment"
+        android:name="com.mahmoudhamdyae.foodplanner.view.search.ingredients.view.IngredientsFragment"
+        android:label="@string/ingredients_screen_title"
+        tools:layout="@layout/fragment_ingredients" >
+        <action
+            android:id="@+id/action_ingredientsFragment_to_mealsFragment"
+            app:destination="@id/mealsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/areasFragment"
+        android:name="com.mahmoudhamdyae.foodplanner.view.search.areas.view.AreasFragment"
+        android:label="@string/areas_screen_title"
+        tools:layout="@layout/fragment_areas" >
+        <action
+            android:id="@+id/action_areasFragment_to_mealsFragment"
+            app:destination="@id/mealsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="com.mahmoudhamdyae.foodplanner.view.search.categories.view.CategoriesFragment"
+        android:label="@string/categories_screen_title"
+        tools:layout="@layout/fragment_categories" >
+        <action
+            android:id="@+id/action_categoriesFragment_to_mealsFragment"
+            app:destination="@id/mealsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealsFragment"
+        android:name="com.mahmoudhamdyae.foodplanner.view.search.meals.view.MealsFragment"
+        android:label="fragment_meals"
+        tools:layout="@layout/fragment_meals" >
+        <argument
+            android:name="search_type"
+            app:argType="com.mahmoudhamdyae.foodplanner.model.SearchType" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_mealsFragment_to_mealFragment"
             app:destination="@id/mealFragment" />
     </fragment>
 </navigation>

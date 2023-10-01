@@ -1,4 +1,4 @@
-package com.mahmoudhamdyae.foodplanner.view.search.names.view;
+package com.mahmoudhamdyae.foodplanner.view.search.areas.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,25 +14,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mahmoudhamdyae.foodplanner.R;
-import com.mahmoudhamdyae.foodplanner.model.Meal;
+import com.mahmoudhamdyae.foodplanner.model.Area;
 
 import java.util.List;
 
-public class NamesAdapter extends RecyclerView.Adapter<NamesAdapter.ViewHolder> {
+public class AreasAdapter extends RecyclerView.Adapter<AreasAdapter.ViewHolder> {
 
-    private List<Meal> items;
+    private List<Area> items;
     private final Context context;
-    private final OnMealClickListener listener;
+    private final OnAreaClickListener listener;
 
-    public NamesAdapter(Context context, List<Meal> items, OnMealClickListener listener) {
+    public AreasAdapter(Context context, List<Area> items, OnAreaClickListener listener) {
         super();
         this.items = items;
         this.context = context;
         this.listener = listener;
     }
 
-    public void setList(List<Meal> meals) {
-        this.items = meals;
+    public void setList(List<Area> areas) {
+        this.items = areas;
         notifyDataSetChanged();
     }
 
@@ -40,23 +40,23 @@ public class NamesAdapter extends RecyclerView.Adapter<NamesAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.meal_row, parent, false);
+        View view = inflater.inflate(R.layout.search_row, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        String imageUrl = "https://222.themealdb.com/images/areas/" + items.get(position).getName() + "-Small.png";
         Glide.with(context)
-                .load(items.get(position).getImageUrl())
+                .load(imageUrl)
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.loading_img)
                         .error(R.drawable.ic_broken_image))
                 .into(holder.imageView);
 
-        holder.titleView.setText(items.get(position).getName());
-        holder.descriptionView.setText(items.get(position).getInstructions());
+        holder.name.setText(items.get(position).getName());
 
-        holder.row.setOnClickListener(v -> listener.onMealClicked(items.get(position)));
+        holder.row.setOnClickListener(v -> listener.onAreaClicked(items.get(position)));
     }
 
     @Override
@@ -67,14 +67,13 @@ public class NamesAdapter extends RecyclerView.Adapter<NamesAdapter.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView titleView, descriptionView;
+        TextView name;
         CardView row;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.image_view);
-            titleView = itemView.findViewById(R.id.title);
-            descriptionView = itemView.findViewById(R.id.desc);
+            imageView = itemView.findViewById(R.id.image);
+            name = itemView.findViewById(R.id.name);
             row = itemView.findViewById(R.id.row);
         }
     }

@@ -6,17 +6,17 @@ import java.util.List;
 
 public class AreaResponse {
 
-    @SerializedName("meals") private List<Area> countries;
+    @SerializedName("meals") private List<Area> areas;
 
-    public AreaResponse(List<Area> countries) {
-        this.countries = countries;
+    public AreaResponse(List<Area> areas) {
+        this.areas = areas;
     }
 
-    public List<Area> getCountries() {
-        return countries;
+    public List<Area> getAreas() {
+        return areas;
     }
 
-    public void setCountries(List<Area> countries) {
-        this.countries = countries;
+    public void setAreas(List<Area> areas) {
+        this.areas = areas;
     }
 }

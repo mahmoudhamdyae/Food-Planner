@@ -1,12 +1,9 @@
-package com.mahmoudhamdyae.foodplanner.view.search.names.view;
+package com.mahmoudhamdyae.foodplanner.view.search.meals.view;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,16 +19,16 @@ import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
+import com.mahmoudhamdyae.foodplanner.model.SearchType;
 import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
-import com.mahmoudhamdyae.foodplanner.view.search.names.presenter.INamesPresenter;
-import com.mahmoudhamdyae.foodplanner.view.search.names.presenter.NamesPresenter;
+import com.mahmoudhamdyae.foodplanner.view.search.meals.presenter.IMealsPresenter;
+import com.mahmoudhamdyae.foodplanner.view.search.meals.presenter.MealsPresenter;
 
 import java.util.ArrayList;
 
-public class NamesFragment extends Fragment implements INamesView, OnMealClickListener {
+public class MealsFragment extends Fragment implements IMealsView, OnMealClickListener {
 
-    private NamesAdapter mAdapter;
-    private INamesPresenter presenter;
+    private MealsAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +38,7 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_names, container, false);
+        return inflater.inflate(R.layout.fragment_meals, container, false);
     }
 
     @Override
@@ -49,7 +46,7 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
         super.onViewCreated(view, savedInstanceState);
 
         // Recycler View
-        mAdapter = new NamesAdapter(getContext(), new ArrayList<>(), this);
+        mAdapter = new MealsAdapter(getContext(), new ArrayList<>(), this);
         RecyclerView recyclerView = view.findViewById(R.id.meals_recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -57,23 +54,13 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
+        // Get arguments from previous screen
+        SearchType searchType = MealsFragmentArgs.fromBundle(getArguments()).getSearchType();
+        String name = MealsFragmentArgs.fromBundle(getArguments()).getName();
+
         // Presenter
-        presenter = new NamesPresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())));
-
-        // Search EditText
-        EditText searchEditText = view.findViewById(R.id.search_edit_text);
-        searchEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                presenter.searchMealByName(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
+        IMealsPresenter presenter = new MealsPresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())));
+        presenter.getMeals(searchType, name);
     }
 
     @Override
@@ -92,7 +79,7 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
     }
 
     private void navigateToMealScreen(Meal meal) {
-        NavDirections action = NamesFragmentDirections.actionNamesFragmentToMealFragment(meal);
+        NavDirections action = MealsFragmentDirections.actionMealsFragmentToMealFragment(meal);
         Navigation.findNavController(requireView()).navigate(action);
     }
 }
