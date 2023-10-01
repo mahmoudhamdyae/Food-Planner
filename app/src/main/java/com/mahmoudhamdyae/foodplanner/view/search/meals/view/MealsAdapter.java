@@ -53,7 +53,8 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
                         .error(R.drawable.ic_broken_image))
                 .into(holder.imageView);
 
-        holder.name.setText(items.get(position).getName());
+        holder.title.setText(items.get(position).getName());
+        holder.desc.setText(items.get(position).getInstructions());
 
         holder.row.setOnClickListener(v -> listener.onMealClicked(items.get(position)));
     }
@@ -66,13 +67,14 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView name;
+        TextView title, desc;
         CardView row;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.image);
-            name = itemView.findViewById(R.id.name);
+            imageView = itemView.findViewById(R.id.image_view);
+            title = itemView.findViewById(R.id.title);
+            desc = itemView.findViewById(R.id.desc);
             row = itemView.findViewById(R.id.row);
         }
     }

@@ -46,7 +46,7 @@ public class AreasAdapter extends RecyclerView.Adapter<AreasAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String imageUrl = "https://222.themealdb.com/images/areas/" + items.get(position).getName() + "-Small.png";
+        String imageUrl = "https://www.themealdb.com/images/areas/" + items.get(position).getName() + "-Small.png";
         Glide.with(context)
                 .load(imageUrl)
                 .apply(new RequestOptions()

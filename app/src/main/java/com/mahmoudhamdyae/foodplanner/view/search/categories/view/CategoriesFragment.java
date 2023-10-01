@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
-import com.mahmoudhamdyae.foodplanner.model.Category;
-import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
+import com.mahmoudhamdyae.foodplanner.model.CategoryName;
+import com.mahmoudhamdyae.foodplanner.model.CategoryNamesResponse;
 import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
 import com.mahmoudhamdyae.foodplanner.model.SearchType;
 import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
@@ -60,8 +60,8 @@ public class CategoriesFragment extends Fragment implements ICategoryView, OnCat
     }
 
     @Override
-    public void onGetCategoriesSuccess(CategoryResponse categoryResponse) {
-        mAdapter.setList(categoryResponse.getCategories());
+    public void onGetCategoriesSuccess(CategoryNamesResponse categoryNamesResponse) {
+        mAdapter.setList(categoryNamesResponse.getCategories());
     }
 
     @Override
@@ -70,11 +70,11 @@ public class CategoriesFragment extends Fragment implements ICategoryView, OnCat
     }
 
     @Override
-    public void onCategoryClicked(Category category) {
+    public void onCategoryClicked(CategoryName category) {
         navigateToMealsScreen(category);
     }
 
-    private void navigateToMealsScreen(Category category) {
+    private void navigateToMealsScreen(CategoryName category) {
         NavDirections action = CategoriesFragmentDirections.actionCategoriesFragmentToMealsFragment(SearchType.CATEGORY, category.getName());
         Navigation.findNavController(requireView()).navigate(action);
     }
