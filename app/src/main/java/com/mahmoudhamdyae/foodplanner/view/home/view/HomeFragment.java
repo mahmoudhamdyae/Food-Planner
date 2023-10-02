@@ -34,6 +34,7 @@ import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
+import com.mahmoudhamdyae.foodplanner.model.SearchType;
 import com.mahmoudhamdyae.foodplanner.view.home.presenter.HomePresenter;
 import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
 
@@ -145,6 +146,11 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         Navigation.findNavController(requireView()).navigate(action);
     }
 
+    private void navigateToMealsScreen(String categoryName) {
+        NavDirections action = HomeFragmentDirections.actionHomeFragmentToMealsFragment(SearchType.CATEGORY, categoryName);
+        Navigation.findNavController(requireView()).navigate(action);
+    }
+
     private void navigateToMealScreen() {
         if (mealOfTheDay != null) {
             NavDirections action = HomeFragmentDirections.actionHomeFragmentToMealFragment(mealOfTheDay.getId());
@@ -154,7 +160,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
 
     @Override
     public void onCategoryClicked(Category category) {
-        Toast.makeText(getContext(), "Clicked: " + category.getName(), Toast.LENGTH_SHORT).show();
+        navigateToMealsScreen(category.getName());
     }
 
     @Override

@@ -19,6 +19,9 @@
             app:destination="@id/authFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_homeFragment_to_mealsFragment"
+            app:destination="@id/mealsFragment" />
     </fragment>
 
     <fragment
