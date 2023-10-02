@@ -1,6 +1,5 @@
 package com.mahmoudhamdyae.foodplanner.network;
 
-import com.mahmoudhamdyae.foodplanner.model.CategoryNamesResponse;
 import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
 import com.mahmoudhamdyae.foodplanner.model.IngredientResponse;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
@@ -19,9 +18,6 @@ public interface ApiService {
 
     @GET("random.php")
     Call<MealsResponse> getMealOfTheDay();
-
-    @GET("list.php?c=list")
-    Call<CategoryNamesResponse> getCategoriesNames();
 
     @GET("list.php?i=list")
     Call<IngredientResponse> getIngredients();

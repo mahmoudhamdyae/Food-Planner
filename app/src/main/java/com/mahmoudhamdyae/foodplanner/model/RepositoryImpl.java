@@ -51,11 +51,6 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void getCategoriesNames(NetworkCallback networkCallback) {
-        remoteDataSource.getCategoriesNames(networkCallback);
-    }
-
-    @Override
     public void getMealsByArea(String area, NetworkCallback networkCallback) {
         remoteDataSource.getMealsByArea(area, networkCallback);
     }
