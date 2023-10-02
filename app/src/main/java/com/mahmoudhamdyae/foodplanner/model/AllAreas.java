@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllAreas {
-    private static AllAreas allAreas=null;
-    private  List<Area> areas= new  ArrayList<Area>();
+
+    private static AllAreas allAreas = null;
+    private final List<Area> areas = new ArrayList<>();
 
     private AllAreas() {
         areas.add(new Area("American", R.drawable.america));
@@ -40,12 +41,10 @@ public class AllAreas {
     }
 
     public static AllAreas getInstance() {
-        if (allAreas == null) {
-            allAreas = new AllAreas();
-        }
-
+        if (allAreas == null) allAreas = new AllAreas();
         return allAreas;
     }
+
     public List<Area> getAllAreas() {
         return areas;
     }

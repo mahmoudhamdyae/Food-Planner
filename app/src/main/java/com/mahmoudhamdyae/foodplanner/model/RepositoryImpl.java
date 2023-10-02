@@ -46,11 +46,6 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void getAreas(NetworkCallback networkCallback) {
-        remoteDataSource.getAreas(networkCallback);
-    }
-
-    @Override
     public void getIngredients(NetworkCallback networkCallback) {
         remoteDataSource.getIngredients(networkCallback);
     }

@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 
 import com.mahmoudhamdyae.foodplanner.model.CategoryNamesResponse;
 import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
-import com.mahmoudhamdyae.foodplanner.model.AreaResponse;
 import com.mahmoudhamdyae.foodplanner.model.IngredientResponse;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 
@@ -102,28 +101,6 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
 
             @Override
             public void onFailure(@NonNull Call<MealsResponse> call, @NonNull Throwable t) {
-                Log.i(TAG, "onFailure: CallBack");
-                networkCallback.onFailureResult(t.getMessage());
-                t.printStackTrace();
-            }
-        });
-    }
-
-    @Override
-    public void getAreas(NetworkCallback networkCallback) {
-        makeNetworkCall();
-        Call<AreaResponse> call = apiService.getAreas();
-        call.enqueue(new Callback<AreaResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<AreaResponse> call, @NonNull Response<AreaResponse> response) {
-                if (response.isSuccessful()) {
-                    Log.i(TAG, "onResponse: CallBack " + response.raw() + response.body().getAreas());
-                    networkCallback.onSuccessResult(response.body());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<AreaResponse> call, @NonNull Throwable t) {
                 Log.i(TAG, "onFailure: CallBack");
                 networkCallback.onFailureResult(t.getMessage());
                 t.printStackTrace();

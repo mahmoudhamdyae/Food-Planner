@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,20 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mahmoudhamdyae.foodplanner.R;
-import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
+import com.mahmoudhamdyae.foodplanner.model.AllAreas;
 import com.mahmoudhamdyae.foodplanner.model.Area;
-import com.mahmoudhamdyae.foodplanner.model.AreaResponse;
-import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
 import com.mahmoudhamdyae.foodplanner.model.SearchType;
-import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
-import com.mahmoudhamdyae.foodplanner.view.search.areas.presenter.AreaPresenter;
-import com.mahmoudhamdyae.foodplanner.view.search.areas.presenter.IAreaPresenter;
 
-import java.util.ArrayList;
-
-public class AreasFragment extends Fragment implements IAreaView, OnAreaClickListener {
-
-    private AreasAdapter mAdapter;
+public class AreasFragment extends Fragment implements OnAreaClickListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,27 +40,13 @@ public class AreasFragment extends Fragment implements IAreaView, OnAreaClickLis
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.areas_screen_title);
 
         // Recycler View
-        mAdapter = new AreasAdapter(getContext(), new ArrayList<>(), this);
+        AreasAdapter mAdapter = new AreasAdapter(getContext(), AllAreas.getInstance().getAllAreas(), this);
         RecyclerView recyclerView = view.findViewById(R.id.areas_recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
-
-        // Presenter
-        IAreaPresenter presenter = new AreaPresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())));
-        presenter.getAreas();
-    }
-
-    @Override
-    public void onGetAreasSuccess(AreaResponse areaResponse) {
-        mAdapter.setList(areaResponse.getAreas());
-    }
-
-    @Override
-    public void onGetAreasFail(String errorMsg) {
-        Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Override

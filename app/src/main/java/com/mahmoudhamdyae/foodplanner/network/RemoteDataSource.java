@@ -5,7 +5,6 @@ public interface RemoteDataSource {
     void getCategories(NetworkCallback networkCallback);
     void searchMeal(String name, NetworkCallback networkCallback);
     void getMealOfTheDay(NetworkCallback networkCallback);
-    void getAreas(NetworkCallback networkCallback);
     void getIngredients(NetworkCallback networkCallback);
     void getCategoriesNames(NetworkCallback networkCallback);
     void getMealsByArea(String area, NetworkCallback networkCallback);

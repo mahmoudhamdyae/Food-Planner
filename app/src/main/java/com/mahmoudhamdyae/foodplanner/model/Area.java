@@ -2,11 +2,9 @@ package com.mahmoudhamdyae.foodplanner.model;
 
 import androidx.annotation.DrawableRes;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Area {
 
-    @SerializedName("strArea") private String name;
+    private String name;
     @DrawableRes private int image;
 
     public Area(String name, @DrawableRes int image) {

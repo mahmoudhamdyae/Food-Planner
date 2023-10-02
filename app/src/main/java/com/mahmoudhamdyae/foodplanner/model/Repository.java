@@ -18,7 +18,6 @@ public interface Repository {
     void addMealToFav(Meal meal);
     void removeMealFromFav(Meal meal);
 
-    void getAreas(NetworkCallback networkCallback);
     void getIngredients(NetworkCallback networkCallback);
     void getCategoriesNames(NetworkCallback networkCallback);
     void getMealsByArea(String area, NetworkCallback networkCallback);
