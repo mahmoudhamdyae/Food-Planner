@@ -1,10 +1,10 @@
 package com.mahmoudhamdyae.foodplanner.view.search.categories.view;
 
-import com.mahmoudhamdyae.foodplanner.model.CategoryNamesResponse;
+import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
 
 public interface ICategoryView {
 
-    void onGetCategoriesSuccess(CategoryNamesResponse categoryResponse);
+    void onGetCategoriesSuccess(CategoryResponse categoryResponse);
 
     void onGetCategoriesFail(String errorMsg);
 }

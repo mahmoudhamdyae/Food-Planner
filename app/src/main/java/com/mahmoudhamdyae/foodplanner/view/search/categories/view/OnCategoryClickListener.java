@@ -1,8 +1,8 @@
 package com.mahmoudhamdyae.foodplanner.view.search.categories.view;
 
-import com.mahmoudhamdyae.foodplanner.model.CategoryName;
+import com.mahmoudhamdyae.foodplanner.model.Category;
 
 public interface OnCategoryClickListener {
 
-    void onCategoryClicked(CategoryName category);
+    void onCategoryClicked(Category category);
 }

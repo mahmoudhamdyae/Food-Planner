@@ -14,24 +14,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mahmoudhamdyae.foodplanner.R;
-import com.mahmoudhamdyae.foodplanner.model.CategoryName;
+import com.mahmoudhamdyae.foodplanner.model.Category;
 
 import java.util.List;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
 
-    private List<CategoryName> items;
+    private List<Category> items;
     private final Context context;
     private final OnCategoryClickListener listener;
 
-    public CategoriesAdapter(Context context, List<CategoryName> items, OnCategoryClickListener listener) {
+    public CategoriesAdapter(Context context, List<Category> items, OnCategoryClickListener listener) {
         super();
         this.items = items;
         this.context = context;
         this.listener = listener;
     }
 
-    public void setList(List<CategoryName> categories) {
+    public void setList(List<Category> categories) {
         this.items = categories;
         notifyDataSetChanged();
     }
@@ -46,7 +46,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String imageUrl = "https://www.themealdb.com/images/categories/" + items.get(position).getName() + "-Small.png";
+        String imageUrl = items.get(position).getImageUrl();
         Glide.with(context)
                 .load(imageUrl)
                 .apply(new RequestOptions()
