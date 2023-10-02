@@ -9,6 +9,7 @@
         android:id="@+id/areas_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/search_row" />
+        tools:listitem="@layout/search_row"
+        android:paddingBottom="40dp"/>
 
 </FrameLayout>
