@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -20,11 +21,13 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
     private List<String> items;
     private final Context context;
+    private final OnIngredientClickListener listener;
 
-    public IngredientsAdapter(@NonNull Context context, List<String> items) {
+    public IngredientsAdapter(@NonNull Context context, List<String> items, OnIngredientClickListener listener) {
         super();
         this.context = context;
         this.items = items;
+        this.listener = listener;
     }
 
     @NonNull
@@ -50,6 +53,9 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
                         .placeholder(R.drawable.loading_img)
                         .error(R.drawable.ic_broken_image))
                 .into(holder.ingredientImage);
+        holder.row.setOnClickListener(v -> {
+            listener.onIngredientClicked(items.get(position));
+        });
     }
 
     @Override
@@ -61,12 +67,14 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
         TextView ingredientNameTextView;
         ImageView ingredientImage;
+        CardView row;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             ingredientNameTextView = itemView.findViewById(R.id.ingredient_name);
             ingredientImage = itemView.findViewById(R.id.ingredient_image);
+            row = itemView.findViewById(R.id.row);
         }
     }
 }

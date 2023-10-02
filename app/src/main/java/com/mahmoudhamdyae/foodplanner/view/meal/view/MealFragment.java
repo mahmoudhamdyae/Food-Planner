@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +29,7 @@ import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
+import com.mahmoudhamdyae.foodplanner.model.SearchType;
 import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.view.meal.presenter.IMealPresenter;
 import com.mahmoudhamdyae.foodplanner.view.meal.presenter.MealPresenter;
@@ -34,7 +37,7 @@ import com.mahmoudhamdyae.foodplanner.view.meal.presenter.MealPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MealFragment extends Fragment implements IMealView {
+public class MealFragment extends Fragment implements IMealView, OnIngredientClickListener {
 
     private IMealPresenter presenter;
     private Boolean isFav = false;
@@ -77,7 +80,7 @@ public class MealFragment extends Fragment implements IMealView {
         instTextView = view.findViewById(R.id.inst);
 
         // Recycler View
-        mAdapter = new IngredientsAdapter(requireContext(), new ArrayList<>());
+        mAdapter = new IngredientsAdapter(requireContext(), new ArrayList<>(), this);
         RecyclerView recyclerView = view.findViewById(R.id.ingredients_recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -190,5 +193,15 @@ public class MealFragment extends Fragment implements IMealView {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         return currentUser != null;
+    }
+
+    @Override
+    public void onIngredientClicked(String ingredientName) {
+        navigateToMealsFragment(ingredientName);
+    }
+
+    private void navigateToMealsFragment(String name) {
+        NavDirections action = MealFragmentDirections.actionMealFragmentToMealsFragment(SearchType.INGREDIENT, name);
+        Navigation.findNavController(requireView()).navigate(action);
     }
 }
