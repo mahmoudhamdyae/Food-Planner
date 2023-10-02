@@ -1,11 +1,11 @@
 package com.mahmoudhamdyae.foodplanner.view.search.areas.presenter;
 
+import com.mahmoudhamdyae.foodplanner.model.AllAreas;
 import com.mahmoudhamdyae.foodplanner.model.AreaResponse;
 import com.mahmoudhamdyae.foodplanner.model.Repository;
-import com.mahmoudhamdyae.foodplanner.network.NetworkCallback;
 import com.mahmoudhamdyae.foodplanner.view.search.areas.view.IAreaView;
 
-public class AreaPresenter implements IAreaPresenter, NetworkCallback {
+public class AreaPresenter implements IAreaPresenter {
 
     private final IAreaView listener;
     private final Repository repo;
@@ -17,16 +17,6 @@ public class AreaPresenter implements IAreaPresenter, NetworkCallback {
 
     @Override
     public void getAreas() {
-        repo.getAreas(this);
-    }
-
-    @Override
-    public void onSuccessResult(Object object) {
-        listener.onGetAreasSuccess((AreaResponse) object);
-    }
-
-    @Override
-    public void onFailureResult(String errorMsg) {
-        listener.onGetAreasFail(errorMsg);
+        listener.onGetAreasSuccess(new AreaResponse(AllAreas.getInstance().getAllAreas()));
     }
 }

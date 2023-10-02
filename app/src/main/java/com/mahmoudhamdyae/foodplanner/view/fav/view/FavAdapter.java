@@ -55,7 +55,6 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
                 .into(holder.imageView);
 
         holder.titleView.setText(items.get(position).getName());
-        holder.descriptionView.setText(items.get(position).getInstructions());
 
         holder.row.setOnClickListener(v -> listener.onMealClicked(items.get(position)));
     }
@@ -68,14 +67,13 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView titleView, descriptionView;
+        TextView titleView;
         CardView row;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_view);
             titleView = itemView.findViewById(R.id.title);
-            descriptionView = itemView.findViewById(R.id.desc);
             row = itemView.findViewById(R.id.row);
         }
     }

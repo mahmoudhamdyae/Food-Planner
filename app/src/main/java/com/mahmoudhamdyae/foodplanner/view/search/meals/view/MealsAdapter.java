@@ -54,7 +54,6 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
                 .into(holder.imageView);
 
         holder.title.setText(items.get(position).getName());
-        holder.desc.setText(items.get(position).getInstructions());
 
         holder.row.setOnClickListener(v -> listener.onMealClicked(items.get(position)));
     }
@@ -67,14 +66,13 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView title, desc;
+        TextView title;
         CardView row;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_view);
             title = itemView.findViewById(R.id.title);
-            desc = itemView.findViewById(R.id.desc);
             row = itemView.findViewById(R.id.row);
         }
     }

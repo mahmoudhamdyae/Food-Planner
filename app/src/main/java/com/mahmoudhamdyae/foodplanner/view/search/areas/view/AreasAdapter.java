@@ -11,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.model.Area;
 
@@ -46,16 +44,8 @@ public class AreasAdapter extends RecyclerView.Adapter<AreasAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String imageUrl = "https://www.themealdb.com/images/areas/" + items.get(position).getName() + "-Small.png";
-        Glide.with(context)
-                .load(imageUrl)
-                .apply(new RequestOptions()
-                        .placeholder(R.drawable.loading_img)
-                        .error(R.drawable.ic_broken_image))
-                .into(holder.imageView);
-
+        holder.imageView.setImageResource(items.get(position).getImage());
         holder.name.setText(items.get(position).getName());
-
         holder.row.setOnClickListener(v -> listener.onAreaClicked(items.get(position)));
     }
 
