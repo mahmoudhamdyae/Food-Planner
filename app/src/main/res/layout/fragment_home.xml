@@ -28,6 +28,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <include
+                    layout="@layout/shimmer_grid"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="230dp"
+                    android:layout_height="230dp" />
+
                 <include layout="@layout/shimmer_linear_row" />
 
                 <include layout="@layout/shimmer_linear_row" />
