@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
@@ -37,6 +38,8 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
     private NamesAdapter mAdapter;
     private INamesPresenter presenter;
     private LottieAnimationView emptyView;
+    private RecyclerView recyclerView;
+    private ShimmerFrameLayout mShimmerViewContainer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,13 +57,14 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
         super.onViewCreated(view, savedInstanceState);
 
         emptyView = view.findViewById(R.id.empty_image);
+        recyclerView = view.findViewById(R.id.meals_recycler_view);
+        mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
 
         // Set Action Bar Title
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.names_screen_title);
 
         // Recycler View
         mAdapter = new NamesAdapter(getContext(), new ArrayList<>(), this);
-        RecyclerView recyclerView = view.findViewById(R.id.meals_recycler_view);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), Utils.getNoOfColumns(requireContext()));
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -78,6 +82,8 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mShimmerViewContainer.setVisibility(View.VISIBLE);
+                mShimmerViewContainer.startShimmerAnimation();
                 presenter.searchMealByName(s.toString());
             }
 
@@ -94,11 +100,13 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
         } else {
             emptyView.setVisibility(View.GONE);
         }
+        stopShimmerEffectAndShowUi();
         mAdapter.setList(meals);
     }
 
     @Override
     public void onGetMealsFail(String errorMsg) {
+        mShimmerViewContainer.stopShimmerAnimation();
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 
@@ -110,5 +118,11 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
     private void navigateToMealScreen(Meal meal) {
         NavDirections action = NamesFragmentDirections.actionNamesFragmentToMealFragment(meal.getId(), null);
         Navigation.findNavController(requireView()).navigate(action);
+    }
+
+    private void stopShimmerEffectAndShowUi() {
+        mShimmerViewContainer.stopShimmerAnimation();
+        mShimmerViewContainer.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 }
