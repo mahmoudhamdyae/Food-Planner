@@ -1,7 +1,6 @@
 package com.mahmoudhamdyae.foodplanner.view.auth.presenter;
 
 import android.content.Intent;
-import android.util.Log;
 
 import com.mahmoudhamdyae.foodplanner.account.AccountService;
 import com.mahmoudhamdyae.foodplanner.account.OnResult;
@@ -61,7 +60,7 @@ public class AuthPresenter implements IAuthPresenter, OnResult, NetworkCallback 
 
     @Override
     public void onSuccessResult(Object object) {
-        Log.d("hahahahaha", "onSuccessResult: " + ((Meal) object).getName());
+        repo.addMealToFav((Meal) object, this);
     }
 
     @Override
