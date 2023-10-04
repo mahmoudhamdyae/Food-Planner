@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.mahmoudhamdyae.foodplanner.R;
@@ -34,6 +35,7 @@ public class FavFragment extends Fragment implements IFavView, OnMealClickListen
     private FavAdapter mAdapter;
     private ShimmerFrameLayout mShimmerViewContainer;
     private RecyclerView recyclerView;
+    private LottieAnimationView emptyView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class FavFragment extends Fragment implements IFavView, OnMealClickListen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        emptyView = view.findViewById(R.id.empty_image);
         mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
         recyclerView = view.findViewById(R.id.fav_recycler_view);
 
@@ -96,7 +99,14 @@ public class FavFragment extends Fragment implements IFavView, OnMealClickListen
     @Override
     public void showData(LiveData<List<Meal>> meals) {
         stopShimmerEffectAndShowUi();
-        meals.observe(this, meals1 -> mAdapter.setList(meals1));
+        meals.observe(this, meals1 -> {
+            if (meals1.size() == 0) {
+                emptyView.setVisibility(View.VISIBLE);
+            } else {
+                emptyView.setVisibility(View.GONE);
+            }
+            mAdapter.setList(meals1);
+        });
     }
 
     private void navigateToMealScreen(Meal meal) {
