@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +35,7 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
 
     private MealsAdapter mAdapter;
     private ShimmerFrameLayout mShimmerViewContainer;
-    private RecyclerView recyclerView;
+    private LinearLayout linearLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,8 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
         super.onViewCreated(view, savedInstanceState);
 
         mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
-        recyclerView = view.findViewById(R.id.meals_recycler_view);
+        linearLayout = view.findViewById(R.id.linear_layout);
+        RecyclerView recyclerView = view.findViewById(R.id.meals_recycler_view);
 
         TextView descTextView = view.findViewById(R.id.desc);
 
@@ -121,6 +123,6 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
     private void stopShimmerEffectAndShowUi() {
         mShimmerViewContainer.stopShimmerAnimation();
         mShimmerViewContainer.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
+        linearLayout.setVisibility(View.VISIBLE);
     }
 }
