@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         super.onViewCreated(view, savedInstanceState);
 
         // Presenter
-        presenter = new HomePresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())), new AccountServiceImpl(requireContext(), this));
+        presenter = new HomePresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())), new AccountServiceImpl(requireContext()));
 
         // View Items
         imageView = view.findViewById(R.id.image_view);

@@ -19,16 +19,14 @@ import com.mahmoudhamdyae.foodplanner.R;
 public class AccountServiceImpl implements AccountService {
 
     private static final String TAG = "Account_Service";
-    private final OnResult listener;
 
     private final FirebaseAuth mAuth;
     private final Context context;
 
     private final GoogleSignInClient mGoogleSignInClient;
 
-    public AccountServiceImpl(@NonNull Context context, OnResult listener) {
+    public AccountServiceImpl(@NonNull Context context) {
         this.context = context;
-        this.listener = listener;
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         // Google Sign in
@@ -45,55 +43,55 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void signInWithGoogle() {
+    public void signInWithGoogle(OnResult onResult) {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        listener.onGoogleAuthSuccess(signInIntent);
+        onResult.onGoogleAuthSuccess(signInIntent);
     }
 
     @Override
-    public void firebaseAuthWithGoogle(String idToken) {
+    public void firebaseAuthWithGoogle(String idToken, OnResult onResult) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 // Sign in success, update UI with the signed-in user's information
                 Log.w(TAG, "signInWithGoogle:success");
-                listener.onAuthSuccess();
+                onResult.onAuthSuccess();
             } else {
                 Log.w(TAG, "signInWithGoogle:failure", task.getException());
                 // If sign in fails, display a message to the user.
-                listener.onFailure("Authentication Failed.");
+                onResult.onFailure("Authentication Failed.");
             }
         });
     }
 
     @Override
-    public void login(String email, String password) {
+    public void login(String email, String password, OnResult onResult) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity) context, task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success");
-                        listener.onAuthSuccess();
+                        onResult.onAuthSuccess();
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
-                        listener.onFailure(String.valueOf(task.getException()));
+                        onResult.onFailure(String.valueOf(task.getException()));
                     }
                 });
     }
 
     @Override
-    public void signup(String email, String password) {
+    public void signup(String email, String password, OnResult onResult) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity) context, task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success");
-                        listener.onAuthSuccess();
+                        onResult.onAuthSuccess();
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                        listener.onFailure(String.valueOf(task.getException()));
+                        onResult.onFailure(String.valueOf(task.getException()));
                     }
                 });
     }

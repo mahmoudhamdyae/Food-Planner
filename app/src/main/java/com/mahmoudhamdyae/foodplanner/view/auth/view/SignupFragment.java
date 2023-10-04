@@ -1,7 +1,8 @@
-package com.mahmoudhamdyae.foodplanner.view.auth;
+package com.mahmoudhamdyae.foodplanner.view.auth.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +19,16 @@ import androidx.navigation.Navigation;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mahmoudhamdyae.foodplanner.R;
-import com.mahmoudhamdyae.foodplanner.account.AccountService;
 import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
-import com.mahmoudhamdyae.foodplanner.account.OnResult;
 import com.mahmoudhamdyae.foodplanner.utils.Validation;
+import com.mahmoudhamdyae.foodplanner.view.auth.presenter.AuthPresenter;
+import com.mahmoudhamdyae.foodplanner.view.auth.presenter.IAuthPresenter;
 
-public class LoginFragment extends Fragment implements OnResult {
+public class SignupFragment extends Fragment implements IAuthView {
 
-    private TextInputLayout emailEditText, passwordEditText;
+    private TextInputLayout emailEditText, passwordEditText, repeatPasswordEditText;
 
-    private AccountService accountService;
+    private IAuthPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,38 +38,40 @@ public class LoginFragment extends Fragment implements OnResult {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        return inflater.inflate(R.layout.fragment_signup, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        accountService = new AccountServiceImpl(requireContext(), this);
+        presenter = new AuthPresenter(this, new AccountServiceImpl(requireContext()));
 
-        // Login
-        Button loginButton = view.findViewById(R.id.login_button);
-        loginButton.setOnClickListener(v -> validateAndLogin());
+        // Login - Navigate Back
+        TextView loginButton = view.findViewById(R.id.login);
+        loginButton.setOnClickListener(v -> navigateToLoginScreen());
 
         // Skip - Navigate to home screen
         Button skipButton = view.findViewById(R.id.skip_button);
         skipButton.setOnClickListener(v -> skipAuth());
 
         // Signup - Navigate to signup screen
-        TextView signupTextView = view.findViewById(R.id.signup_free);
-        signupTextView.setOnClickListener(v -> {
-            navigateToSignupScreen();
-        });
+        Button signupTextView = view.findViewById(R.id.signup_button);
+        signupTextView.setOnClickListener(v -> validateAndSignup());
 
         // TextInputs
         emailEditText = view.findViewById(R.id.email);
         passwordEditText = view.findViewById(R.id.password);
+        repeatPasswordEditText = view.findViewById(R.id.repeat_password);
     }
 
-    private void validateAndLogin() {
+    private void validateAndSignup() {
         passwordEditText.setError(null);
         emailEditText.setError(null);
-        if (validateEmail() && validatePassword()) login();
+        repeatPasswordEditText.setError(null);
+        if (validateEmail() && validatePassword() && validateRepeatPassword()) {
+            signup();
+        }
     }
 
     private boolean validateEmail() {
@@ -83,17 +86,30 @@ public class LoginFragment extends Fragment implements OnResult {
 
     private boolean validatePassword() {
         String password = passwordEditText.getEditText().getText().toString();
-        if (password.isEmpty()) {
-            passwordEditText.setError(getResources().getString(R.string.empty_password_error));
+        Validation validation = new Validation();
+        int error = validation.passwordErrorMessage(password);
+        if (error != -1) {
+            passwordEditText.setError(getResources().getString(error));
             return false;
         }
         return true;
     }
 
-    private void login() {
+    private boolean validateRepeatPassword() {
+        String password = passwordEditText.getEditText().getText().toString();
+        String repeatedPassword = repeatPasswordEditText.getEditText().getText().toString();
+        Validation validation = new Validation();
+        if (!validation.passwordMatches(password, repeatedPassword)) {
+            repeatPasswordEditText.setError(getResources().getString(R.string.password_match_error));
+            return false;
+        }
+        return true;
+    }
+
+    private void signup() {
         String email = emailEditText.getEditText().getText().toString();
         String password = passwordEditText.getEditText().getText().toString();
-        accountService.login(email, password);
+        presenter.signup(email, password);
     }
 
     private void skipAuth() {
@@ -110,28 +126,30 @@ public class LoginFragment extends Fragment implements OnResult {
                 }).show();
     }
 
-    private void navigateToSignupScreen() {
-        NavDirections action = LoginFragmentDirections.actionLoginFragmentToSignupFragment();
+    private void navigateToHomeScreen() {
+        NavDirections action = SignupFragmentDirections.actionSignupFragmentToHomeFragment();
         Navigation.findNavController(requireView()).navigate(action);
     }
 
-    private void navigateToHomeScreen() {
-        NavDirections action = LoginFragmentDirections.actionLoginFragmentToHomeFragment();
+    private void navigateToLoginScreen() {
+        NavDirections action = SignupFragmentDirections.actionSignupFragmentToLoginFragment2();
         Navigation.findNavController(requireView()).navigate(action);
     }
 
     @Override
     public void onAuthSuccess() {
-        // Log in success
+        // Sign up success
         navigateToHomeScreen();
     }
 
     @Override
-    public void onGoogleAuthSuccess(Intent signInIntent) { }
+    public void onGoogleAuthSuccess(Intent signInIntent) {
+        Log.e("SignupFragment", "onGoogleAuthSuccess: Not Implemented");
+    }
 
     @Override
     public void onFailure(String errorMsg) {
-        // Failed to log in
+        // Failed to sign up
         Toast.makeText(getActivity(), "Authentication failed.",
                 Toast.LENGTH_SHORT).show();
     }

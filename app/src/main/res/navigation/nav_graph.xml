@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.mahmoudhamdyae.foodplanner.view.auth.LoginFragment"
+        android:name="com.mahmoudhamdyae.foodplanner.view.auth.view.LoginFragment"
         android:label="@string/log_in_screen_title"
         tools:layout="@layout/fragment_login">
         <action
@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.mahmoudhamdyae.foodplanner.view.auth.SignupFragment"
+        android:name="com.mahmoudhamdyae.foodplanner.view.auth.view.SignupFragment"
         android:label="@string/sign_up_screen_title"
         tools:layout="@layout/fragment_signup">
         <action
@@ -105,7 +105,7 @@
     </fragment>
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.mahmoudhamdyae.foodplanner.view.auth.AuthFragment"
+        android:name="com.mahmoudhamdyae.foodplanner.view.auth.view.AuthFragment"
         android:label="@string/auth_screen_title"
         tools:layout="@layout/fragment_auth">
         <action

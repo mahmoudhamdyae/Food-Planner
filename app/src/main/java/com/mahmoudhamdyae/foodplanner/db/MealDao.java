@@ -21,7 +21,7 @@ public interface MealDao {
     List<Meal> getFavMeals();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addMealToFav(Meal meal);
+    void addMealToFav(Meal... meal);
 
     @Delete
     void removeMealFromFav(Meal meal);

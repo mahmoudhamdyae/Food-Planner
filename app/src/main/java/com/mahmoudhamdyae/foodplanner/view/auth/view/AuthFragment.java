@@ -1,4 +1,4 @@
-package com.mahmoudhamdyae.foodplanner.view.auth;
+package com.mahmoudhamdyae.foodplanner.view.auth.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,14 +21,14 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.mahmoudhamdyae.foodplanner.R;
-import com.mahmoudhamdyae.foodplanner.account.AccountService;
 import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
-import com.mahmoudhamdyae.foodplanner.account.OnResult;
+import com.mahmoudhamdyae.foodplanner.view.auth.presenter.AuthPresenter;
+import com.mahmoudhamdyae.foodplanner.view.auth.presenter.IAuthPresenter;
 
-public class AuthFragment extends Fragment implements OnResult {
+public class AuthFragment extends Fragment implements IAuthView {
 
     private static final int RC_SIGN_IN = 1;
-    private AccountService accountService;
+    private IAuthPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class AuthFragment extends Fragment implements OnResult {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        accountService = new AccountServiceImpl(requireContext(), this);
+        presenter = new AuthPresenter(this, new AccountServiceImpl(requireContext()));
 
         // Skip button
         Button skipButton = view.findViewById(R.id.skip_button);
@@ -61,7 +61,7 @@ public class AuthFragment extends Fragment implements OnResult {
 
         // Google Sign in
         SignInButton googleButton = view.findViewById(R.id.google_sign_in_button);
-        googleButton.setOnClickListener(v -> accountService.signInWithGoogle());
+        googleButton.setOnClickListener(v -> presenter.signInWithGoogle());
     }
 
     @Override
@@ -72,7 +72,7 @@ public class AuthFragment extends Fragment implements OnResult {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                accountService.firebaseAuthWithGoogle(account.getIdToken());
+                presenter.firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
             }

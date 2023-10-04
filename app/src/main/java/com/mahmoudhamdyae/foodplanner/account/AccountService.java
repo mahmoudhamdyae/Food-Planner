@@ -4,10 +4,10 @@ public interface AccountService {
 
     Boolean hasUser();
 
-    void signInWithGoogle();
-    void firebaseAuthWithGoogle(String idToken);
+    void signInWithGoogle(OnResult onResult);
+    void firebaseAuthWithGoogle(String idToken, OnResult onResult);
 
-    void login(String email, String password);
-    void signup(String email, String password);
+    void login(String email, String password, OnResult onResult);
+    void signup(String email, String password, OnResult onResult);
     void signOut();
 }
