@@ -24,19 +24,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include layout="@layout/data_placeholder_layout" />
+            <include layout="@layout/shimmer_linear_row" />
 
-            <include layout="@layout/data_placeholder_layout" />
+            <include layout="@layout/shimmer_linear_row" />
 
-            <include layout="@layout/data_placeholder_layout" />
+            <include layout="@layout/shimmer_linear_row" />
 
-            <include layout="@layout/data_placeholder_layout" />
+            <include layout="@layout/shimmer_linear_row" />
 
-            <include layout="@layout/data_placeholder_layout" />
+            <include layout="@layout/shimmer_linear_row" />
 
-            <include layout="@layout/data_placeholder_layout" />
+            <include layout="@layout/shimmer_linear_row" />
 
-            <include layout="@layout/data_placeholder_layout" />
+            <include layout="@layout/shimmer_linear_row" />
         </LinearLayout>
 
     </com.facebook.shimmer.ShimmerFrameLayout>
