@@ -27,7 +27,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
-import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
 import com.mahmoudhamdyae.foodplanner.model.SearchType;
 import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
@@ -47,6 +46,7 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
     private IngredientsAdapter mAdapter;
     private WebView youtube;
     private List<Meal> favMeals;
+    private Meal meal;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,12 +63,9 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter = new MealPresenter(this,
-                RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(),
-                        LocalDataSourceImpl.getInstance(requireContext())));
-        presenter.getFavMeals();
-        String mealId = MealFragmentArgs.fromBundle(getArguments()).getMealId();
-        presenter.getMealById(mealId);
+        // Button
+        addToCartButton = view.findViewById(R.id.add_to_cart);
+        if (!hasUser()) addToCartButton.setVisibility(View.GONE);
 
         // Image
         imageView = view.findViewById(R.id.image_view);
@@ -79,6 +76,9 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
         fromTextView = view.findViewById(R.id.from);
         instTextView = view.findViewById(R.id.inst);
 
+        // YouTube Player
+        youtube = view.findViewById(R.id.youtube);
+
         // Recycler View
         mAdapter = new IngredientsAdapter(requireContext(), new ArrayList<>(), this);
         RecyclerView recyclerView = view.findViewById(R.id.ingredients_recycler_view);
@@ -88,35 +88,43 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
-        // Button
-        addToCartButton = view.findViewById(R.id.add_to_cart);
-        if (!hasUser()) addToCartButton.setVisibility(View.GONE);
-
-        // YouTube Player
-        youtube = view.findViewById(R.id.youtube);
+        // Presenter
+        presenter = new MealPresenter(this,
+                RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(),
+                        LocalDataSourceImpl.getInstance(requireContext())));
+        // Args
+        String mealId = MealFragmentArgs.fromBundle(getArguments()).getMealId();
+        meal = MealFragmentArgs.fromBundle(getArguments()).getMeal();
+        if (meal == null) {
+            presenter.getMealById(mealId);
+        } else {
+            onGetMealSuccess(meal);
+        }
     }
 
     @Override
     public void showData(List<Meal> meals) {
         favMeals = meals;
+        if (favMeals != null) {
+            for (int i = 0; i < favMeals.size(); i++) {
+                if (favMeals.get(i).getId().equals(meal.getId())) {
+                    isFav = true;
+                    addToCartButton.setText(getString(R.string.remove_from_cart));
+                    addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_24));
+                    break;
+                } else {
+                    isFav = false;
+                    addToCartButton.setText(getString(R.string.add_to_cart));
+                    addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_border_24));
+                }
+            }
+        }
     }
 
     @Override
-    public void onGetMealSuccess(MealsResponse mealsResponse) {
-        Meal meal = mealsResponse.getMeals().get(0);
-
-        for (int i = 0; i < favMeals.size(); i++) {
-            if (favMeals.get(i).getId().equals(meal.getId())) {
-                isFav = true;
-                addToCartButton.setText(getString(R.string.remove_from_cart));
-                addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_24));
-                break;
-            } else {
-                isFav = false;
-                addToCartButton.setText(getString(R.string.add_to_cart));
-                addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_border_24));
-            }
-        }
+    public void onGetMealSuccess(Meal meal) {
+        this.meal = meal;
+        presenter.getFavMeals();
 
         // Add to Cart Button
         addToCartButton.setOnClickListener(v -> {

@@ -38,7 +38,7 @@ public class MealPresenter implements IMealPresenter, NetworkCallback {
 
     @Override
     public void onSuccessResult(Object object) {
-        view.onGetMealSuccess((MealsResponse) object);
+        view.onGetMealSuccess(((MealsResponse) object).getMeals().get(0));
     }
 
     @Override

@@ -103,7 +103,7 @@ public class FavFragment extends Fragment implements IFavView, OnMealClickListen
     }
 
     private void navigateToMealScreen(Meal meal) {
-        NavDirections action = FavFragmentDirections.actionFavFragmentToMealFragment(meal.getId());
+        NavDirections action = FavFragmentDirections.actionFavFragmentToMealFragment(meal.getId(), meal);
         Navigation.findNavController(requireView()).navigate(action);
     }
 
