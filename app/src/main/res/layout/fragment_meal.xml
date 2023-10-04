@@ -9,7 +9,7 @@
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_view_container"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
@@ -18,26 +18,10 @@
         app:layout_constraintTop_toTopOf="parent"
         shimmer:duration="800">
 
-        <!-- Adding 7 rows of placeholders -->
-        <LinearLayout
+        <include
+            layout="@layout/shimmer_meal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <include layout="@layout/shimmer_linear_row" />
-
-            <include layout="@layout/shimmer_linear_row" />
-
-            <include layout="@layout/shimmer_linear_row" />
-
-            <include layout="@layout/shimmer_linear_row" />
-
-            <include layout="@layout/shimmer_linear_row" />
-
-            <include layout="@layout/shimmer_linear_row" />
-
-            <include layout="@layout/shimmer_linear_row" />
-        </LinearLayout>
+            android:layout_height="wrap_content" />
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
@@ -186,8 +170,8 @@
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:paddingHorizontal="16dp"
-            app:icon="@drawable/ic_baseline_favorite_border_24"
-            tools:text="@string/add_to_cart" />
+            android:text="@string/add_to_cart"
+            app:icon="@drawable/ic_baseline_favorite_border_24" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
