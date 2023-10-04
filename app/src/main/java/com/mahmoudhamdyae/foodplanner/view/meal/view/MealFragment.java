@@ -8,6 +8,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.button.MaterialButton;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
@@ -41,12 +43,13 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
     private IMealPresenter presenter;
     private Boolean isFav = false;
     private MaterialButton addToCartButton;
-    private LinearLayout bottomLayout;
     private TextView titleTextView, fromTextView, instTextView;
     private ImageView imageView;
     private IngredientsAdapter mAdapter;
     private WebView youtube;
     private Meal meal;
+    private ShimmerFrameLayout mShimmerViewContainer;
+    private ScrollView scrollView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +66,9 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        bottomLayout = view.findViewById(R.id.bottom_layout);
+        LinearLayout bottomLayout = view.findViewById(R.id.bottom_layout);
+        mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
+        scrollView = view.findViewById(R.id.scroll_view);
 
         // Presenter
         presenter = new MealPresenter(this,
@@ -108,7 +113,6 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
 
     @Override
     public void showData(List<Meal> meals) {
-
         try {
             if (meals != null) {
                 for (int i = 0; i < meals.size(); i++) {
@@ -129,6 +133,8 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
 
     @Override
     public void onGetMealSuccess(Meal meal) {
+        stopShimmerEffectAndShowUi();
+
         this.meal = meal;
         presenter.getFavMeals();
 
@@ -200,6 +206,7 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
 
     @Override
     public void onGetMealFail(String errorMsg) {
+        mShimmerViewContainer.stopShimmerAnimation();
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 
@@ -211,5 +218,23 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
     private void navigateToMealsFragment(String name) {
         NavDirections action = MealFragmentDirections.actionMealFragmentToMealsFragment(SearchType.INGREDIENT, name, null);
         Navigation.findNavController(requireView()).navigate(action);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mShimmerViewContainer.startShimmerAnimation();
+    }
+
+    @Override
+    public void onPause() {
+        stopShimmerEffectAndShowUi();
+        super.onPause();
+    }
+
+    private void stopShimmerEffectAndShowUi() {
+        mShimmerViewContainer.stopShimmerAnimation();
+        mShimmerViewContainer.setVisibility(View.GONE);
+        scrollView.setVisibility(View.VISIBLE);
     }
 }
