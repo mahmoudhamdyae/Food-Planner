@@ -21,9 +21,9 @@
                 android:layout_height="200dp"
                 android:contentDescription="@string/image"
                 android:scaleType="centerCrop"
-                tools:src="@tools:sample/backgrounds/scenic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/backgrounds/scenic" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view"
@@ -121,16 +121,35 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/add_to_cart"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_margin="8dp"
-        app:icon="@drawable/ic_baseline_favorite_border_24"
-        android:paddingHorizontal="16dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/add_to_cart" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_to_calender"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="16dp"
+            android:text="@string/add_to_calendar"
+            app:icon="@drawable/ic_baseline_edit_calendar_24" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_to_cart"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="16dp"
+            app:icon="@drawable/ic_baseline_favorite_border_24"
+            tools:text="@string/add_to_cart" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

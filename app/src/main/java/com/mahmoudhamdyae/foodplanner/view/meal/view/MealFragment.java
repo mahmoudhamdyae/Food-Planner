@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
     private IMealPresenter presenter;
     private Boolean isFav = false;
     private MaterialButton addToCartButton;
+    private LinearLayout bottomLayout;
     private TextView titleTextView, fromTextView, instTextView;
     private ImageView imageView;
     private IngredientsAdapter mAdapter;
@@ -61,6 +63,8 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        bottomLayout = view.findViewById(R.id.bottom_layout);
+
         // Presenter
         presenter = new MealPresenter(this,
                 RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(),
@@ -69,7 +73,7 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
 
         // Button
         addToCartButton = view.findViewById(R.id.add_to_cart);
-        if (!presenter.hasUser()) addToCartButton.setVisibility(View.GONE);
+        if (!presenter.hasUser()) bottomLayout.setVisibility(View.GONE);
 
         // Image
         imageView = view.findViewById(R.id.image_view);
