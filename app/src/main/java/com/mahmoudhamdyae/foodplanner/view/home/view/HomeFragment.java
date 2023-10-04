@@ -35,18 +35,21 @@ import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
 import com.mahmoudhamdyae.foodplanner.model.SearchType;
-import com.mahmoudhamdyae.foodplanner.view.home.presenter.HomePresenter;
 import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
+import com.mahmoudhamdyae.foodplanner.view.home.presenter.HomePresenter;
 
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements OnCategoryClickListener, IHomeView, OnResult {
 
+    private static final String MEAL_OF_THE_DAY_STATE = "MEAL_OF_THE_DAY";
+    private static final String CATEGORIES_LIST_STATE = "CATEGORIES_LIST_STATE";
     private HomeAdapter mAdapter;
 
     private ImageView imageView;
     private TextView title;
     private Meal mealOfTheDay;
+    private ArrayList<Category> categories;
 
     private HomePresenter presenter;
 
@@ -65,8 +68,15 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (savedInstanceState == null) {
+            categories = new ArrayList<>();
+        } else {
+            categories = savedInstanceState.getParcelableArrayList(CATEGORIES_LIST_STATE);
+            mealOfTheDay = savedInstanceState.getParcelable(MEAL_OF_THE_DAY_STATE);
+        }
+
         // Recycler view
-        mAdapter = new HomeAdapter(getContext(), new ArrayList<>(), this);
+        mAdapter = new HomeAdapter(getContext(), categories, this);
         RecyclerView recyclerView = view.findViewById(R.id.categories_recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -166,7 +176,8 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
 
     @Override
     public void onGetCategoriesSuccess(CategoryResponse categoryResponse) {
-        mAdapter.setList(categoryResponse.getCategories());
+        categories = (ArrayList<Category>) categoryResponse.getCategories();
+        mAdapter.setList(categories);
     }
 
     @Override
@@ -197,4 +208,11 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
 
     @Override
     public void onFailure(String errorMsg) { }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(MEAL_OF_THE_DAY_STATE, mealOfTheDay);
+        outState.putParcelableArrayList(CATEGORIES_LIST_STATE, categories);
+    }
 }

@@ -1,8 +1,11 @@
 package com.mahmoudhamdyae.foodplanner.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Category {
+public class Category implements Parcelable {
 
     @SerializedName("idCategory") private String id;
     @SerializedName("strCategory") private String name;
@@ -47,4 +50,43 @@ public class Category {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.description);
+        dest.writeString(this.imageUrl);
+    }
+
+    public void readFromParcel(Parcel source) {
+        this.id = source.readString();
+        this.name = source.readString();
+        this.description = source.readString();
+        this.imageUrl = source.readString();
+    }
+
+    protected Category(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.description = in.readString();
+        this.imageUrl = in.readString();
+    }
+
+    public static final Parcelable.Creator<Category> CREATOR = new Parcelable.Creator<Category>() {
+        @Override
+        public Category createFromParcel(Parcel source) {
+            return new Category(source);
+        }
+
+        @Override
+        public Category[] newArray(int size) {
+            return new Category[size];
+        }
+    };
 }
