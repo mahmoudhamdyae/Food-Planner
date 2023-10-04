@@ -68,11 +68,24 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Presenter
+        presenter = new HomePresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())), new AccountServiceImpl(requireContext(), this));
+
+        // View Items
+        imageView = view.findViewById(R.id.image_view);
+        title = view.findViewById(R.id.title);
+        View row = view.findViewById(R.id.meal_of_the_day);
+        row.setOnClickListener(v -> navigateToMealScreen());
+        ViewCompat.setTransitionName(imageView, "meal_image");
+
         if (savedInstanceState == null) {
+            presenter.getMeals();
+            presenter.getMealOfTheDay();
             categories = new ArrayList<>();
         } else {
             categories = savedInstanceState.getParcelableArrayList(CATEGORIES_LIST_STATE);
             mealOfTheDay = savedInstanceState.getParcelable(MEAL_OF_THE_DAY_STATE);
+            setMealOfTheDayUI();
         }
 
         // Recycler view
@@ -83,18 +96,6 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
-
-        // View Items
-        imageView = view.findViewById(R.id.image_view);
-        title = view.findViewById(R.id.title);
-        View row = view.findViewById(R.id.meal_of_the_day);
-        row.setOnClickListener(v -> navigateToMealScreen());
-        ViewCompat.setTransitionName(imageView, "meal_image");
-
-        // Presenter
-        presenter = new HomePresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())), new AccountServiceImpl(requireContext(), this));
-        presenter.getMeals();
-        presenter.getMealOfTheDay();
 
         setHasOptionsMenu(true);
     }
@@ -183,6 +184,10 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     @Override
     public void onGetMealOfTheDaySuccess(MealsResponse mealsResponse) {
         mealOfTheDay = mealsResponse.getMeals().get(0);
+        setMealOfTheDayUI();
+    }
+
+    private void setMealOfTheDayUI() {
         try {
             Glide.with(requireContext())
                     .load(mealOfTheDay.getImageUrl())
