@@ -3,6 +3,7 @@ package com.mahmoudhamdyae.foodplanner.view.search.names.view;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mahmoudhamdyae.foodplanner.R;
@@ -56,7 +57,7 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
         mAdapter = new NamesAdapter(getContext(), new ArrayList<>(), this);
         RecyclerView recyclerView = view.findViewById(R.id.meals_recycler_view);
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), getNoOfColumns());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
@@ -78,6 +79,12 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
             @Override
             public void afterTextChanged(Editable s) {}
         });
+    }
+
+    private int getNoOfColumns() {
+        DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+        float screenWidthDp = displayMetrics.widthPixels / displayMetrics.density;
+        return (int) Math.ceil(screenWidthDp / 185f);
     }
 
     @Override
