@@ -79,7 +79,7 @@ public class CategoriesFragment extends Fragment implements ICategoryView, OnCat
     }
 
     private void navigateToMealsScreen(Category category) {
-        NavDirections action = CategoriesFragmentDirections.actionCategoriesFragmentToMealsFragment(SearchType.CATEGORY, category.getName());
+        NavDirections action = CategoriesFragmentDirections.actionCategoriesFragmentToMealsFragment(SearchType.CATEGORY, category.getName(), category.getDescription());
         Navigation.findNavController(requireView()).navigate(action);
     }
 }

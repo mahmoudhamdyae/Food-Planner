@@ -55,7 +55,7 @@ public class AreasFragment extends Fragment implements OnAreaClickListener {
     }
 
     private void navigateToMealsScreen(Area area) {
-        NavDirections action = AreasFragmentDirections.actionAreasFragmentToMealsFragment(SearchType.AREA, area.getName());
+        NavDirections action = AreasFragmentDirections.actionAreasFragmentToMealsFragment(SearchType.AREA, area.getName(), null);
         Navigation.findNavController(requireView()).navigate(action);
     }
 }

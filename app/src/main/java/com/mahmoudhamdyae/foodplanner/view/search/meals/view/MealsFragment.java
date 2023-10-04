@@ -5,6 +5,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -53,6 +54,8 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        TextView descTextView = view.findViewById(R.id.desc);
+
         // Recycler View
         mAdapter = new MealsAdapter(getContext(), new ArrayList<>(), this);
         RecyclerView recyclerView = view.findViewById(R.id.meals_recycler_view);
@@ -65,6 +68,14 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
         // Get arguments from previous screen
         SearchType searchType = MealsFragmentArgs.fromBundle(getArguments()).getSearchType();
         String name = MealsFragmentArgs.fromBundle(getArguments()).getName();
+        String categoryDesc = MealsFragmentArgs.fromBundle(getArguments()).getDesc();
+        if (categoryDesc != null) {
+            descTextView.setVisibility(View.VISIBLE);
+            descTextView.setText(categoryDesc);
+        } else {
+            descTextView.setVisibility(View.GONE);
+
+        }
 
         // Set Action Bar Title
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(name);

@@ -214,7 +214,7 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
     }
 
     private void navigateToMealsFragment(String name) {
-        NavDirections action = MealFragmentDirections.actionMealFragmentToMealsFragment(SearchType.INGREDIENT, name);
+        NavDirections action = MealFragmentDirections.actionMealFragmentToMealsFragment(SearchType.INGREDIENT, name, null);
         Navigation.findNavController(requireView()).navigate(action);
     }
 }

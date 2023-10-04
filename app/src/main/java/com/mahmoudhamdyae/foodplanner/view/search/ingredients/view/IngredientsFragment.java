@@ -79,7 +79,7 @@ public class IngredientsFragment extends Fragment implements IIngredientView, On
     }
 
     private void navigateToMealsScreen(Ingredient ingredient) {
-        NavDirections action = IngredientsFragmentDirections.actionIngredientsFragmentToMealsFragment(SearchType.INGREDIENT, ingredient.getName());
+        NavDirections action = IngredientsFragmentDirections.actionIngredientsFragmentToMealsFragment(SearchType.INGREDIENT, ingredient.getName(), null);
         Navigation.findNavController(requireView()).navigate(action);
     }
 }
