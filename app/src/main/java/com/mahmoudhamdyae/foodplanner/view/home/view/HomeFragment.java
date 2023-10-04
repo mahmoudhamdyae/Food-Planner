@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mahmoudhamdyae.foodplanner.R;
@@ -46,8 +48,11 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     private static final String CATEGORIES_LIST_STATE = "CATEGORIES_LIST_STATE";
     private HomeAdapter mAdapter;
 
+    private ShimmerFrameLayout mShimmerViewContainer;
     private ImageView imageView;
-    private TextView title;
+    private TextView title, mealOfTheDayLabel, categoriesLabel;
+    private CardView mealOfTheDayCardView;
+    private RecyclerView recyclerView;
     private Meal mealOfTheDay;
     private ArrayList<Category> categories;
 
@@ -68,14 +73,19 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // View Items
+        mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
+        imageView = view.findViewById(R.id.image_view);
+        title = view.findViewById(R.id.title);
+        mealOfTheDayCardView = view.findViewById(R.id.meal_of_the_day);
+        mealOfTheDayLabel = view.findViewById(R.id.meal_of_the_day_label);
+        categoriesLabel = view.findViewById(R.id.categories_label);
+        recyclerView = view.findViewById(R.id.categories_recycler_view);
+
         // Presenter
         presenter = new HomePresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())), new AccountServiceImpl(requireContext()));
 
-        // View Items
-        imageView = view.findViewById(R.id.image_view);
-        title = view.findViewById(R.id.title);
-        View row = view.findViewById(R.id.meal_of_the_day);
-        row.setOnClickListener(v -> navigateToMealScreen());
+        mealOfTheDayCardView.setOnClickListener(v -> navigateToMealScreen());
         ViewCompat.setTransitionName(imageView, "meal_image");
 
         if (savedInstanceState == null) {
@@ -86,11 +96,11 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
             categories = savedInstanceState.getParcelableArrayList(CATEGORIES_LIST_STATE);
             mealOfTheDay = savedInstanceState.getParcelable(MEAL_OF_THE_DAY_STATE);
             setMealOfTheDayUI();
+            stopShimmerEffectAndShowUi();
         }
 
         // Recycler view
         mAdapter = new HomeAdapter(getContext(), categories, this);
-        RecyclerView recyclerView = view.findViewById(R.id.categories_recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -98,6 +108,18 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         recyclerView.setAdapter(mAdapter);
 
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mShimmerViewContainer.startShimmerAnimation();
+    }
+
+    @Override
+    public void onPause() {
+        stopShimmerEffectAndShowUi();
+        super.onPause();
     }
 
     private void showSignOutDialog() {
@@ -165,7 +187,6 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     private void navigateToMealScreen() {
         if (mealOfTheDay != null) {
             NavDirections action = HomeFragmentDirections.actionHomeFragmentToMealFragment(mealOfTheDay.getId(), mealOfTheDay);
-
             Navigation.findNavController(requireView()).navigate(action);
         }
     }
@@ -179,30 +200,35 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     public void onGetCategoriesSuccess(CategoryResponse categoryResponse) {
         categories = (ArrayList<Category>) categoryResponse.getCategories();
         mAdapter.setList(categories);
+        stopShimmerEffectAndShowUi();
     }
 
     @Override
     public void onGetMealOfTheDaySuccess(MealsResponse mealsResponse) {
         mealOfTheDay = mealsResponse.getMeals().get(0);
         setMealOfTheDayUI();
+        stopShimmerEffectAndShowUi();
     }
 
     private void setMealOfTheDayUI() {
-        try {
-            Glide.with(requireContext())
-                    .load(mealOfTheDay.getImageUrl())
-                    .apply(new RequestOptions()
-                            .placeholder(R.drawable.loading_img)
-                            .error(R.drawable.ic_broken_image))
-                    .into(imageView);
-        } catch (IllegalStateException e) { e.printStackTrace(); }
+        if (mealOfTheDay != null) {
+            try {
+                Glide.with(requireContext())
+                        .load(mealOfTheDay.getImageUrl())
+                        .apply(new RequestOptions()
+                                .placeholder(R.drawable.loading_img)
+                                .error(R.drawable.ic_broken_image))
+                        .into(imageView);
+            } catch (IllegalStateException e) { e.printStackTrace(); }
 
-        title.setText(mealOfTheDay.getName());
+            title.setText(mealOfTheDay.getName());
+        }
     }
 
     @Override
     public void onNetworkFail(String errorMsg) {
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        mShimmerViewContainer.stopShimmerAnimation();
     }
 
     @Override
@@ -219,5 +245,14 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         super.onSaveInstanceState(outState);
         outState.putParcelable(MEAL_OF_THE_DAY_STATE, mealOfTheDay);
         outState.putParcelableArrayList(CATEGORIES_LIST_STATE, categories);
+    }
+
+    private void stopShimmerEffectAndShowUi() {
+        mShimmerViewContainer.stopShimmerAnimation();
+        mShimmerViewContainer.setVisibility(View.GONE);
+        categoriesLabel.setVisibility(View.VISIBLE);
+        mealOfTheDayLabel.setVisibility(View.VISIBLE);
+        mealOfTheDayCardView.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 }
