@@ -37,7 +37,7 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
 
     private NamesAdapter mAdapter;
     private INamesPresenter presenter;
-    private LottieAnimationView emptyView;
+    private LottieAnimationView emptyView, searchImage;
     private RecyclerView recyclerView;
     private ShimmerFrameLayout mShimmerViewContainer;
 
@@ -57,6 +57,7 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
         super.onViewCreated(view, savedInstanceState);
 
         emptyView = view.findViewById(R.id.empty_image);
+        searchImage = view.findViewById(R.id.search_image);
         recyclerView = view.findViewById(R.id.meals_recycler_view);
         mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
 
@@ -84,6 +85,7 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mShimmerViewContainer.setVisibility(View.VISIBLE);
                 mShimmerViewContainer.startShimmerAnimation();
+                searchImage.setVisibility(View.GONE);
                 presenter.searchMealByName(s.toString());
             }
 
