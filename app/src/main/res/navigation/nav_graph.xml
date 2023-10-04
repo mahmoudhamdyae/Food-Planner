@@ -12,17 +12,14 @@
         android:label="@string/home_screen_title"
         tools:layout="@layout/fragment_home">
         <action
-            app:popUpToSaveState="true"
             android:id="@+id/action_homeFragment_to_mealFragment"
             app:destination="@id/mealFragment" />
         <action
-            app:popUpToSaveState="true"
             android:id="@+id/action_homeFragment_to_authFragment"
             app:destination="@id/authFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
         <action
-            app:popUpToSaveState="true"
             android:id="@+id/action_homeFragment_to_mealsFragment"
             app:destination="@id/mealsFragment" />
     </fragment>
