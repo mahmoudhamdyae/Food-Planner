@@ -165,7 +165,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     }
 
     @Override
-    public void onGetMealsSuccess(CategoryResponse categoryResponse) {
+    public void onGetCategoriesSuccess(CategoryResponse categoryResponse) {
         mAdapter.setList(categoryResponse.getCategories());
     }
 

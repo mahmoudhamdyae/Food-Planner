@@ -37,7 +37,7 @@ public class HomePresenter implements IHomePresenter, NetworkCallback {
     @Override
     public void onSuccessResult(Object object) {
         if (object instanceof CategoryResponse) {
-            view.onGetMealsSuccess((CategoryResponse) object);
+            view.onGetCategoriesSuccess((CategoryResponse) object);
         } else if (object instanceof MealsResponse) {
             view.onGetMealOfTheDaySuccess((MealsResponse) object);
         }

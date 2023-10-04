@@ -5,7 +5,7 @@ import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 
 public interface IHomeView {
 
-    void onGetMealsSuccess(CategoryResponse categoryResponse);
+    void onGetCategoriesSuccess(CategoryResponse categoryResponse);
 
     void onGetMealOfTheDaySuccess(MealsResponse mealsResponse);
 

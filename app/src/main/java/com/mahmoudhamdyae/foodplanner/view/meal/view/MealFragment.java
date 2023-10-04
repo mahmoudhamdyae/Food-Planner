@@ -105,20 +105,23 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
     @Override
     public void showData(List<Meal> meals) {
         favMeals = meals;
-        if (favMeals != null) {
-            for (int i = 0; i < favMeals.size(); i++) {
-                if (favMeals.get(i).getId().equals(meal.getId())) {
-                    isFav = true;
-                    addToCartButton.setText(getString(R.string.remove_from_cart));
-                    addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_24));
-                    break;
-                } else {
-                    isFav = false;
-                    addToCartButton.setText(getString(R.string.add_to_cart));
-                    addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_border_24));
+
+        try {
+            if (favMeals != null) {
+                for (int i = 0; i < favMeals.size(); i++) {
+                    if (favMeals.get(i).getId().equals(meal.getId())) {
+                        isFav = true;
+                        addToCartButton.setText(getString(R.string.remove_from_cart));
+                        addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_24));
+                        break;
+                    } else {
+                        isFav = false;
+                        addToCartButton.setText(getString(R.string.add_to_cart));
+                        addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_border_24));
+                    }
                 }
             }
-        }
+        } catch (IllegalStateException e) { e.printStackTrace(); }
     }
 
     @Override
@@ -126,68 +129,70 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
         this.meal = meal;
         presenter.getFavMeals();
 
-        // Add to Cart Button
-        addToCartButton.setOnClickListener(v -> {
-            if (isFav) {
-                presenter.removeMealFromFav(meal);
-                Toast.makeText(requireContext(), getString(R.string.removed_toast, meal.getName()), Toast.LENGTH_SHORT).show();
-                addToCartButton.setText(getString(R.string.add_to_cart));
-                addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_border_24));
-                isFav = false;
-            } else {
-                presenter.addMealToFav(meal);
-                Toast.makeText(requireContext(), getString(R.string.added_toast, meal.getName()), Toast.LENGTH_SHORT).show();
-                addToCartButton.setText(getString(R.string.remove_from_cart));
-                addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_24));
-                isFav = true;
-            }
-        });
-
-        // Meal Image
-        Glide.with(requireContext())
-                .load(meal.getImageUrl())
-                .apply(new RequestOptions()
-                        .placeholder(R.drawable.loading_img)
-                        .error(R.drawable.ic_broken_image))
-                .into(imageView);
-        // Meal Text
-        titleTextView.setText(meal.getName());
-        fromTextView.setText(getString(R.string.from, meal.getArea()));
-        instTextView.setText(meal.getInstructions());
-
-        // YouTube Player
-        String videoUrl = meal.getYoutubeUrl().replace("watch?v=", "embed/");
-        String video = "<iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl + "\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
-        youtube.loadData(video, "text/html","utf-8");
-        youtube.getSettings().setJavaScriptEnabled(true);
-        youtube.setWebChromeClient(new WebChromeClient());
-
-        // Ingredients
-        ArrayList<String> ingredients = new ArrayList<>();
         try {
-            if (!meal.getIngredient1().equals("") && meal.getIngredient1() != null) ingredients.add(meal.getIngredient1());
-            if (!meal.getIngredient2().equals("") && meal.getIngredient2() != null) ingredients.add(meal.getIngredient2());
-            if (!meal.getIngredient3().equals("") && meal.getIngredient3() != null) ingredients.add(meal.getIngredient3());
-            if (!meal.getIngredient4().equals("") && meal.getIngredient4() != null) ingredients.add(meal.getIngredient4());
-            if (!meal.getIngredient5().equals("") && meal.getIngredient5() != null) ingredients.add(meal.getIngredient5());
-            if (!meal.getIngredient6().equals("") && meal.getIngredient6() != null) ingredients.add(meal.getIngredient6());
-            if (!meal.getIngredient7().equals("") && meal.getIngredient7() != null) ingredients.add(meal.getIngredient7());
-            if (!meal.getIngredient8().equals("") && meal.getIngredient8() != null) ingredients.add(meal.getIngredient8());
-            if (!meal.getIngredient9().equals("") && meal.getIngredient9() != null) ingredients.add(meal.getIngredient9());
-            if (!meal.getIngredient10().equals("") && meal.getIngredient10() != null) ingredients.add(meal.getIngredient10());
-            if (!meal.getIngredient11() .equals("") && meal.getIngredient11() != null) ingredients.add(meal.getIngredient11());
-            if (!meal.getIngredient12().equals("") && meal.getIngredient12() != null) ingredients.add(meal.getIngredient12());
-            if (!meal.getIngredient13().equals("") && meal.getIngredient13() != null) ingredients.add(meal.getIngredient13());
-            if (!meal.getIngredient14().equals("") && meal.getIngredient14() != null) ingredients.add(meal.getIngredient14());
-            if (!meal.getIngredient15().equals("") && meal.getIngredient15() != null) ingredients.add(meal.getIngredient15());
-            if (!meal.getIngredient16().equals("") && meal.getIngredient16() != null) ingredients.add(meal.getIngredient16());
-            if (!meal.getIngredient17().equals("") && meal.getIngredient17() != null) ingredients.add(meal.getIngredient17());
-            if (!meal.getIngredient18().equals("") && meal.getIngredient18() != null) ingredients.add(meal.getIngredient18());
-            if (!meal.getIngredient19().equals("") && meal.getIngredient19() != null) ingredients.add(meal.getIngredient19());
-            if (!meal.getIngredient20().equals("") && meal.getIngredient20() != null) ingredients.add(meal.getIngredient20());
-        } catch (NullPointerException e) { e.printStackTrace(); }
+            // Add to Cart Button
+            addToCartButton.setOnClickListener(v -> {
+                if (isFav) {
+                    presenter.removeMealFromFav(meal);
+                    Toast.makeText(requireContext(), getString(R.string.removed_toast, meal.getName()), Toast.LENGTH_SHORT).show();
+                    addToCartButton.setText(getString(R.string.add_to_cart));
+                    addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_border_24));
+                    isFav = false;
+                } else {
+                    presenter.addMealToFav(meal);
+                    Toast.makeText(requireContext(), getString(R.string.added_toast, meal.getName()), Toast.LENGTH_SHORT).show();
+                    addToCartButton.setText(getString(R.string.remove_from_cart));
+                    addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_24));
+                    isFav = true;
+                }
+            });
 
-        mAdapter.setList(ingredients);
+            // Meal Image
+            Glide.with(requireContext())
+                    .load(meal.getImageUrl())
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.loading_img)
+                            .error(R.drawable.ic_broken_image))
+                    .into(imageView);
+            // Meal Text
+            titleTextView.setText(meal.getName());
+            fromTextView.setText(getString(R.string.from, meal.getArea()));
+            instTextView.setText(meal.getInstructions());
+
+            // YouTube Player
+            String videoUrl = meal.getYoutubeUrl().replace("watch?v=", "embed/");
+            String video = "<iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl + "\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
+            youtube.loadData(video, "text/html","utf-8");
+            youtube.getSettings().setJavaScriptEnabled(true);
+            youtube.setWebChromeClient(new WebChromeClient());
+
+            // Ingredients
+            ArrayList<String> ingredients = new ArrayList<>();
+            try {
+                if (!meal.getIngredient1().equals("") && meal.getIngredient1() != null) ingredients.add(meal.getIngredient1());
+                if (!meal.getIngredient2().equals("") && meal.getIngredient2() != null) ingredients.add(meal.getIngredient2());
+                if (!meal.getIngredient3().equals("") && meal.getIngredient3() != null) ingredients.add(meal.getIngredient3());
+                if (!meal.getIngredient4().equals("") && meal.getIngredient4() != null) ingredients.add(meal.getIngredient4());
+                if (!meal.getIngredient5().equals("") && meal.getIngredient5() != null) ingredients.add(meal.getIngredient5());
+                if (!meal.getIngredient6().equals("") && meal.getIngredient6() != null) ingredients.add(meal.getIngredient6());
+                if (!meal.getIngredient7().equals("") && meal.getIngredient7() != null) ingredients.add(meal.getIngredient7());
+                if (!meal.getIngredient8().equals("") && meal.getIngredient8() != null) ingredients.add(meal.getIngredient8());
+                if (!meal.getIngredient9().equals("") && meal.getIngredient9() != null) ingredients.add(meal.getIngredient9());
+                if (!meal.getIngredient10().equals("") && meal.getIngredient10() != null) ingredients.add(meal.getIngredient10());
+                if (!meal.getIngredient11() .equals("") && meal.getIngredient11() != null) ingredients.add(meal.getIngredient11());
+                if (!meal.getIngredient12().equals("") && meal.getIngredient12() != null) ingredients.add(meal.getIngredient12());
+                if (!meal.getIngredient13().equals("") && meal.getIngredient13() != null) ingredients.add(meal.getIngredient13());
+                if (!meal.getIngredient14().equals("") && meal.getIngredient14() != null) ingredients.add(meal.getIngredient14());
+                if (!meal.getIngredient15().equals("") && meal.getIngredient15() != null) ingredients.add(meal.getIngredient15());
+                if (!meal.getIngredient16().equals("") && meal.getIngredient16() != null) ingredients.add(meal.getIngredient16());
+                if (!meal.getIngredient17().equals("") && meal.getIngredient17() != null) ingredients.add(meal.getIngredient17());
+                if (!meal.getIngredient18().equals("") && meal.getIngredient18() != null) ingredients.add(meal.getIngredient18());
+                if (!meal.getIngredient19().equals("") && meal.getIngredient19() != null) ingredients.add(meal.getIngredient19());
+                if (!meal.getIngredient20().equals("") && meal.getIngredient20() != null) ingredients.add(meal.getIngredient20());
+            } catch (NullPointerException e) { e.printStackTrace(); }
+
+            mAdapter.setList(ingredients);
+        } catch (IllegalStateException e) { e.printStackTrace(); }
     }
 
     @Override
