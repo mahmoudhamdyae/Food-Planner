@@ -18,6 +18,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
@@ -29,11 +30,13 @@ import com.mahmoudhamdyae.foodplanner.view.search.names.presenter.INamesPresente
 import com.mahmoudhamdyae.foodplanner.view.search.names.presenter.NamesPresenter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NamesFragment extends Fragment implements INamesView, OnMealClickListener {
 
     private NamesAdapter mAdapter;
     private INamesPresenter presenter;
+    private LottieAnimationView emptyView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,8 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        emptyView = view.findViewById(R.id.empty_image);
 
         // Set Action Bar Title
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.names_screen_title);
@@ -83,7 +88,13 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
 
     @Override
     public void onGetMealsSuccess(MealsResponse mealsResponse) {
-        mAdapter.setList(mealsResponse.getMeals());
+        List<Meal> meals = mealsResponse.getMeals();
+        if (meals == null || meals.size() == 0) {
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            emptyView.setVisibility(View.GONE);
+        }
+        mAdapter.setList(meals);
     }
 
     @Override
