@@ -22,6 +22,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -55,6 +56,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     private RecyclerView recyclerView;
     private Meal mealOfTheDay;
     private ArrayList<Category> categories;
+    private LottieAnimationView errorImage;
 
     private HomePresenter presenter;
 
@@ -74,6 +76,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         super.onViewCreated(view, savedInstanceState);
 
         // View Items
+        errorImage = view.findViewById(R.id.error_image);
         mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
         imageView = view.findViewById(R.id.image_view);
         title = view.findViewById(R.id.title);
@@ -228,7 +231,8 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     @Override
     public void onNetworkFail(String errorMsg) {
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
-        mShimmerViewContainer.stopShimmerAnimation();
+        mShimmerViewContainer.setVisibility(View.GONE);
+        errorImage.setVisibility(View.VISIBLE);
     }
 
     @Override
