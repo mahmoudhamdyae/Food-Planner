@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
@@ -32,6 +33,8 @@ import java.util.ArrayList;
 public class MealsFragment extends Fragment implements IMealsView, OnMealClickListener {
 
     private MealsAdapter mAdapter;
+    private ShimmerFrameLayout mShimmerViewContainer;
+    private RecyclerView recyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,11 +51,13 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
+        recyclerView = view.findViewById(R.id.meals_recycler_view);
+
         TextView descTextView = view.findViewById(R.id.desc);
 
         // Recycler View
         mAdapter = new MealsAdapter(getContext(), new ArrayList<>(), this);
-        RecyclerView recyclerView = view.findViewById(R.id.meals_recycler_view);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), Utils.getNoOfColumns(requireContext()));
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -81,11 +86,13 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
 
     @Override
     public void onGetMealsSuccess(MealsResponse mealsResponse) {
+        stopShimmerEffectAndShowUi();
         mAdapter.setList(mealsResponse.getMeals());
     }
 
     @Override
     public void onGetMealsFail(String errorMsg) {
+        mShimmerViewContainer.stopShimmerAnimation();
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 
@@ -97,5 +104,23 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
     private void navigateToMealScreen(Meal meal) {
         NavDirections action = MealsFragmentDirections.actionMealsFragmentToMealFragment(meal.getId(), null);
         Navigation.findNavController(requireView()).navigate(action);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mShimmerViewContainer.startShimmerAnimation();
+    }
+
+    @Override
+    public void onPause() {
+        stopShimmerEffectAndShowUi();
+        super.onPause();
+    }
+
+    private void stopShimmerEffectAndShowUi() {
+        mShimmerViewContainer.stopShimmerAnimation();
+        mShimmerViewContainer.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 }

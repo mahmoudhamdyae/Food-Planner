@@ -15,6 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.model.Category;
@@ -30,6 +31,8 @@ import java.util.ArrayList;
 public class CategoriesFragment extends Fragment implements ICategoryView, OnCategoryClickListener {
 
     private CategoriesAdapter mAdapter;
+    private ShimmerFrameLayout mShimmerViewContainer;
+    private RecyclerView recyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,12 +49,14 @@ public class CategoriesFragment extends Fragment implements ICategoryView, OnCat
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
+        recyclerView = view.findViewById(R.id.categories_recycler_view);
+
         // Set Action Bar Title
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.categories_screen_title);
 
         // Recycler View
         mAdapter = new CategoriesAdapter(getContext(), new ArrayList<>(), this);
-        RecyclerView recyclerView = view.findViewById(R.id.categories_recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -65,11 +70,13 @@ public class CategoriesFragment extends Fragment implements ICategoryView, OnCat
 
     @Override
     public void onGetCategoriesSuccess(CategoryResponse categoryResponse) {
+        stopShimmerEffectAndShowUi();
         mAdapter.setList(categoryResponse.getCategories());
     }
 
     @Override
     public void onGetCategoriesFail(String errorMsg) {
+        mShimmerViewContainer.stopShimmerAnimation();
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 
@@ -81,5 +88,23 @@ public class CategoriesFragment extends Fragment implements ICategoryView, OnCat
     private void navigateToMealsScreen(Category category) {
         NavDirections action = CategoriesFragmentDirections.actionCategoriesFragmentToMealsFragment(SearchType.CATEGORY, category.getName(), category.getDescription());
         Navigation.findNavController(requireView()).navigate(action);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mShimmerViewContainer.startShimmerAnimation();
+    }
+
+    @Override
+    public void onPause() {
+        stopShimmerEffectAndShowUi();
+        super.onPause();
+    }
+
+    private void stopShimmerEffectAndShowUi() {
+        mShimmerViewContainer.stopShimmerAnimation();
+        mShimmerViewContainer.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 }
