@@ -1,7 +1,6 @@
 package com.mahmoudhamdyae.foodplanner.view.search.meals.view;
 
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
 import com.mahmoudhamdyae.foodplanner.model.SearchType;
 import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
+import com.mahmoudhamdyae.foodplanner.utils.Utils;
 import com.mahmoudhamdyae.foodplanner.view.search.meals.presenter.IMealsPresenter;
 import com.mahmoudhamdyae.foodplanner.view.search.meals.presenter.MealsPresenter;
 
@@ -44,12 +44,6 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
         return inflater.inflate(R.layout.fragment_meals, container, false);
     }
 
-    private int getNoOfColumns() {
-        DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
-        float screenWidthDp = displayMetrics.widthPixels / displayMetrics.density;
-        return (int) Math.ceil(screenWidthDp / 185f);
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -60,7 +54,7 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
         mAdapter = new MealsAdapter(getContext(), new ArrayList<>(), this);
         RecyclerView recyclerView = view.findViewById(R.id.meals_recycler_view);
         recyclerView.setHasFixedSize(true);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), getNoOfColumns());
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), Utils.getNoOfColumns(requireContext()));
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);

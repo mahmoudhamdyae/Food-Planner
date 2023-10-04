@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -22,6 +22,7 @@ import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
 import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
+import com.mahmoudhamdyae.foodplanner.utils.Utils;
 import com.mahmoudhamdyae.foodplanner.view.fav.presenter.FavPresenter;
 import com.mahmoudhamdyae.foodplanner.view.fav.presenter.IFavPresenter;
 
@@ -54,7 +55,7 @@ public class FavFragment extends Fragment implements IFavView, OnMealClickListen
             mAdapter = new FavAdapter(getContext(), new ArrayList<>(), this);
             RecyclerView recyclerView = view.findViewById(R.id.fav_recycler_view);
             recyclerView.setHasFixedSize(true);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), Utils.getNoOfColumns(requireContext()));
             layoutManager.setOrientation(RecyclerView.VERTICAL);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(mAdapter);
