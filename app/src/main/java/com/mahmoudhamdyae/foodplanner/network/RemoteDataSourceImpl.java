@@ -20,28 +20,24 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
     public static final String TAG = "Remote_Data_Source";
 
     private static RemoteDataSourceImpl client = null;
-    private ApiService apiService;
+    public static ApiService apiService;
 
     private RemoteDataSourceImpl() { }
 
     public static RemoteDataSource getInstance() {
         if (client == null) {
             client = new RemoteDataSourceImpl();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            apiService = retrofit.create(ApiService.class);
         }
         return client;
     }
 
-    private void makeNetworkCall() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        apiService = retrofit.create(ApiService.class);
-    }
-
     @Override
     public void getCategories(NetworkCallback networkCallback) {
-        makeNetworkCall();
         Call<CategoryResponse> call = apiService.getCategories();
         call.enqueue(new Callback<CategoryResponse>() {
 
@@ -64,7 +60,6 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
 
     @Override
     public void searchMeal(String name, NetworkCallback networkCallback) {
-        makeNetworkCall();
         Call<MealsResponse> call = apiService.searchMealsByName(name);
         call.enqueue(new Callback<MealsResponse>() {
 
@@ -87,7 +82,6 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
 
     @Override
     public void getMealOfTheDay(NetworkCallback networkCallback) {
-        makeNetworkCall();
         Call<MealsResponse> call = apiService.getMealOfTheDay();
         call.enqueue(new Callback<MealsResponse>() {
             @Override
@@ -109,7 +103,6 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
 
     @Override
     public void getIngredients(NetworkCallback networkCallback) {
-        makeNetworkCall();
         Call<IngredientResponse> call = apiService.getIngredients();
         call.enqueue(new Callback<IngredientResponse>() {
             @Override
@@ -131,7 +124,6 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
 
     @Override
     public void getMealsByArea(String area, NetworkCallback networkCallback) {
-        makeNetworkCall();
         Call<MealsResponse> call = apiService.getMealsByArea(area);
         call.enqueue(new Callback<MealsResponse>() {
             @Override
@@ -153,7 +145,6 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
 
     @Override
     public void getMealsByCategory(String category, NetworkCallback networkCallback) {
-        makeNetworkCall();
         Call<MealsResponse> call = apiService.getMealsByCategory(category);
         call.enqueue(new Callback<MealsResponse>() {
             @Override
@@ -175,7 +166,6 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
 
     @Override
     public void getMealsByIngredient(String ingredient, NetworkCallback networkCallback) {
-        makeNetworkCall();
         Call<MealsResponse> call = apiService.getMealsByIngredient(ingredient);
         call.enqueue(new Callback<MealsResponse>() {
             @Override
@@ -197,7 +187,6 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
 
     @Override
     public void getMealById(String mealId, NetworkCallback networkCallback) {
-        makeNetworkCall();
         Call<MealsResponse> call = apiService.getMealById(mealId);
         call.enqueue(new Callback<MealsResponse>() {
             @Override
