@@ -1,33 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="20dp"
-    android:layout_marginLeft="10dp">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    android:elevation="8dp"
+    app:cardCornerRadius="8dp">
 
-    <View
-        android:id="@+id/thumbnail"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="10dp"
-        android:background="#dddddd"
-        />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/thumbnail"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
+        android:padding="8dp">
+
         <View
-            android:layout_width="100dp"
-            android:layout_height="8dp"
-            android:background="#dddddd" />
+            android:id="@+id/thumbnail"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="8dp"
+            android:background="#dddddd"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
         <View
-            android:layout_width="30dp"
+            android:id="@+id/shimmer_title"
+            android:layout_width="150dp"
             android:layout_height="8dp"
-            android:layout_marginTop="5dp"
-            android:background="#dddddd" />
-    </LinearLayout>
-</RelativeLayout>
+            android:background="#dddddd"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="8dp"
+            app:layout_constraintStart_toEndOf="@+id/thumbnail"
+            app:layout_constraintTop_toTopOf="@+id/thumbnail"/>
+        <View
+            android:id="@+id/shimmer_desc"
+            android:layout_width="70dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="8dp"
+            android:background="#dddddd"
+            app:layout_constraintStart_toEndOf="@id/thumbnail"
+            app:layout_constraintTop_toBottomOf="@id/shimmer_title"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

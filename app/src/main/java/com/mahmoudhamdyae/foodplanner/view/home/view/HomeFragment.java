@@ -228,7 +228,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     @Override
     public void onNetworkFail(String errorMsg) {
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
-        mShimmerViewContainer.stopShimmerAnimation();
+//        mShimmerViewContainer.stopShimmerAnimation();
     }
 
     @Override
