@@ -20,6 +20,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
+import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
+import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
+import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.utils.Validation;
 import com.mahmoudhamdyae.foodplanner.view.auth.presenter.AuthPresenter;
 import com.mahmoudhamdyae.foodplanner.view.auth.presenter.IAuthPresenter;
@@ -45,7 +48,8 @@ public class SignupFragment extends Fragment implements IAuthView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter = new AuthPresenter(this, new AccountServiceImpl(requireContext()));
+        presenter = new AuthPresenter(this, new AccountServiceImpl(requireContext()), RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(),
+                LocalDataSourceImpl.getInstance(requireContext())));
 
         // Login - Navigate Back
         TextView loginButton = view.findViewById(R.id.login);

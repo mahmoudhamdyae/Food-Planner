@@ -1,19 +1,25 @@
 package com.mahmoudhamdyae.foodplanner.view.auth.presenter;
 
 import android.content.Intent;
+import android.util.Log;
 
 import com.mahmoudhamdyae.foodplanner.account.AccountService;
 import com.mahmoudhamdyae.foodplanner.account.OnResult;
+import com.mahmoudhamdyae.foodplanner.model.Meal;
+import com.mahmoudhamdyae.foodplanner.model.Repository;
+import com.mahmoudhamdyae.foodplanner.network.NetworkCallback;
 import com.mahmoudhamdyae.foodplanner.view.auth.view.IAuthView;
 
-public class AuthPresenter implements IAuthPresenter, OnResult {
+public class AuthPresenter implements IAuthPresenter, OnResult, NetworkCallback {
 
     private final AccountService accountService;
     private final IAuthView view;
+    private final Repository repo;
 
-    public AuthPresenter(IAuthView view, AccountService accountService) {
+    public AuthPresenter(IAuthView view, AccountService accountService, Repository repo) {
         this.accountService = accountService;
         this.view = view;
+        this.repo = repo;
     }
 
 
@@ -40,7 +46,7 @@ public class AuthPresenter implements IAuthPresenter, OnResult {
     @Override
     public void onAuthSuccess() {
         view.onAuthSuccess();
-
+        repo.getFavMealsFromFirebase(this);
     }
 
     @Override
@@ -50,6 +56,16 @@ public class AuthPresenter implements IAuthPresenter, OnResult {
 
     @Override
     public void onFailure(String errorMsg) {
+        view.onFailure(errorMsg);
+    }
+
+    @Override
+    public void onSuccessResult(Object object) {
+        Log.d("hahahahaha", "onSuccessResult: " + ((Meal) object).getName());
+    }
+
+    @Override
+    public void onFailureResult(String errorMsg) {
         view.onFailure(errorMsg);
     }
 }

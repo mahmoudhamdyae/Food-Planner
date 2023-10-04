@@ -98,4 +98,9 @@ public class RepositoryImpl implements Repository {
     public void removeAllMealsFromFav() {
         localDataSource.removeAllMealsFromFav();
     }
+
+    @Override
+    public void getFavMealsFromFirebase(NetworkCallback networkCallback) {
+        remoteDataSource.getFavMeals(networkCallback);
+    }
 }

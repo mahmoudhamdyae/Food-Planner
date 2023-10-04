@@ -48,7 +48,7 @@ public class LocalDataSourceImpl implements LocalDataSource {
     }
 
     @Override
-    public void addMealToFav(Meal meal) {
+    public void addMealToFav(Meal... meal) {
         new Thread(() -> {
             dao.addMealToFav(meal);
             Log.i(TAG, "addMealToFav");

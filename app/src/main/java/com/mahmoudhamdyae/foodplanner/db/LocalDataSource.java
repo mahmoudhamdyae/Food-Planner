@@ -11,7 +11,7 @@ public interface LocalDataSource {
 
     LiveData<List<Meal>> observeFavMeals();
     void getFavMeals(IMealView view);
-    void addMealToFav(Meal meal);
+    void addMealToFav(Meal... meal);
     void removeMealFromFav(Meal meal);
     void removeAllMealsFromFav();
 }

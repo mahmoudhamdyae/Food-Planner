@@ -224,13 +224,13 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
 
     @Override
     public void getFavMeals(NetworkCallback networkCallback) {
-        db.collection("users")
+        db.collection(getUserId())
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d(TAG, document.getId() + " => " + document.getData());
-                            networkCallback.onSuccessResult(document.getData());
+                            networkCallback.onSuccessResult(document.toObject(Meal.class));
                         }
                     } else {
                         Log.w(TAG, "Error getting documents.", task.getException());

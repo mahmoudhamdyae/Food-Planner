@@ -24,4 +24,5 @@ public interface Repository {
     void getMealsByCategory(String category, NetworkCallback networkCallback);
     void getMealsByIngredient(String ingredient, NetworkCallback networkCallback);
     void getMealById(String mealId, NetworkCallback networkCallback);
+    void getFavMealsFromFirebase(NetworkCallback networkCallback);
 }
