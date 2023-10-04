@@ -9,4 +9,5 @@ public interface IMealPresenter {
     void getFavMeals();
     void addMealToFav(Meal meal);
     void removeMealFromFav(Meal meal);
+    Boolean hasUser();
 }

@@ -1,5 +1,6 @@
 package com.mahmoudhamdyae.foodplanner.view.meal.presenter;
 
+import com.mahmoudhamdyae.foodplanner.account.AccountService;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 import com.mahmoudhamdyae.foodplanner.model.Repository;
@@ -10,10 +11,12 @@ public class MealPresenter implements IMealPresenter, NetworkCallback {
 
     private final IMealView view;
     private final Repository repo;
+    private final AccountService accountService;
 
-    public MealPresenter(IMealView view, Repository repo) {
+    public MealPresenter(IMealView view, Repository repo, AccountService accountService) {
         this.view = view;
         this.repo = repo;
+        this.accountService = accountService;
     }
 
     @Override
@@ -34,6 +37,11 @@ public class MealPresenter implements IMealPresenter, NetworkCallback {
     @Override
     public void removeMealFromFav(Meal meal) {
         repo.removeMealFromFav(meal, this);
+    }
+
+    @Override
+    public Boolean hasUser() {
+        return accountService.hasUser();
     }
 
     @Override

@@ -100,7 +100,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         setHasOptionsMenu(true);
     }
 
-    private void signOut() {
+    private void showSignOutDialog() {
         new MaterialAlertDialogBuilder(requireContext())
                 .setMessage(R.string.dialog_sign_out_msg)
                 .setPositiveButton(R.string.dialog_sign_out, (dialog, id) -> {
@@ -127,10 +127,10 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.log_out:
-                signOut();
+                showSignOutDialog();
                 return true;
             case R.id.sign_in:
-                signUp();
+                showSignUpDialog();
                 return true;
             default:
                 break;
@@ -138,7 +138,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         return false;
     }
 
-    private void signUp() {
+    private void showSignUpDialog() {
         new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.dialog_log_in_title)
                 .setMessage(R.string.dialog_log_in_msg)
