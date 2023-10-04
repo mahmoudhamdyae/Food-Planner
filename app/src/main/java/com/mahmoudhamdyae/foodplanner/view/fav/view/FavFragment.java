@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
@@ -31,6 +32,8 @@ import java.util.List;
 public class FavFragment extends Fragment implements IFavView, OnMealClickListener {
 
     private FavAdapter mAdapter;
+    private ShimmerFrameLayout mShimmerViewContainer;
+    private RecyclerView recyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,12 +50,15 @@ public class FavFragment extends Fragment implements IFavView, OnMealClickListen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
+        recyclerView = view.findViewById(R.id.fav_recycler_view);
+
+        // Presenter
         IFavPresenter presenter = new FavPresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())), new AccountServiceImpl(requireContext()));
         if (presenter.hasUser()) {
             presenter.observeFavMeals();
 
             mAdapter = new FavAdapter(getContext(), new ArrayList<>(), this);
-            RecyclerView recyclerView = view.findViewById(R.id.fav_recycler_view);
             recyclerView.setHasFixedSize(true);
             GridLayoutManager layoutManager = new GridLayoutManager(getContext(), Utils.getNoOfColumns(requireContext()));
             layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -89,9 +95,8 @@ public class FavFragment extends Fragment implements IFavView, OnMealClickListen
 
     @Override
     public void showData(LiveData<List<Meal>> meals) {
-        meals.observe(this, meals1 -> {
-            mAdapter.setList(meals1);
-        });
+        stopShimmerEffectAndShowUi();
+        meals.observe(this, meals1 -> mAdapter.setList(meals1));
     }
 
     private void navigateToMealScreen(Meal meal) {
@@ -102,5 +107,23 @@ public class FavFragment extends Fragment implements IFavView, OnMealClickListen
     @Override
     public void onMealClicked(Meal meal) {
         navigateToMealScreen(meal);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mShimmerViewContainer.startShimmerAnimation();
+    }
+
+    @Override
+    public void onPause() {
+        stopShimmerEffectAndShowUi();
+        super.onPause();
+    }
+
+    private void stopShimmerEffectAndShowUi() {
+        mShimmerViewContainer.stopShimmerAnimation();
+        mShimmerViewContainer.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 }

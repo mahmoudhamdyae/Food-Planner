@@ -7,18 +7,18 @@ import com.mahmoudhamdyae.foodplanner.view.fav.view.IFavView;
 public class FavPresenter implements IFavPresenter {
 
     private final Repository repo;
-    private final IFavView listener;
+    private final IFavView view;
     private final AccountService accountService;
 
-    public FavPresenter(IFavView listener, Repository repo, AccountService accountService) {
-        this.listener = listener;
+    public FavPresenter(IFavView view, Repository repo, AccountService accountService) {
+        this.view = view;
         this.repo = repo;
         this.accountService = accountService;
     }
 
     @Override
     public void observeFavMeals() {
-        listener.showData(repo.observeFavMeals());
+        view.showData(repo.observeFavMeals());
     }
 
     @Override
