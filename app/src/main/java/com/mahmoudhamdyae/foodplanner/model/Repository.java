@@ -15,8 +15,8 @@ public interface Repository {
 
     LiveData<List<Meal>> observeFavMeals();
     void getFavMeals(IMealView view);
-    void addMealToFav(Meal meal);
-    void removeMealFromFav(Meal meal);
+    void addMealToFav(Meal meal, NetworkCallback networkCallback);
+    void removeMealFromFav(Meal meal, NetworkCallback networkCallback);
 
     void getIngredients(NetworkCallback networkCallback);
     void getMealsByArea(String area, NetworkCallback networkCallback);

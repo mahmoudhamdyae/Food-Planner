@@ -1,5 +1,7 @@
 package com.mahmoudhamdyae.foodplanner.network;
 
+import com.mahmoudhamdyae.foodplanner.model.Meal;
+
 public interface RemoteDataSource {
 
     void getCategories(NetworkCallback networkCallback);
@@ -11,4 +13,9 @@ public interface RemoteDataSource {
     void getMealsByIngredient(String ingredient, NetworkCallback networkCallback);
 
     void getMealById(String mealId, NetworkCallback networkCallback);
+
+    // Firebase Firestore
+    void getFavMeals(NetworkCallback networkCallback);
+    void addMealToFav(Meal meal, NetworkCallback networkCallback);
+    void removeMealFromFav(Meal meal, NetworkCallback networkCallback);
 }

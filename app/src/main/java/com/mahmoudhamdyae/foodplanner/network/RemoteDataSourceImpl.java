@@ -4,9 +4,15 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
 import com.mahmoudhamdyae.foodplanner.model.IngredientResponse;
+import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
+
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,16 +28,26 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
     private static RemoteDataSourceImpl client = null;
     public static ApiService apiService;
 
-    private RemoteDataSourceImpl() { }
+    private static FirebaseAuth mAuth;
+    private static FirebaseFirestore db;
+
+    private RemoteDataSourceImpl() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        apiService = retrofit.create(ApiService.class);
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+    }
+
+    private String getUserId() {
+        return mAuth.getUid();
+    }
 
     public static RemoteDataSource getInstance() {
         if (client == null) {
             client = new RemoteDataSourceImpl();
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            apiService = retrofit.create(ApiService.class);
         }
         return client;
     }
@@ -203,6 +219,43 @@ public class RemoteDataSourceImpl implements RemoteDataSource {
                 networkCallback.onFailureResult(t.getMessage());
                 t.printStackTrace();
             }
+        });
+    }
+
+    @Override
+    public void getFavMeals(NetworkCallback networkCallback) {
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, document.getId() + " => " + document.getData());
+                            networkCallback.onSuccessResult(document.getData());
+                        }
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                        networkCallback.onFailureResult(Objects.requireNonNull(task.getException()).getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void addMealToFav(Meal meal, NetworkCallback networkCallback) {
+        db.collection(getUserId()).document(meal.getId()).set(meal).addOnSuccessListener(documentReference -> {
+            Log.d(TAG, "addMealToFav: " + documentReference);
+        }).addOnFailureListener(e -> {
+            Log.w(TAG, "Error adding document", e);
+            networkCallback.onFailureResult(e.getMessage());
+        });
+    }
+
+    @Override
+    public void removeMealFromFav(Meal meal, NetworkCallback networkCallback) {
+        db.collection(getUserId()).document(meal.getId()).delete().addOnSuccessListener(documentReference -> {
+            Log.d(TAG, "removeMealToFav: " + documentReference);
+        }).addOnFailureListener(e -> {
+            Log.w(TAG, "Error adding document", e);
+            networkCallback.onFailureResult(e.getMessage());
         });
     }
 }

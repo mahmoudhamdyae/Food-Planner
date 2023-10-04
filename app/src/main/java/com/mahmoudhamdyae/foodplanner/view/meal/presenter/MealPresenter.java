@@ -28,17 +28,19 @@ public class MealPresenter implements IMealPresenter, NetworkCallback {
 
     @Override
     public void addMealToFav(Meal meal) {
-        repo.addMealToFav(meal);
+        repo.addMealToFav(meal, this);
     }
 
     @Override
     public void removeMealFromFav(Meal meal) {
-        repo.removeMealFromFav(meal);
+        repo.removeMealFromFav(meal, this);
     }
 
     @Override
     public void onSuccessResult(Object object) {
-        view.onGetMealSuccess(((MealsResponse) object).getMeals().get(0));
+        if (object instanceof  MealsResponse) {
+            view.onGetMealSuccess(((MealsResponse) object).getMeals().get(0));
+        }
     }
 
     @Override

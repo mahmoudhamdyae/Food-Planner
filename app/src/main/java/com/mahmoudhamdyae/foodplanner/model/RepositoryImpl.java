@@ -83,12 +83,14 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void addMealToFav(Meal meal) {
+    public void addMealToFav(Meal meal, NetworkCallback networkCallback) {
         localDataSource.addMealToFav(meal);
+        remoteDataSource.addMealToFav(meal, networkCallback);
     }
 
     @Override
-    public void removeMealFromFav(Meal meal) {
+    public void removeMealFromFav(Meal meal, NetworkCallback networkCallback) {
         localDataSource.removeMealFromFav(meal);
+        remoteDataSource.removeMealFromFav(meal, networkCallback);
     }
 }
