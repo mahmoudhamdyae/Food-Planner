@@ -25,4 +25,7 @@ public interface MealDao {
 
     @Delete
     void removeMealFromFav(Meal meal);
+
+    @Query("DELETE FROM meal_table")
+    void removeAllMealsFromFav();
 }

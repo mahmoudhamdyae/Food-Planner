@@ -62,4 +62,12 @@ public class LocalDataSourceImpl implements LocalDataSource {
             Log.i(TAG, "removeMealFromFav");
         }).start();
     }
+
+    @Override
+    public void removeAllMealsFromFav() {
+        new Thread(() -> {
+            dao.removeAllMealsFromFav();
+            Log.i(TAG, "removeAllMealsFromFav");
+        }).start();
+    }
 }

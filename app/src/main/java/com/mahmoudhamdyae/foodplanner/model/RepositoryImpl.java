@@ -93,4 +93,9 @@ public class RepositoryImpl implements Repository {
         localDataSource.removeMealFromFav(meal);
         remoteDataSource.removeMealFromFav(meal, networkCallback);
     }
+
+    @Override
+    public void removeAllMealsFromFav() {
+        localDataSource.removeAllMealsFromFav();
+    }
 }

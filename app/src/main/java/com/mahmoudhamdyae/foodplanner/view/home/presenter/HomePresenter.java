@@ -32,6 +32,7 @@ public class HomePresenter implements IHomePresenter, NetworkCallback {
     @Override
     public void signOut() {
         accountService.signOut();
+        repo.removeAllMealsFromFav();
     }
 
     @Override

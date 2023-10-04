@@ -13,4 +13,5 @@ public interface LocalDataSource {
     void getFavMeals(IMealView view);
     void addMealToFav(Meal meal);
     void removeMealFromFav(Meal meal);
+    void removeAllMealsFromFav();
 }

@@ -17,6 +17,7 @@ public interface Repository {
     void getFavMeals(IMealView view);
     void addMealToFav(Meal meal, NetworkCallback networkCallback);
     void removeMealFromFav(Meal meal, NetworkCallback networkCallback);
+    void removeAllMealsFromFav();
 
     void getIngredients(NetworkCallback networkCallback);
     void getMealsByArea(String area, NetworkCallback networkCallback);
