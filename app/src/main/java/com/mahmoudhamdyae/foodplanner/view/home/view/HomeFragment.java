@@ -138,7 +138,9 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
                 // Current Day
                 mealOfTheDay = sharedPref.getMeal();
                 setMealOfTheDayUI();
-                stopShimmerEffectAndShowUi();
+                categoriesLabel.setVisibility(View.VISIBLE);
+                mealOfTheDayLabel.setVisibility(View.VISIBLE);
+                mealOfTheDayCardView.setVisibility(View.VISIBLE);
             } else {
                 // New Day
                 presenter.getMealOfTheDay();
@@ -241,7 +243,6 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     public void onGetMealOfTheDaySuccess(MealsResponse mealsResponse) {
         mealOfTheDay = mealsResponse.getMeals().get(0);
         setMealOfTheDayUI();
-        stopShimmerEffectAndShowUi();
         sharedPref.setMeal(mealOfTheDay);
     }
 
