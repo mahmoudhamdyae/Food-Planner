@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
                     destinationId == R.id.authFragment ||
                             destinationId == R.id.loginFragment ||
                             destinationId == R.id.signupFragment ||
-                            destinationId == R.id.mealFragment
+                            destinationId == R.id.mealFragment ||
+                            destinationId == R.id.welcomeFragment
             ) {
                 getSupportActionBar().hide();
                 findViewById(R.id.bottom_nav).setVisibility(View.GONE);
