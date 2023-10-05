@@ -31,61 +31,26 @@
         app:layout_constraintTop_toTopOf="parent"
         shimmer:duration="800">
 
-        <GridLayout
+        <!-- Adding 7 rows of placeholders -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:columnCount="2"
-            android:orientation="vertical"
-            android:rowCount="4">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <include
-                layout="@layout/shimmer_grid"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_margin="8dp" />
+            <include layout="@layout/shimmer_linear_row" />
 
-            <include
-                layout="@layout/shimmer_grid"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_margin="8dp" />
+            <include layout="@layout/shimmer_linear_row" />
 
-            <include
-                layout="@layout/shimmer_grid"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_margin="8dp" />
+            <include layout="@layout/shimmer_linear_row" />
 
-            <include
-                layout="@layout/shimmer_grid"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_margin="8dp" />
+            <include layout="@layout/shimmer_linear_row" />
 
-            <include
-                layout="@layout/shimmer_grid"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_margin="8dp" />
+            <include layout="@layout/shimmer_linear_row" />
 
-            <include
-                layout="@layout/shimmer_grid"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_margin="8dp" />
+            <include layout="@layout/shimmer_linear_row" />
 
-            <include
-                layout="@layout/shimmer_grid"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_margin="8dp" />
-
-            <include
-                layout="@layout/shimmer_grid"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_margin="8dp" />
-        </GridLayout>
+            <include layout="@layout/shimmer_linear_row" />
+        </LinearLayout>
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 

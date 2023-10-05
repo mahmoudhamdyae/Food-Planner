@@ -3,6 +3,7 @@ package com.mahmoudhamdyae.foodplanner.view.search.names.view;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +33,15 @@ import com.mahmoudhamdyae.foodplanner.view.search.names.presenter.NamesPresenter
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class NamesFragment extends Fragment implements INamesView, OnMealClickListener {
+
+    private static final String TAG = "NamesFragment";
 
     private NamesAdapter mAdapter;
     private INamesPresenter presenter;
@@ -61,6 +69,7 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
         recyclerView = view.findViewById(R.id.meals_recycler_view);
         mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
         errorImage = view.findViewById(R.id.error_image);
+        EditText searchEditText = view.findViewById(R.id.search_edit_text);
 
         // Set Action Bar Title
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.names_screen_title);
@@ -77,22 +86,32 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
         presenter = new NamesPresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())));
 
         // Search EditText
-        EditText searchEditText = view.findViewById(R.id.search_edit_text);
-        searchEditText.addTextChangedListener(new TextWatcher() {
+        Observable<String> observable = Observable.create(emitter -> searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mShimmerViewContainer.setVisibility(View.VISIBLE);
-                mShimmerViewContainer.startShimmerAnimation();
-                searchImage.setVisibility(View.GONE);
-                presenter.searchMealByName(s.toString());
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                emitter.onNext(charSequence.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
-        });
+        }));
+        observable.doOnNext(searchString -> {
+            Log.i(TAG, "upStream: " + searchString);
+        })
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .debounce(1, TimeUnit.SECONDS)
+                .distinctUntilChanged()
+                .subscribe(searchString -> {
+                    Log.i(TAG, "downStream: " + searchString);
+                    mShimmerViewContainer.setVisibility(View.VISIBLE);
+                    mShimmerViewContainer.startShimmerAnimation();
+                    searchImage.setVisibility(View.GONE);
+                    presenter.searchMealByName(searchString);
+                });
     }
 
     @Override

@@ -4,33 +4,33 @@ import com.mahmoudhamdyae.foodplanner.model.CategoryResponse;
 import com.mahmoudhamdyae.foodplanner.model.IngredientResponse;
 import com.mahmoudhamdyae.foodplanner.model.MealsResponse;
 
-import retrofit2.Call;
+import io.reactivex.rxjava3.core.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface ApiService {
 
     @GET("categories.php")
-    Call<CategoryResponse> getCategories();
+    Flowable<CategoryResponse> getCategories();
 
     @GET("search.php")
-    Call<MealsResponse> searchMealsByName(@Query("s") String name);
+    Flowable<MealsResponse> searchMealsByName(@Query("s") String name);
 
     @GET("random.php")
-    Call<MealsResponse> getMealOfTheDay();
+    Flowable<MealsResponse> getMealOfTheDay();
 
     @GET("list.php?i=list")
-    Call<IngredientResponse> getIngredients();
+    Flowable<IngredientResponse> getIngredients();
 
     @GET("filter.php") //
-    Call<MealsResponse> getMealsByArea(@Query("a") String area);
+    Flowable<MealsResponse> getMealsByArea(@Query("a") String area);
 
     @GET("filter.php") //
-    Call<MealsResponse> getMealsByCategory(@Query("c") String category);
+    Flowable<MealsResponse> getMealsByCategory(@Query("c") String category);
 
     @GET("filter.php") //
-    Call<MealsResponse> getMealsByIngredient(@Query("i") String ingredient);
+    Flowable<MealsResponse> getMealsByIngredient(@Query("i") String ingredient);
 
     @GET("lookup.php")
-    Call<MealsResponse> getMealById(@Query("i") String mealId);
+    Flowable<MealsResponse> getMealById(@Query("i") String mealId);
 }
