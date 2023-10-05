@@ -29,6 +29,7 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mahmoudhamdyae.foodplanner.R;
+import com.mahmoudhamdyae.foodplanner.SharedPref;
 import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
 import com.mahmoudhamdyae.foodplanner.account.OnResult;
 import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
@@ -42,6 +43,8 @@ import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.view.home.presenter.HomePresenter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Map;
 
 public class HomeFragment extends Fragment implements OnCategoryClickListener, IHomeView, OnResult {
 
@@ -59,6 +62,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     private LottieAnimationView errorImage;
 
     private HomePresenter presenter;
+    private SharedPref sharedPref;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,7 +97,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
 
         if (savedInstanceState == null) {
             presenter.getMeals();
-            presenter.getMealOfTheDay();
+            getMealOfTheDay();
             categories = new ArrayList<>();
         } else {
             categories = savedInstanceState.getParcelableArrayList(CATEGORIES_LIST_STATE);
@@ -111,6 +115,30 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         recyclerView.setAdapter(mAdapter);
 
         setHasOptionsMenu(true);
+    }
+
+    private void getMealOfTheDay() {
+        sharedPref = new SharedPref(requireContext());
+        Map<String, Integer> savedDate = sharedPref.getDate();
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
+        int savedDay= savedDate.get("day");
+        int savedYear= savedDate.get("year");
+        if (savedDay == 0 || savedYear == 0) {
+            // First time ever
+            presenter.getMealOfTheDay();
+        } else {
+            // There is value stored
+            if (savedDay == currentDay && savedYear == currentYear) {
+                // Current Day
+                mealOfTheDay = sharedPref.getMeal();
+                setMealOfTheDayUI();
+                stopShimmerEffectAndShowUi();
+            } else {
+                // New Day
+                presenter.getMealOfTheDay();
+            }
+        }
     }
 
     @Override
@@ -150,15 +178,13 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.log_out:
-                showSignOutDialog();
-                return true;
-            case R.id.sign_in:
-                showSignUpDialog();
-                return true;
-            default:
-                break;
+        int itemId = item.getItemId();
+        if (itemId == R.id.log_out) {
+            showSignOutDialog();
+            return true;
+        } else if (itemId == R.id.sign_in) {
+            showSignUpDialog();
+            return true;
         }
         return false;
     }
@@ -211,6 +237,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         mealOfTheDay = mealsResponse.getMeals().get(0);
         setMealOfTheDayUI();
         stopShimmerEffectAndShowUi();
+        sharedPref.setMeal(mealOfTheDay);
     }
 
     private void setMealOfTheDayUI() {
