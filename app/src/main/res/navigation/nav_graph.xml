@@ -95,9 +95,7 @@
             app:argType="string" />
         <action
             android:id="@+id/action_mealFragment_to_mealsFragment"
-            app:destination="@id/mealsFragment"
-            app:popUpTo="@id/mealsFragment"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/mealsFragment"/>
         <argument
             android:name="meal"
             app:argType="com.mahmoudhamdyae.foodplanner.model.Meal"
