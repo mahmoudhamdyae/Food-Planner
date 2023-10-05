@@ -92,6 +92,9 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                mShimmerViewContainer.setVisibility(View.VISIBLE);
+                mShimmerViewContainer.startShimmerAnimation();
+                searchImage.setVisibility(View.GONE);
                 emitter.onNext(charSequence.toString());
             }
 
@@ -102,16 +105,13 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
             Log.i(TAG, "upStream: " + searchString);
         })
                 .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .debounce(1, TimeUnit.SECONDS)
+                .debounce(500, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(searchString -> {
                     Log.i(TAG, "downStream: " + searchString);
-                    mShimmerViewContainer.setVisibility(View.VISIBLE);
-                    mShimmerViewContainer.startShimmerAnimation();
-                    searchImage.setVisibility(View.GONE);
                     presenter.searchMealByName(searchString);
-                });
+                }, error -> Log.d(TAG, "onViewCreated error: " + error.getMessage()));
     }
 
     @Override
