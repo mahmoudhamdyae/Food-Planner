@@ -96,6 +96,8 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         mealOfTheDayCardView.setOnClickListener(v -> navigateToMealScreen());
         ViewCompat.setTransitionName(imageView, "meal_image");
 
+        sharedPref = new SharedPref(requireContext());
+
         if (savedInstanceState == null) {
             presenter.getMeals();
             getMealOfTheDay();
@@ -123,7 +125,6 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     }
 
     private void getMealOfTheDay() {
-        sharedPref = new SharedPref(requireContext());
         Map<String, Integer> savedDate = sharedPref.getDate();
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
