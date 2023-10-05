@@ -31,12 +31,12 @@ public class WelcomeViewPageAdapter extends RecyclerView.Adapter<WelcomeViewPage
     public void onBindViewHolder(@NonNull PagerVH2 holder, int position) {
         switch (position) {
             case 0:
-                holder.introTitle.setText(context.getString(R.string.on_boarding_text_1));
+                holder.introTitle.setText(context.getString(R.string.on_boarding_title_1));
                 holder.introDescription.setText(context.getString(R.string.on_boarding_text_1));
                 holder.introImage.setAnimation("w1.json");
                 break;
             case 1:
-                holder.introTitle.setText(context.getString(R.string.on_boarding_text_2));
+                holder.introTitle.setText(context.getString(R.string.on_boarding_title_2));
                 holder.introDescription.setText(context.getString(R.string.on_boarding_text_2));
                 holder.introImage.setAnimation("w2.json");
                 break;

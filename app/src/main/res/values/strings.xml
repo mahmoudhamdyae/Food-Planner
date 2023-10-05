@@ -20,12 +20,12 @@
     <string name="welcome_next_button">Next</string>
     <string name="welcome_get_started_button">Get Started</string>
     <string name="welcome_skip_button">Skip</string>
-    <string name="on_boarding_title_1">T1</string>
-    <string name="on_boarding_title_2">T2</string>
-    <string name="on_boarding_title_3">T3</string>
-    <string name="on_boarding_text_1">D1</string>
-    <string name="on_boarding_text_2">D2</string>
-    <string name="on_boarding_text_3">D3</string>
+    <string name="on_boarding_title_1">Search For Any Recipe</string>
+    <string name="on_boarding_title_2">Learn How To Make The Recipe</string>
+    <string name="on_boarding_title_3">All Your Favourite Recipes In One Place</string>
+    <string name="on_boarding_text_1">Search for recipes based on countries, ingredients or categories.</string>
+    <string name="on_boarding_text_2">Get instructions on how to make the recipe.</string>
+    <string name="on_boarding_text_3">Save time on planning by having your favourite recipes within reach.</string>
 
     <!-- Auth -->
     <string name="auth_sign_up_button">Sign up with Email</string>
