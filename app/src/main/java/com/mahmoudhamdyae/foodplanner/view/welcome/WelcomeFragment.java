@@ -22,6 +22,7 @@ public class WelcomeFragment extends Fragment {
 
     private ViewPager2 viewPager;
     private Button nextButton;
+    private Button skipButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class WelcomeFragment extends Fragment {
 
         viewPager = view.findViewById(R.id.view_pager);
         nextButton = view.findViewById(R.id.next_button);
-        Button skipButton = view.findViewById(R.id.skip_button);
+        skipButton = view.findViewById(R.id.skip_button);
 
         viewPager.setAdapter(new WelcomeViewPageAdapter(requireContext()));
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(view.findViewById(R.id.tab_layout), viewPager, (tab, position) -> {
@@ -54,8 +55,10 @@ public class WelcomeFragment extends Fragment {
 
                 if (position == MAX_STEP - 1) {
                     nextButton.setText(R.string.welcome_get_started_button);
+                    skipButton.setVisibility(View.INVISIBLE);
                 } else {
                     nextButton.setText(R.string.welcome_next_button);
+                    skipButton.setVisibility(View.VISIBLE);
                 }
             }
         });
