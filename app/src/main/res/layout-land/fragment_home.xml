@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
     android:layout_height="match_parent"
-    tools:context=".view.home.view.HomeFragment"
-    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    tools:context=".view.home.view.HomeFragment">
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_view_container"
@@ -54,21 +54,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:visibility="gone"
-            tools:visibility="visible"
             android:text="@string/meal_of_the_day"
             android:textColor="@color/md_theme_primary"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/meal_of_the_day"
             android:layout_width="match_parent"
             android:layout_height="130dp"
-            android:visibility="gone"
-            tools:visibility="visible"
             android:layout_margin="8dp"
             android:elevation="8dp"
-            app:cardCornerRadius="8dp">
+            android:visibility="gone"
+            app:cardCornerRadius="8dp"
+            tools:visibility="visible">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -108,22 +108,31 @@
         <TextView
             android:id="@+id/categories_label"
             android:layout_width="wrap_content"
-            android:visibility="gone"
-            tools:visibility="visible"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="@string/categories_label"
             android:textColor="@color/md_theme_primary"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categories_recycler_view"
             android:layout_width="match_parent"
-            android:visibility="gone"
-            tools:visibility="visible"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:paddingBottom="35dp"
-            tools:listitem="@layout/meal_row" />
+            android:visibility="gone"
+            tools:listitem="@layout/meal_row"
+            tools:visibility="visible" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/error_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="error.json"
+            app:lottie_loop="true"/>
     </LinearLayout>
 </LinearLayout>

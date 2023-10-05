@@ -50,6 +50,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
 
     private static final String MEAL_OF_THE_DAY_STATE = "MEAL_OF_THE_DAY";
     private static final String CATEGORIES_LIST_STATE = "CATEGORIES_LIST_STATE";
+    private static final String IS_ERROR_STATE = "IS_ERROR_STATE";
     private HomeAdapter mAdapter;
 
     private ShimmerFrameLayout mShimmerViewContainer;
@@ -104,6 +105,10 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
             mealOfTheDay = savedInstanceState.getParcelable(MEAL_OF_THE_DAY_STATE);
             setMealOfTheDayUI();
             stopShimmerEffectAndShowUi();
+            if (savedInstanceState.getBoolean(IS_ERROR_STATE)) {
+                recyclerView.setVisibility(View.GONE);
+                errorImage.setVisibility(View.VISIBLE);
+            }
         }
 
         // Recycler view
@@ -276,6 +281,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         super.onSaveInstanceState(outState);
         outState.putParcelable(MEAL_OF_THE_DAY_STATE, mealOfTheDay);
         outState.putParcelableArrayList(CATEGORIES_LIST_STATE, categories);
+        outState.putBoolean(IS_ERROR_STATE, errorImage.getVisibility() == View.VISIBLE);
     }
 
     private void stopShimmerEffectAndShowUi() {
