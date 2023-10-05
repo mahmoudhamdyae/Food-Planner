@@ -1,11 +1,10 @@
 package com.mahmoudhamdyae.foodplanner.model;
 
-import androidx.lifecycle.LiveData;
-
 import com.mahmoudhamdyae.foodplanner.network.NetworkCallback;
-import com.mahmoudhamdyae.foodplanner.view.meal.view.IMealView;
 
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Flowable;
 
 public interface Repository {
 
@@ -13,8 +12,7 @@ public interface Repository {
     void searchMeal(String name, NetworkCallback networkCallback);
     void getMealOfTheDay(NetworkCallback networkCallback);
 
-    LiveData<List<Meal>> observeFavMeals();
-    void getFavMeals(IMealView view);
+    Flowable<List<Meal>> getFavMeals();
     void addMealToFav(Meal meal, NetworkCallback networkCallback);
     void removeMealFromFav(Meal meal, NetworkCallback networkCallback);
     void removeAllMealsFromFav();

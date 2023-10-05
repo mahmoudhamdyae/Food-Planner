@@ -1,13 +1,12 @@
 package com.mahmoudhamdyae.foodplanner.model;
 
-import androidx.lifecycle.LiveData;
-
 import com.mahmoudhamdyae.foodplanner.db.LocalDataSource;
 import com.mahmoudhamdyae.foodplanner.network.NetworkCallback;
 import com.mahmoudhamdyae.foodplanner.network.RemoteDataSource;
-import com.mahmoudhamdyae.foodplanner.view.meal.view.IMealView;
 
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Flowable;
 
 public class RepositoryImpl implements Repository {
 
@@ -73,13 +72,8 @@ public class RepositoryImpl implements Repository {
     // Local Data Source
 
     @Override
-    public LiveData<List<Meal>> observeFavMeals() {
-        return localDataSource.observeFavMeals();
-    }
-
-    @Override
-    public void getFavMeals(IMealView view) {
-        localDataSource.getFavMeals(view);
+    public Flowable<List<Meal>> getFavMeals() {
+        return localDataSource.getFavMeals();
     }
 
     @Override

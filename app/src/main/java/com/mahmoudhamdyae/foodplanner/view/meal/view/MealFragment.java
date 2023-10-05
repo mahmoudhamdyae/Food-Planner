@@ -1,6 +1,7 @@
 package com.mahmoudhamdyae.foodplanner.view.meal.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MealFragment extends Fragment implements IMealView, OnIngredientClickListener {
+
+    private static final String TAG = "MealFragment";
 
     private IMealPresenter presenter;
     private Boolean isFav = false;
@@ -111,8 +114,7 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
         }
     }
 
-    @Override
-    public void showData(List<Meal> meals) {
+    private void determineFavMealOrNot(List<Meal> meals) {
         try {
             if (meals != null) {
                 for (int i = 0; i < meals.size(); i++) {
@@ -136,7 +138,18 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
         stopShimmerEffectAndShowUi();
 
         this.meal = meal;
-        presenter.getFavMeals();
+        presenter.getFavMeals().subscribe(
+                meals -> {
+                    Log.i(TAG, "onGetMeals: " + meals);
+                    determineFavMealOrNot(meals);
+                },
+                error -> {
+                    mShimmerViewContainer.stopShimmerAnimation();
+                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, "onGetMeals error: " + error.getMessage());
+                    error.printStackTrace();
+                }
+        );
 
         try {
             // Add to Cart Button

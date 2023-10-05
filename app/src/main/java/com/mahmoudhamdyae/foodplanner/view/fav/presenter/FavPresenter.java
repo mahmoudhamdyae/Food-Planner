@@ -1,24 +1,26 @@
 package com.mahmoudhamdyae.foodplanner.view.fav.presenter;
 
 import com.mahmoudhamdyae.foodplanner.account.AccountService;
+import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.Repository;
-import com.mahmoudhamdyae.foodplanner.view.fav.view.IFavView;
+
+import java.util.List;
+
+import io.reactivex.rxjava3.core.Flowable;
 
 public class FavPresenter implements IFavPresenter {
 
     private final Repository repo;
-    private final IFavView view;
     private final AccountService accountService;
 
-    public FavPresenter(IFavView view, Repository repo, AccountService accountService) {
-        this.view = view;
+    public FavPresenter(Repository repo, AccountService accountService) {
         this.repo = repo;
         this.accountService = accountService;
     }
 
     @Override
-    public void observeFavMeals() {
-        view.showData(repo.observeFavMeals());
+    public Flowable<List<Meal>> observeFavMeals() {
+        return repo.getFavMeals();
     }
 
     @Override

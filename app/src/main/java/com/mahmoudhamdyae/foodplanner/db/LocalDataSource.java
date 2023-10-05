@@ -1,16 +1,14 @@
 package com.mahmoudhamdyae.foodplanner.db;
 
-import androidx.lifecycle.LiveData;
-
 import com.mahmoudhamdyae.foodplanner.model.Meal;
-import com.mahmoudhamdyae.foodplanner.view.meal.view.IMealView;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Flowable;
+
 public interface LocalDataSource {
 
-    LiveData<List<Meal>> observeFavMeals();
-    void getFavMeals(IMealView view);
+    Flowable<List<Meal>> getFavMeals();
     void addMealToFav(Meal... meal);
     void removeMealFromFav(Meal meal);
     void removeAllMealsFromFav();

@@ -7,6 +7,10 @@ import com.mahmoudhamdyae.foodplanner.model.Repository;
 import com.mahmoudhamdyae.foodplanner.network.NetworkCallback;
 import com.mahmoudhamdyae.foodplanner.view.meal.view.IMealView;
 
+import java.util.List;
+
+import io.reactivex.rxjava3.core.Flowable;
+
 public class MealPresenter implements IMealPresenter, NetworkCallback {
 
     private final IMealView view;
@@ -25,8 +29,8 @@ public class MealPresenter implements IMealPresenter, NetworkCallback {
     }
 
     @Override
-    public void getFavMeals() {
-        repo.getFavMeals(view);
+    public Flowable<List<Meal>> getFavMeals() {
+        return repo.getFavMeals();
     }
 
     @Override
