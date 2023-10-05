@@ -12,7 +12,7 @@
     <string name="meals_screen_title">Meals</string>
     <string name="names_screen_title">Search by Name</string>
     <string name="categories_screen_title">Search by Categories</string>
-    <string name="areas_screen_title">Search by Areas</string>
+    <string name="areas_screen_title">Search by Countries</string>
     <string name="ingredients_screen_title">Search by Ingredients</string>
     <string name="fav_screen_title">Favourites Meals</string>
 
@@ -73,7 +73,7 @@
     <string name="search_by">Search By</string>
     <string name="search_by_name_button">Name</string>
     <string name="search_by_category_button">Category</string>
-    <string name="search_by_area_button">Area</string>
+    <string name="search_by_area_button">Country</string>
     <string name="search_by_ingredient_button">Ingredient</string>
 
     <!-- Content Descriptions -->
