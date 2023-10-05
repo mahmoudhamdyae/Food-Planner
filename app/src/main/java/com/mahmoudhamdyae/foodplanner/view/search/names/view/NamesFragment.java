@@ -37,7 +37,7 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
 
     private NamesAdapter mAdapter;
     private INamesPresenter presenter;
-    private LottieAnimationView emptyView, searchImage;
+    private LottieAnimationView emptyView, searchImage, errorImage;
     private RecyclerView recyclerView;
     private ShimmerFrameLayout mShimmerViewContainer;
 
@@ -60,6 +60,7 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
         searchImage = view.findViewById(R.id.search_image);
         recyclerView = view.findViewById(R.id.meals_recycler_view);
         mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
+        errorImage = view.findViewById(R.id.error_image);
 
         // Set Action Bar Title
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.names_screen_title);
@@ -108,8 +109,9 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
 
     @Override
     public void onGetMealsFail(String errorMsg) {
-        mShimmerViewContainer.stopShimmerAnimation();
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        mShimmerViewContainer.setVisibility(View.GONE);
+        errorImage.setVisibility(View.VISIBLE);
     }
 
     @Override

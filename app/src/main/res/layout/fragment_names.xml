@@ -8,6 +8,19 @@
     android:padding="8dp"
     tools:context=".view.search.names.view.NamesFragment">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/error_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="error.json"
+        app:lottie_loop="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <EditText
         android:id="@+id/search_edit_text"
         android:layout_width="match_parent"

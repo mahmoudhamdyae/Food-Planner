@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
@@ -36,6 +37,7 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
     private MealsAdapter mAdapter;
     private ShimmerFrameLayout mShimmerViewContainer;
     private LinearLayout linearLayout;
+    private LottieAnimationView errorImage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        errorImage = view.findViewById(R.id.error_image);
         mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
         linearLayout = view.findViewById(R.id.linear_layout);
         RecyclerView recyclerView = view.findViewById(R.id.meals_recycler_view);
@@ -94,8 +97,9 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
 
     @Override
     public void onGetMealsFail(String errorMsg) {
-        mShimmerViewContainer.stopShimmerAnimation();
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        mShimmerViewContainer.setVisibility(View.GONE);
+        errorImage.setVisibility(View.VISIBLE);
     }
 
     @Override
