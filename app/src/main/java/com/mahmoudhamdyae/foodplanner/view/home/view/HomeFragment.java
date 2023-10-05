@@ -129,22 +129,16 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
         int savedDay= savedDate.get("day");
         int savedYear= savedDate.get("year");
-        if (savedDay == 0 || savedYear == 0) {
-            // First time ever
-            presenter.getMealOfTheDay();
+        if (savedDay == currentDay && savedYear == currentYear) {
+            // Current Day
+            mealOfTheDay = sharedPref.getMeal();
+            setMealOfTheDayUI();
+            categoriesLabel.setVisibility(View.VISIBLE);
+            mealOfTheDayLabel.setVisibility(View.VISIBLE);
+            mealOfTheDayCardView.setVisibility(View.VISIBLE);
         } else {
-            // There is value stored
-            if (savedDay == currentDay && savedYear == currentYear) {
-                // Current Day
-                mealOfTheDay = sharedPref.getMeal();
-                setMealOfTheDayUI();
-                categoriesLabel.setVisibility(View.VISIBLE);
-                mealOfTheDayLabel.setVisibility(View.VISIBLE);
-                mealOfTheDayCardView.setVisibility(View.VISIBLE);
-            } else {
-                // New Day
-                presenter.getMealOfTheDay();
-            }
+            // New Day
+            presenter.getMealOfTheDay();
         }
     }
 
