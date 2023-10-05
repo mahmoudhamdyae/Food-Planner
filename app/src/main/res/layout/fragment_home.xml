@@ -15,7 +15,7 @@
             android:id="@+id/error_image"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:paddingTop="16dp"
+            android:paddingTop="24dp"
             android:visibility="gone"
             app:lottie_autoPlay="true"
             app:lottie_fileName="error.json"
