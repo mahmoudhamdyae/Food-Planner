@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
@@ -51,12 +52,11 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             e.printStackTrace();
         }
 
-        Intent mIntent = new Intent(Intent.ACTION_EDIT);
-        mIntent.setType("vnd.android.cursor.item/event");
-        mIntent.putExtra("time", true);
-        mIntent.putExtra("beginTime", mStartTime.getTime());
-        mIntent.putExtra("endTime", mEndTime.getTime());
-        mIntent.putExtra("title", mealName);
+        Intent mIntent = new Intent(Intent.ACTION_INSERT);
+        mIntent.setData(CalendarContract.Events.CONTENT_URI);
+        mIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, mStartTime.getTime());
+        mIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, mEndTime.getTime());
+        mIntent.putExtra(CalendarContract.Events.TITLE, mealName);
         startActivity(mIntent);
     }
 }

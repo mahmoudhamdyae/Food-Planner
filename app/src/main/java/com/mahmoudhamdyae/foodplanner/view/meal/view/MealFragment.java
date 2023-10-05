@@ -82,10 +82,7 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
 
         // Add to calender Button
         MaterialButton addToCalender = view.findViewById(R.id.add_to_calender);
-        addToCalender.setOnClickListener(v -> {
-            DialogFragment newFragment = new DatePickerFragment(meal.getName());
-            newFragment.show(requireActivity().getSupportFragmentManager(), "datePicker");
-        });
+        addToCalender.setOnClickListener(v -> showDatePicker());
 
         // Add to cart Button
         addToCartButton = view.findViewById(R.id.add_to_cart);
@@ -120,6 +117,11 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
         } else {
             onGetMealSuccess(meal);
         }
+    }
+
+    private void showDatePicker() {
+        DialogFragment newFragment = new DatePickerFragment(meal.getName());
+        newFragment.show(requireActivity().getSupportFragmentManager(), "datePicker");
     }
 
     private void determineFavMealOrNot(List<Meal> meals) {
