@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -79,7 +80,14 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
                         LocalDataSourceImpl.getInstance(requireContext())),
                 new AccountServiceImpl(requireContext()));
 
-        // Button
+        // Add to calender Button
+        MaterialButton addToCalender = view.findViewById(R.id.add_to_calender);
+        addToCalender.setOnClickListener(v -> {
+            DialogFragment newFragment = new DatePickerFragment(meal.getName());
+            newFragment.show(requireActivity().getSupportFragmentManager(), "datePicker");
+        });
+
+        // Add to cart Button
         addToCartButton = view.findViewById(R.id.add_to_cart);
         if (!presenter.hasUser()) bottomLayout.setVisibility(View.GONE);
 
