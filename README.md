@@ -36,5 +36,5 @@ Application Features:
 
 ## Screenshots
 <p align="center">
-  <img src="Screenshots/FoodPlanner.jpg" height="800" width="700">
+  <img src="Screenshots/FoodPlanner.jpg" height="900" width="700">
 </p>
