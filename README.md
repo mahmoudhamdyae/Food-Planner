@@ -36,12 +36,4 @@ Application Features:
 ## Screenshots
 <p align="center">
   <img src="Screenshots/1.jpg" height="450" width="220">
-  <img src="Screenshots/2.jpg" height="450" width="220">
-  <img src="Screenshots/3.jpg" height="450" width="220">
-  <img src="Screenshots/4.jpg" height="450" width="220">
-  <img src="Screenshots/5.jpg" height="450" width="220">
-  <img src="Screenshots/6.jpg" height="450" width="220">
-  <img src="Screenshots/7.jpg" height="450" width="220">
-  <img src="Screenshots/8.jpg" height="450" width="220">
-  <img src="Screenshots/9.jpg" height="450" width="220">
 </p>
