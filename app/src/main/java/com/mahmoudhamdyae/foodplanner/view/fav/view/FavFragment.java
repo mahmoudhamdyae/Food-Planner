@@ -67,14 +67,18 @@ public class FavFragment extends Fragment implements OnMealClickListener {
         if (presenter.hasUser()) {
             presenter.observeFavMeals().subscribe(
                     meals -> {
-                        Log.i(TAG, "onGetMeals: " + meals);
+                        ArrayList<Meal> arrayList = new ArrayList<>();
+                        for (Meal meal: meals) {
+                            if (meal.getFavourite() == null || meal.getFavourite() == true) arrayList.add(meal);
+                        }
+                        Log.i(TAG, "onGetMeals: " + arrayList);
                         stopShimmerEffectAndShowUi();
-                        if (meals.size() == 0) {
+                        if (arrayList.size() == 0) {
                             emptyView.setVisibility(View.VISIBLE);
                         } else {
                             emptyView.setVisibility(View.GONE);
                         }
-                        mAdapter.setList(meals);
+                        mAdapter.setList(arrayList);
                         },
                     error -> {
                         errorImage.setVisibility(View.VISIBLE);

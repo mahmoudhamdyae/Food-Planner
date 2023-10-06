@@ -5,4 +5,5 @@ import com.mahmoudhamdyae.foodplanner.model.Meal;
 public interface OnMealClickListener {
 
     void onMealClicked(Meal meal);
+    void onRemoveFromPlanClicked(Meal meal);
 }

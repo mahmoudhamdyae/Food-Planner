@@ -18,7 +18,7 @@ public class LocalDataSourceImpl implements LocalDataSource {
     public static final String TAG = "LocalDataSource";
 
     private final MealDao dao;
-    private final Flowable<List<Meal>> favMeals;
+    private Flowable<List<Meal>> favMeals;
 
     private static LocalDataSourceImpl instance = null;
 
@@ -37,6 +37,7 @@ public class LocalDataSourceImpl implements LocalDataSource {
 
     @Override
     public Flowable<List<Meal>> getFavMeals() {
+        favMeals = dao.observeFavMeal();
         return favMeals.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

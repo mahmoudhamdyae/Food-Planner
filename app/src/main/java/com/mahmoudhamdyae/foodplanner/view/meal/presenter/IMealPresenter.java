@@ -13,5 +13,6 @@ public interface IMealPresenter {
     Flowable<List<Meal>> getFavMeals();
     void addMealToFav(Meal meal);
     void removeMealFromFav(Meal meal);
+    void addToPlan(Meal meal);
     Boolean hasUser();
 }

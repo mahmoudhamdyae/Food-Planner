@@ -1,9 +1,11 @@
 package com.mahmoudhamdyae.foodplanner.view.search.meals.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +33,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
         this.listener = listener;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setList(List<Meal> meals) {
         this.items = meals;
         notifyDataSetChanged();
@@ -46,16 +49,24 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Meal meal = items.get(position);
         Glide.with(context)
-                .load(items.get(position).getImageUrl())
+                .load(meal.getImageUrl())
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.loading_img)
                         .error(R.drawable.ic_broken_image))
                 .into(holder.imageView);
 
-        holder.title.setText(items.get(position).getName());
+        holder.title.setText(meal.getName());
 
-        holder.row.setOnClickListener(v -> listener.onMealClicked(items.get(position)));
+        holder.row.setOnClickListener(v -> listener.onMealClicked(meal));
+
+        if (meal.getDay() != null) {
+            holder.removeFromPlan.setVisibility(View.VISIBLE);
+            holder.removeFromPlan.setOnClickListener(v -> listener.onRemoveFromPlanClicked(meal));
+        } else {
+            holder.removeFromPlan.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -68,12 +79,14 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
         ImageView imageView;
         TextView title;
         CardView row;
+        ImageButton removeFromPlan;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_view);
             title = itemView.findViewById(R.id.title);
             row = itemView.findViewById(R.id.row);
+            removeFromPlan = itemView.findViewById(R.id.del_from_plan);
         }
     }
 }

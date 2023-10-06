@@ -40,5 +40,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="Title"/>
+
+        <ImageButton
+            android:id="@+id/del_from_plan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="6dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_baseline_delete_24"
+            android:contentDescription="@string/image" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

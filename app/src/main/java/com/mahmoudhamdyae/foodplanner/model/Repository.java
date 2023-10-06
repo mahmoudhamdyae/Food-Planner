@@ -14,7 +14,7 @@ public interface Repository {
 
     Flowable<List<Meal>> getFavMeals();
     void addMealToFav(Meal meal, NetworkCallback networkCallback);
-    void removeMealFromFav(Meal meal, NetworkCallback networkCallback);
+    void removeMealFromFav(Meal meal, NetworkCallback networkCallback, Boolean isFav);
     void removeAllMealsFromFav();
 
     void getIngredients(NetworkCallback networkCallback);

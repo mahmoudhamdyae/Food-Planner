@@ -195,4 +195,13 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/plansFragment"
+        android:name="com.mahmoudhamdyae.foodplanner.view.plans.view.PlansFragment"
+        android:label="@string/plan_screen_title"
+        tools:layout="@layout/fragment_plans" >
+        <action
+            android:id="@+id/action_plansFragment_to_mealsFragment"
+            app:destination="@id/mealsFragment" />
+    </fragment>
 </navigation>

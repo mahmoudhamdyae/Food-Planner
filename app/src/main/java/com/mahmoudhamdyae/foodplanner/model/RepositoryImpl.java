@@ -83,9 +83,24 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void removeMealFromFav(Meal meal, NetworkCallback networkCallback) {
-        localDataSource.removeMealFromFav(meal);
-        remoteDataSource.removeMealFromFav(meal, networkCallback);
+    public void removeMealFromFav(Meal meal, NetworkCallback networkCallback, Boolean isFav) {
+        if (meal.getFavourite() && meal.getDay() != null) {
+            // Plan and fav
+            if (isFav) {
+                // Remove fav only
+                meal.setFavourite(false);
+            } else {
+                // Remove plan only
+                meal.setFavourite(true);
+                meal.setDay(null);
+            }
+            localDataSource.addMealToFav(meal);
+            remoteDataSource.addMealToFav(meal, networkCallback);
+        } else {
+            // Plan or fav
+            localDataSource.removeMealFromFav(meal);
+            remoteDataSource.removeMealFromFav(meal, networkCallback);
+        }
     }
 
     @Override

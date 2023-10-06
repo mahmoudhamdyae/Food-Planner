@@ -31,13 +31,15 @@ import com.mahmoudhamdyae.foodplanner.view.search.meals.presenter.IMealsPresente
 import com.mahmoudhamdyae.foodplanner.view.search.meals.presenter.MealsPresenter;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MealsFragment extends Fragment implements IMealsView, OnMealClickListener {
 
     private MealsAdapter mAdapter;
     private ShimmerFrameLayout mShimmerViewContainer;
     private LinearLayout linearLayout;
-    private LottieAnimationView errorImage;
+    private LottieAnimationView errorImage, emptyView;
+    private IMealsPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
         super.onViewCreated(view, savedInstanceState);
 
         errorImage = view.findViewById(R.id.error_image);
+        emptyView = view.findViewById(R.id.empty_image);
         mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
         linearLayout = view.findViewById(R.id.linear_layout);
         RecyclerView recyclerView = view.findViewById(R.id.meals_recycler_view);
@@ -78,14 +81,13 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
             descTextView.setText(categoryDesc);
         } else {
             descTextView.setVisibility(View.GONE);
-
         }
 
         // Set Action Bar Title
-        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(name);
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(name);
 
         // Presenter
-        IMealsPresenter presenter = new MealsPresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())));
+        presenter = new MealsPresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())));
         presenter.getMeals(searchType, name);
     }
 
@@ -93,6 +95,11 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
     public void onGetMealsSuccess(MealsResponse mealsResponse) {
         stopShimmerEffectAndShowUi();
         mAdapter.setList(mealsResponse.getMeals());
+        if (mealsResponse.getMeals().size() == 0) {
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            emptyView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -105,6 +112,12 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
     @Override
     public void onMealClicked(Meal meal) {
         navigateToMealScreen(meal);
+    }
+
+    @Override
+    public void onRemoveFromPlanClicked(Meal meal) {
+        Toast.makeText(getContext(), meal.getName() + "Removed from Plan", Toast.LENGTH_SHORT).show();
+        presenter.removeMealFromPlan(meal);
     }
 
     private void navigateToMealScreen(Meal meal) {

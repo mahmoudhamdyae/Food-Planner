@@ -40,7 +40,12 @@ public class MealPresenter implements IMealPresenter, NetworkCallback {
 
     @Override
     public void removeMealFromFav(Meal meal) {
-        repo.removeMealFromFav(meal, this);
+        repo.removeMealFromFav(meal, this, true);
+    }
+
+    @Override
+    public void addToPlan(Meal meal) {
+        repo.addMealToFav(meal, this);
     }
 
     @Override

@@ -8,6 +8,7 @@
     <string name="sign_up_screen_title">Food Planner</string>
     <string name="welcome_screen_title">Food Planner</string>
     <string name="search_screen_title">Search</string>
+    <string name="plan_screen_title">My Plans</string>
     <string name="meal_screen_title">Meal</string>
     <string name="meals_screen_title">Meals</string>
     <string name="names_screen_title">Search by Name</string>
@@ -61,13 +62,24 @@
 
     <!-- Meal Fragment -->
     <string name="from">From: %1$s</string>
-    <string name="add_to_cart">Add to Favourites</string>
+    <string name="add_to_cart">Add to\nFavourites</string>
     <string name="add_to_calendar">Add to Calendar</string>
-    <string name="remove_from_cart">Remove from Favourites</string>
+    <string name="add_to_plan">Add to\nPlan</string>
+    <string name="remove_from_cart">Remove from\nFavourites</string>
     <string name="added_toast">%1$s added to Favourites</string>
     <string name="removed_toast">%1$s removed from Favourites</string>
     <string name="ingredients">Ingredients</string>
     <string name="inst">How to make</string>
+    <string name="add_to_plan_dialog_title">Add to Plan</string>
+
+    <!-- Plan Fragment -->
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
 
     <!-- Search Fragment -->
     <string name="search_by">Search By</string>
@@ -86,6 +98,7 @@
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="fav">Favourites</string>
+    <string name="my_plan">My Plan</string>
 
     <!-- Menus -->
     <string name="menu_sign_out">Sign out</string>

@@ -15,6 +15,12 @@
         app:showAsAction="withText" />
 
     <item
+        android:id="@+id/plansFragment"
+        android:icon="@drawable/ic_baseline_edit_calendar_24"
+        android:title="@string/my_plan"
+        app:showAsAction="withText" />
+
+    <item
         android:id="@+id/favFragment"
         android:icon="@drawable/ic_baseline_favorite_border_24"
         android:title="@string/fav"

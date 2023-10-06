@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
 import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
@@ -34,6 +36,7 @@ import com.mahmoudhamdyae.foodplanner.model.Meal;
 import com.mahmoudhamdyae.foodplanner.model.RepositoryImpl;
 import com.mahmoudhamdyae.foodplanner.model.SearchType;
 import com.mahmoudhamdyae.foodplanner.network.RemoteDataSourceImpl;
+import com.mahmoudhamdyae.foodplanner.utils.Utils;
 import com.mahmoudhamdyae.foodplanner.view.meal.presenter.IMealPresenter;
 import com.mahmoudhamdyae.foodplanner.view.meal.presenter.MealPresenter;
 
@@ -80,8 +83,12 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
                         LocalDataSourceImpl.getInstance(requireContext())),
                 new AccountServiceImpl(requireContext()));
 
+        // Add to plan Button
+        MaterialButton addToPlan = view.findViewById(R.id.add_to_plan);
+        addToPlan.setOnClickListener(v -> addToPlan());
+
         // Add to calender Button
-        MaterialButton addToCalender = view.findViewById(R.id.add_to_calender);
+        ImageButton addToCalender = view.findViewById(R.id.add_to_calender);
         addToCalender.setOnClickListener(v -> showDatePicker());
 
         // Add to cart Button
@@ -119,6 +126,17 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
         }
     }
 
+    private void addToPlan() {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.add_to_plan_dialog_title)
+                .setItems(R.array.days_array, (dialog, which) -> {
+                    meal.setDay(getString(Utils.dayToString(which)));
+                    presenter.addToPlan(meal);
+                    Toast.makeText(getContext(), meal.getName() + " Added to Plan", Toast.LENGTH_SHORT).show();
+                })
+                .show();
+    }
+
     private void showDatePicker() {
         DialogFragment newFragment = new DatePickerFragment(meal.getName());
         newFragment.show(requireActivity().getSupportFragmentManager(), "datePicker");
@@ -129,11 +147,21 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
             if (meals != null) {
                 for (int i = 0; i < meals.size(); i++) {
                     if (meals.get(i).getId().equals(meal.getId())) {
-                        isFav = true;
-                        addToCartButton.setText(getString(R.string.remove_from_cart));
-                        addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_24));
+                        if (meals.get(i).getFavourite() != null) meal.setFavourite(meals.get(i).getFavourite());
+                        if (meals.get(i).getDay() != null) meal.setDay(meals.get(i).getDay());
+                        if (meals.get(i).getFavourite()) {
+                            isFav = true;
+                            addToCartButton.setText(getString(R.string.remove_from_cart));
+                            addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_24));
+                        } else {
+                            isFav = false;
+                            addToCartButton.setText(getString(R.string.add_to_cart));
+                            addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_border_24));
+                        }
                         break;
                     } else {
+                        meal.setFavourite(false);
+                        meal.setDay("");
                         isFav = false;
                         addToCartButton.setText(getString(R.string.add_to_cart));
                         addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_border_24));
@@ -171,6 +199,7 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
                     addToCartButton.setIcon(getResources().getDrawable(R.drawable.ic_baseline_favorite_border_24));
                     isFav = false;
                 } else {
+                    meal.setFavourite(true);
                     presenter.addMealToFav(meal);
                     Toast.makeText(requireContext(), getString(R.string.added_toast, meal.getName()), Toast.LENGTH_SHORT).show();
                     addToCartButton.setText(getString(R.string.remove_from_cart));

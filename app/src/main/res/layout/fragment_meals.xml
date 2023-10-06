@@ -12,17 +12,31 @@
         android:layout_height="wrap_content">
 
         <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/empty_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="100dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="empty.json"
+            app:lottie_loop="true" />
+
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/error_image"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_fileName="error.json"
-            app:lottie_loop="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:lottie_loop="true" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer_view_container"
