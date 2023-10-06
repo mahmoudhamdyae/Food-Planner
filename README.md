@@ -21,6 +21,7 @@ Application Features:
 * Retrofit
 * Glide
 * Recycler View
+* Material Design 2
 * Firebase Authentication
 * Firebase Firestore
 * Lottie Animation
