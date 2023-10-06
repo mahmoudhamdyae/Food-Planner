@@ -171,7 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:paddingHorizontal="16dp"
-            android:text="@string/on_boarding_text_3"
+            android:text="@string/add_to_cart"
             app:icon="@drawable/ic_baseline_favorite_border_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

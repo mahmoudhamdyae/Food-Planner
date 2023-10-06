@@ -1,5 +1,6 @@
 package com.mahmoudhamdyae.foodplanner.view.meal.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +20,15 @@ import java.util.List;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.ViewHolder> {
 
-    private List<String> items;
+    private List<String> ingredients, measures;
     private final Context context;
     private final OnIngredientClickListener listener;
 
-    public IngredientsAdapter(@NonNull Context context, List<String> items, OnIngredientClickListener listener) {
+    public IngredientsAdapter(@NonNull Context context, List<String> ingredients, List<String> measures, OnIngredientClickListener listener) {
         super();
         this.context = context;
-        this.items = items;
+        this.ingredients = ingredients;
+        this.measures = measures;
         this.listener = listener;
     }
 
@@ -38,29 +40,30 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         return new ViewHolder(view);
     }
 
-    public void setList(List<String> items) {
-        this.items = items;
+    @SuppressLint("NotifyDataSetChanged")
+    public void setList(List<String> ingredients, List<String> measures) {
+        this.ingredients = ingredients;
+        this.measures = measures;
         notifyDataSetChanged();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.ingredientNameTextView.setText(items.get(position));
-        String url = "https://www.themealdb.com/images/ingredients/" + items.get(position).replace(" ", "%20") + "-Small.png";
+        holder.ingredientNameTextView.setText(ingredients.get(position) + "\n" + measures.get(position));
+        String url = "https://www.themealdb.com/images/ingredients/" + ingredients.get(position).replace(" ", "%20") + "-Small.png";
         Glide.with(context)
                 .load(url)
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.loading_img)
                         .error(R.drawable.ic_broken_image))
                 .into(holder.ingredientImage);
-        holder.row.setOnClickListener(v -> {
-            listener.onIngredientClicked(items.get(position));
-        });
+        holder.row.setOnClickListener(v -> listener.onIngredientClicked(ingredients.get(position)));
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return ingredients.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -101,7 +101,7 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
         youtube = view.findViewById(R.id.youtube);
 
         // Recycler View
-        mAdapter = new IngredientsAdapter(requireContext(), new ArrayList<>(), this);
+        mAdapter = new IngredientsAdapter(requireContext(), new ArrayList<>(), new ArrayList<>(), this);
         RecyclerView recyclerView = view.findViewById(R.id.ingredients_recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -200,6 +200,7 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
 
             // Ingredients
             ArrayList<String> ingredients = new ArrayList<>();
+            ArrayList<String> measures = new ArrayList<>();
             try {
                 if (!meal.getIngredient1().equals("") && meal.getIngredient1() != null) ingredients.add(meal.getIngredient1());
                 if (!meal.getIngredient2().equals("") && meal.getIngredient2() != null) ingredients.add(meal.getIngredient2());
@@ -221,9 +222,30 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
                 if (!meal.getIngredient18().equals("") && meal.getIngredient18() != null) ingredients.add(meal.getIngredient18());
                 if (!meal.getIngredient19().equals("") && meal.getIngredient19() != null) ingredients.add(meal.getIngredient19());
                 if (!meal.getIngredient20().equals("") && meal.getIngredient20() != null) ingredients.add(meal.getIngredient20());
+
+                if (!meal.getMeasure1().equals("") && meal.getMeasure1() != null) measures.add(meal.getMeasure1());
+                if (!meal.getMeasure2().equals("") && meal.getMeasure2() != null) measures.add(meal.getMeasure2());
+                if (!meal.getMeasure3().equals("") && meal.getMeasure3() != null) measures.add(meal.getMeasure3());
+                if (!meal.getMeasure4().equals("") && meal.getMeasure4() != null) measures.add(meal.getMeasure4());
+                if (!meal.getMeasure5().equals("") && meal.getMeasure5() != null) measures.add(meal.getMeasure5());
+                if (!meal.getMeasure6().equals("") && meal.getMeasure6() != null) measures.add(meal.getMeasure6());
+                if (!meal.getMeasure7().equals("") && meal.getMeasure7() != null) measures.add(meal.getMeasure7());
+                if (!meal.getMeasure8().equals("") && meal.getMeasure8() != null) measures.add(meal.getMeasure8());
+                if (!meal.getMeasure9().equals("") && meal.getMeasure9() != null) measures.add(meal.getMeasure9());
+                if (!meal.getMeasure10().equals("") && meal.getMeasure10() != null) measures.add(meal.getMeasure10());
+                if (!meal.getMeasure11().equals("") && meal.getMeasure11() != null) measures.add(meal.getMeasure11());
+                if (!meal.getMeasure12().equals("") && meal.getMeasure12() != null) measures.add(meal.getMeasure12());
+                if (!meal.getMeasure13().equals("") && meal.getMeasure13() != null) measures.add(meal.getMeasure13());
+                if (!meal.getMeasure14().equals("") && meal.getMeasure14() != null) measures.add(meal.getMeasure14());
+                if (!meal.getMeasure15().equals("") && meal.getMeasure15() != null) measures.add(meal.getMeasure15());
+                if (!meal.getMeasure16().equals("") && meal.getMeasure16() != null) measures.add(meal.getMeasure16());
+                if (!meal.getMeasure17().equals("") && meal.getMeasure17() != null) measures.add(meal.getMeasure17());
+                if (!meal.getMeasure18().equals("") && meal.getMeasure18() != null) measures.add(meal.getMeasure18());
+                if (!meal.getMeasure19().equals("") && meal.getMeasure19() != null) measures.add(meal.getMeasure19());
+                if (!meal.getMeasure20().equals("") && meal.getMeasure20() != null) measures.add(meal.getMeasure20());
             } catch (NullPointerException e) { e.printStackTrace(); }
 
-            mAdapter.setList(ingredients);
+            mAdapter.setList(ingredients, measures);
         } catch (IllegalStateException e) { e.printStackTrace(); }
     }
 
