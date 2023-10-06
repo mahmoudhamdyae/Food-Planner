@@ -8,13 +8,13 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -70,7 +70,7 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        LinearLayout bottomLayout = view.findViewById(R.id.bottom_layout);
+        ConstraintLayout bottomLayout = view.findViewById(R.id.bottom_layout);
         mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
         scrollView = view.findViewById(R.id.scroll_view);
 

@@ -143,7 +143,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -156,24 +156,26 @@
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
             android:layout_margin="8dp"
-            android:layout_weight="1"
             android:paddingHorizontal="16dp"
             android:text="@string/add_to_calendar"
-            app:icon="@drawable/ic_baseline_edit_calendar_24" />
+            app:icon="@drawable/ic_baseline_edit_calendar_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/add_to_cart"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_to_cart"
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
             android:layout_margin="8dp"
-            android:layout_weight="1"
             android:paddingHorizontal="16dp"
-            android:text="@string/add_to_cart"
-            app:icon="@drawable/ic_baseline_favorite_border_24" />
-    </LinearLayout>
+            android:text="@string/on_boarding_text_3"
+            app:icon="@drawable/ic_baseline_favorite_border_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/add_to_calender" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
