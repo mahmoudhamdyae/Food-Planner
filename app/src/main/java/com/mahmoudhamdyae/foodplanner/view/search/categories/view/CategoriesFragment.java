@@ -1,9 +1,12 @@
 package com.mahmoudhamdyae.foodplanner.view.search.categories.view;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +31,9 @@ import com.mahmoudhamdyae.foodplanner.view.search.categories.presenter.CategoryP
 import com.mahmoudhamdyae.foodplanner.view.search.categories.presenter.ICategoryPresenter;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class CategoriesFragment extends Fragment implements ICategoryView, OnCategoryClickListener {
 
@@ -35,6 +41,8 @@ public class CategoriesFragment extends Fragment implements ICategoryView, OnCat
     private ShimmerFrameLayout mShimmerViewContainer;
     private RecyclerView recyclerView;
     private LottieAnimationView errorImage;
+    private List<Category> categories;
+    private EditText searchEditText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,10 +64,11 @@ public class CategoriesFragment extends Fragment implements ICategoryView, OnCat
         recyclerView = view.findViewById(R.id.categories_recycler_view);
 
         // Set Action Bar Title
-        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.categories_screen_title);
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(R.string.categories_screen_title);
 
         // Recycler View
-        mAdapter = new CategoriesAdapter(getContext(), new ArrayList<>(), this);
+        categories = new ArrayList<>();
+        mAdapter = new CategoriesAdapter(getContext(), categories, this);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -69,12 +78,32 @@ public class CategoriesFragment extends Fragment implements ICategoryView, OnCat
         // Presenter
         ICategoryPresenter presenter = new CategoryPresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())));
         presenter.getCategories();
+
+        // Search EditText
+        searchEditText = view.findViewById(R.id.search_edit_text);
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().isEmpty()) {
+                    mAdapter.setList(categories);
+                } else {
+                    mAdapter.setList(categories.stream().filter(category -> category.getName().toLowerCase().contains(s.toString().toLowerCase())).collect(Collectors.toList()));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
     }
 
     @Override
     public void onGetCategoriesSuccess(CategoryResponse categoryResponse) {
+        categories = categoryResponse.getCategories();
         stopShimmerEffectAndShowUi();
-        mAdapter.setList(categoryResponse.getCategories());
+        mAdapter.setList(categories);
     }
 
     @Override
@@ -92,6 +121,7 @@ public class CategoriesFragment extends Fragment implements ICategoryView, OnCat
     private void navigateToMealsScreen(Category category) {
         NavDirections action = CategoriesFragmentDirections.actionCategoriesFragmentToMealsFragment(SearchType.CATEGORY, category.getName(), category.getDescription());
         Navigation.findNavController(requireView()).navigate(action);
+        searchEditText.setText("");
     }
 
     @Override

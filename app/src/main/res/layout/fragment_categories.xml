@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="64dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -54,11 +54,25 @@
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
+    <EditText
+        android:id="@+id/search_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_search_24"
+        android:drawablePadding="8dp"
+        android:hint="@string/search"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:padding="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categories_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingBottom="40dp"
-        tools:listitem="@layout/search_row" />
+        tools:listitem="@layout/search_row"
+        app:layout_constraintTop_toBottomOf="@id/search_edit_text"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

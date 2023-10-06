@@ -1,9 +1,12 @@
 package com.mahmoudhamdyae.foodplanner.view.search.ingredients.view;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +31,9 @@ import com.mahmoudhamdyae.foodplanner.view.search.ingredients.presenter.IIngredi
 import com.mahmoudhamdyae.foodplanner.view.search.ingredients.presenter.IngredientPresenter;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class IngredientsFragment extends Fragment implements IIngredientView, OnIngredientClickListener {
 
@@ -35,6 +41,8 @@ public class IngredientsFragment extends Fragment implements IIngredientView, On
     private ShimmerFrameLayout mShimmerViewContainer;
     private RecyclerView recyclerView;
     private LottieAnimationView errorImage;
+    private List<Ingredient> ingredients;
+    private EditText searchEditText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,10 +64,11 @@ public class IngredientsFragment extends Fragment implements IIngredientView, On
         recyclerView = view.findViewById(R.id.ingredients_recycler_view);
 
         // Set Action Bar Title
-        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.ingredients_screen_title);
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(R.string.ingredients_screen_title);
 
         // Recycler View
-        mAdapter = new IngredientsAdapter(getContext(), new ArrayList<>(), this);
+        ingredients = new ArrayList<>();
+        mAdapter = new IngredientsAdapter(getContext(), ingredients, this);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -69,12 +78,32 @@ public class IngredientsFragment extends Fragment implements IIngredientView, On
         // Presenter
         IIngredientPresenter presenter = new IngredientPresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())));
         presenter.getIngredients();
+
+        // Search EditText
+        searchEditText = view.findViewById(R.id.search_edit_text);
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().isEmpty()) {
+                    mAdapter.setList(ingredients);
+                } else {
+                    mAdapter.setList(ingredients.stream().filter(ingredient -> ingredient.getName().toLowerCase().contains(s.toString().toLowerCase())).collect(Collectors.toList()));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
     }
 
     @Override
     public void onGetIngredientsSuccess(IngredientResponse ingredientResponse) {
+        ingredients = ingredientResponse.getIngredients();
         stopShimmerEffectAndShowUi();
-        mAdapter.setList(ingredientResponse.getIngredients());
+        mAdapter.setList(ingredients);
     }
 
     @Override
@@ -92,6 +121,7 @@ public class IngredientsFragment extends Fragment implements IIngredientView, On
     private void navigateToMealsScreen(Ingredient ingredient) {
         NavDirections action = IngredientsFragmentDirections.actionIngredientsFragmentToMealsFragment(SearchType.INGREDIENT, ingredient.getName(), null);
         Navigation.findNavController(requireView()).navigate(action);
+        searchEditText.setText("");
     }
 
     @Override
