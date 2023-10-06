@@ -277,7 +277,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         super.onSaveInstanceState(outState);
         outState.putParcelable(MEAL_OF_THE_DAY_STATE, mealOfTheDay);
         outState.putParcelableArrayList(CATEGORIES_LIST_STATE, categories);
-        outState.putBoolean(IS_ERROR_STATE, errorImage.getVisibility() == View.VISIBLE);
+        outState.putBoolean(IS_ERROR_STATE, errorImage != null && errorImage.getVisibility() == View.VISIBLE);
     }
 
     private void stopShimmerEffectAndShowUi() {
