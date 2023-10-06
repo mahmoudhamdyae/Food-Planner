@@ -50,7 +50,9 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.ingredientNameTextView.setText(ingredients.get(position) + "\n" + measures.get(position));
+        try {
+            holder.ingredientNameTextView.setText(ingredients.get(position) + "\n" + measures.get(position));
+        } catch (ArrayIndexOutOfBoundsException e) { e.printStackTrace(); }
         String url = "https://www.themealdb.com/images/ingredients/" + ingredients.get(position).replace(" ", "%20") + "-Small.png";
         Glide.with(context)
                 .load(url)
