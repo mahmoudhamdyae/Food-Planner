@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
@@ -16,8 +15,6 @@ import androidx.navigation.Navigation;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.model.SearchType;
 import com.mahmoudhamdyae.foodplanner.utils.Utils;
-
-import java.util.Objects;
 
 public class PlansFragment extends Fragment {
 
@@ -35,9 +32,6 @@ public class PlansFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // Set Action Bar Title
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(R.string.plan_screen_title);
 
         CardView saturdayCard = view.findViewById(R.id.saturday);
         CardView sundayCard = view.findViewById(R.id.sunday);

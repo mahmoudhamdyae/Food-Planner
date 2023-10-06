@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(R.string.fav_screen_title);
             } else if (destinationId == R.id.homeFragment) {
                 getSupportActionBar().setTitle(R.string.home_screen_title);
+            } else if (destinationId == R.id.plansFragment) {
+                getSupportActionBar().setTitle(R.string.plan_screen_title);
             }
         });
     }
