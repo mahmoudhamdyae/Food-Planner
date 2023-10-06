@@ -17,6 +17,7 @@ Application Features:
 ## Tools used
 * MVP Architecture Pattern
 * Repository Design Pattern
+* Rx Java
 * Room
 * Retrofit
 * Glide
