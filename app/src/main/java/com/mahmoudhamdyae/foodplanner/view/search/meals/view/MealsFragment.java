@@ -64,14 +64,6 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
 
         TextView descTextView = view.findViewById(R.id.desc);
 
-        // Recycler View
-        mAdapter = new MealsAdapter(getContext(), new ArrayList<>(), this);
-        recyclerView.setHasFixedSize(true);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), Utils.getNoOfColumns(requireContext()));
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(mAdapter);
-
         // Get arguments from previous screen
         SearchType searchType = MealsFragmentArgs.fromBundle(getArguments()).getSearchType();
         String name = MealsFragmentArgs.fromBundle(getArguments()).getName();
@@ -82,6 +74,14 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
         } else {
             descTextView.setVisibility(View.GONE);
         }
+
+        // Recycler View
+        mAdapter = new MealsAdapter(getContext(), new ArrayList<>(), this, searchType == SearchType.PLAN);
+        recyclerView.setHasFixedSize(true);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), Utils.getNoOfColumns(requireContext()));
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(mAdapter);
 
         // Set Action Bar Title
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(name);

@@ -25,12 +25,14 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
     private List<Meal> items;
     private final Context context;
     private final OnMealClickListener listener;
+    private final Boolean isPlan;
 
-    public MealsAdapter(Context context, List<Meal> items, OnMealClickListener listener) {
+    public MealsAdapter(Context context, List<Meal> items, OnMealClickListener listener, Boolean isPlan) {
         super();
         this.items = items;
         this.context = context;
         this.listener = listener;
+        this.isPlan = isPlan;
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -61,7 +63,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
 
         holder.row.setOnClickListener(v -> listener.onMealClicked(meal));
 
-        if (meal.getDay() != null) {
+        if (isPlan) {
             holder.removeFromPlan.setVisibility(View.VISIBLE);
             holder.removeFromPlan.setOnClickListener(v -> listener.onRemoveFromPlanClicked(meal));
         } else {

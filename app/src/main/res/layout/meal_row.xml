@@ -20,11 +20,11 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/image"
             android:scaleType="fitXY"
-            tools:src="@tools:sample/backgrounds/scenic"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
 
         <TextView
             android:id="@+id/title"
@@ -37,20 +37,22 @@
             android:padding="8dp"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Title"/>
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Title" />
 
         <ImageButton
             android:id="@+id/del_from_plan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/circle_background"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="6dp"
+            android:background="@drawable/circle_background"
+            android:contentDescription="@string/image"
             android:padding="12dp"
             android:src="@drawable/ic_baseline_delete_24"
-            android:contentDescription="@string/image" />
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

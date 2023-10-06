@@ -183,7 +183,7 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
                 },
                 error -> {
                     mShimmerViewContainer.stopShimmerAnimation();
-                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.i(TAG, "onGetMeals error: " + error.getMessage());
                     error.printStackTrace();
                 }
