@@ -2,6 +2,7 @@ package com.mahmoudhamdyae.foodplanner.view.home.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,6 +48,8 @@ import java.util.Calendar;
 import java.util.Map;
 
 public class HomeFragment extends Fragment implements OnCategoryClickListener, IHomeView, OnResult {
+
+    private static final String TAG = "HomeFragment";
 
     private static final String MEAL_OF_THE_DAY_STATE = "MEAL_OF_THE_DAY";
     private static final String CATEGORIES_LIST_STATE = "CATEGORIES_LIST_STATE";
@@ -267,7 +269,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
 
     @Override
     public void onNetworkFail(String errorMsg) {
-        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onNetworkFail: " + errorMsg);
         mShimmerViewContainer.setVisibility(View.GONE);
         errorImage.setVisibility(View.VISIBLE);
     }

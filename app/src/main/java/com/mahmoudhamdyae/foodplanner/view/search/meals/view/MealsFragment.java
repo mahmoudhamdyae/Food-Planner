@@ -1,6 +1,7 @@
 package com.mahmoudhamdyae.foodplanner.view.search.meals.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class MealsFragment extends Fragment implements IMealsView, OnMealClickListener {
+
+    private static final String TAG = "MealsFragment";
 
     private MealsAdapter mAdapter;
     private ShimmerFrameLayout mShimmerViewContainer;
@@ -105,7 +108,7 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
 
     @Override
     public void onGetMealsFail(String errorMsg) {
-        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onGetMealsFail: " + errorMsg);
         mShimmerViewContainer.setVisibility(View.GONE);
         errorImage.setVisibility(View.VISIBLE);
     }

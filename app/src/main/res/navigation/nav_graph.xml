@@ -197,7 +197,7 @@
     </fragment>
     <fragment
         android:id="@+id/plansFragment"
-        android:name="com.mahmoudhamdyae.foodplanner.view.plans.view.PlansFragment"
+        android:name="com.mahmoudhamdyae.foodplanner.view.plans.PlansFragment"
         android:label="@string/plan_screen_title"
         tools:layout="@layout/fragment_plans" >
         <action

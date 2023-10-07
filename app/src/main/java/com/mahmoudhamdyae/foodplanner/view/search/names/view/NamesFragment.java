@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -128,7 +127,7 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
 
     @Override
     public void onGetMealsFail(String errorMsg) {
-        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onGetMealsFail: " + errorMsg);
         mShimmerViewContainer.setVisibility(View.GONE);
         errorImage.setVisibility(View.VISIBLE);
     }

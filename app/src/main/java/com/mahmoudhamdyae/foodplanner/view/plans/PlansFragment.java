@@ -1,4 +1,4 @@
-package com.mahmoudhamdyae.foodplanner.view.plans.view;
+package com.mahmoudhamdyae.foodplanner.view.plans;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,8 +20,6 @@ import com.mahmoudhamdyae.foodplanner.model.SearchType;
 import com.mahmoudhamdyae.foodplanner.utils.Utils;
 
 public class PlansFragment extends Fragment {
-
-    private AccountService accountService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +52,7 @@ public class PlansFragment extends Fragment {
         thursdayCard.setOnClickListener(v -> navigateToMealsScreen(5));
         fridayCard.setOnClickListener(v -> navigateToMealsScreen(6));
 
-        accountService = new AccountServiceImpl(requireContext());
+        AccountService accountService = new AccountServiceImpl(requireContext());
         if (!accountService.hasUser()) showSignUpDialog();
     }
 

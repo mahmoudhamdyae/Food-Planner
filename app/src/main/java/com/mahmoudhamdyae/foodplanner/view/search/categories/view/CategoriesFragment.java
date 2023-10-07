@@ -3,11 +3,11 @@ package com.mahmoudhamdyae.foodplanner.view.search.categories.view;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,6 +36,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class CategoriesFragment extends Fragment implements ICategoryView, OnCategoryClickListener {
+
+    private static final String TAG = "CategoriesFragment";
 
     private CategoriesAdapter mAdapter;
     private ShimmerFrameLayout mShimmerViewContainer;
@@ -108,7 +110,7 @@ public class CategoriesFragment extends Fragment implements ICategoryView, OnCat
 
     @Override
     public void onGetCategoriesFail(String errorMsg) {
-        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onGetCategoriesFail: " + errorMsg);
         mShimmerViewContainer.setVisibility(View.GONE);
         errorImage.setVisibility(View.VISIBLE);
     }

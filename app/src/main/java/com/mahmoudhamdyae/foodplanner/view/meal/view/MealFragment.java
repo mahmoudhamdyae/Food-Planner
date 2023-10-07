@@ -286,7 +286,7 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
     @Override
     public void onGetMealFail(String errorMsg) {
         mShimmerViewContainer.stopShimmerAnimation();
-        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onGetMealFail: " + errorMsg);
     }
 
     @Override
