@@ -133,7 +133,7 @@
         android:id="@+id/meals_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="80dp"
+        android:paddingBottom="95dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_edit_text"
         tools:listitem="@layout/meal_row" />
