@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
 import com.mahmoudhamdyae.foodplanner.model.Meal;
@@ -116,8 +117,20 @@ public class MealsFragment extends Fragment implements IMealsView, OnMealClickLi
 
     @Override
     public void onRemoveFromPlanClicked(Meal meal) {
-        Toast.makeText(getContext(), meal.getName() + "Removed from Plan", Toast.LENGTH_SHORT).show();
-        presenter.removeMealFromPlan(meal);
+        getString(R.string.from, meal.getArea());
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.dialog_remove_from_plan_title)
+                .setMessage(getString(R.string.dialog_remove_from_plan_msg, meal.getName()))
+                .setPositiveButton(R.string.dialog_remove_from_plan_yes, (dialog, id) -> {
+                    // Remove the meal from Plan
+                    Toast.makeText(getContext(), meal.getName() + "Removed from Plan", Toast.LENGTH_SHORT).show();
+                    presenter.removeMealFromPlan(meal);
+                    dialog.dismiss();
+                })
+                .setNegativeButton(R.string.dialog_remove_from_plan_cancel, (dialog, id) -> {
+                    // User cancelled the dialog
+                    dialog.dismiss();
+                }).show();
     }
 
     private void navigateToMealScreen(Meal meal) {

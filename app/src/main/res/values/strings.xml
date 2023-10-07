@@ -119,4 +119,9 @@
     <string name="dialog_log_in_msg">Add your food preferences, shop your recipes, plan your meals and more!</string>
     <string name="dialog_log_in_yes">Sign Up</string>
     <string name="dialog_log_in_cancel">Cancel</string>
+    <!-- Remove Meal from Plan-->
+    <string name="dialog_remove_from_plan_title">Remove Meal</string>
+    <string name="dialog_remove_from_plan_msg">Are you sure you want to remove %1$s from the plan?</string>
+    <string name="dialog_remove_from_plan_yes">Remove</string>
+    <string name="dialog_remove_from_plan_cancel">Cancel</string>
 </resources>
