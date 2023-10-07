@@ -203,5 +203,10 @@
         <action
             android:id="@+id/action_plansFragment_to_mealsFragment"
             app:destination="@id/mealsFragment" />
+        <action
+            android:id="@+id/action_plansFragment_to_authFragment"
+            app:destination="@id/authFragment"
+            app:popUpTo="@id/plansFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

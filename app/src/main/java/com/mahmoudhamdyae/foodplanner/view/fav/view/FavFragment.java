@@ -102,6 +102,7 @@ public class FavFragment extends Fragment implements OnMealClickListener {
         new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.dialog_log_in_title)
                 .setMessage(R.string.dialog_log_in_msg)
+                .setCancelable(false)
                 .setPositiveButton(R.string.dialog_log_in_yes, (dialog, id) -> {
                     navigateToAuthScreen();
                     dialog.dismiss();

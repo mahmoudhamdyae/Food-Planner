@@ -12,11 +12,16 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.mahmoudhamdyae.foodplanner.R;
+import com.mahmoudhamdyae.foodplanner.account.AccountService;
+import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
 import com.mahmoudhamdyae.foodplanner.model.SearchType;
 import com.mahmoudhamdyae.foodplanner.utils.Utils;
 
 public class PlansFragment extends Fragment {
+
+    private AccountService accountService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,10 +53,38 @@ public class PlansFragment extends Fragment {
         wednesdayCard.setOnClickListener(v -> navigateToMealsScreen(4));
         thursdayCard.setOnClickListener(v -> navigateToMealsScreen(5));
         fridayCard.setOnClickListener(v -> navigateToMealsScreen(6));
+
+        accountService = new AccountServiceImpl(requireContext());
+        if (!accountService.hasUser()) showSignUpDialog();
     }
 
     private void navigateToMealsScreen(int day) {
         NavDirections action = PlansFragmentDirections.actionPlansFragmentToMealsFragment(SearchType.PLAN, getString(Utils.dayToString(day)), null);
+        Navigation.findNavController(requireView()).navigate(action);
+    }
+
+    private void showSignUpDialog() {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.dialog_log_in_title)
+                .setCancelable(false)
+                .setMessage(R.string.dialog_log_in_msg)
+                .setPositiveButton(R.string.dialog_log_in_yes, (dialog, id) -> {
+                    navigateToAuthScreen();
+                    dialog.dismiss();
+                })
+                .setNegativeButton(R.string.dialog_log_in_cancel, (dialog, id) -> {
+                    // User cancelled the dialog
+                    navigateUp();
+                    dialog.dismiss();
+                }).show();
+    }
+
+    private void navigateUp() {
+        Navigation.findNavController(requireView()).navigateUp();
+    }
+
+    private void navigateToAuthScreen() {
+        NavDirections action = PlansFragmentDirections.actionPlansFragmentToAuthFragment();
         Navigation.findNavController(requireView()).navigate(action);
     }
 }
