@@ -32,7 +32,7 @@ Application Features:
 [TheMealDB API](https://www.themealdb.com/api.php)
 
 ## Downloads
-[APK Download](https://drive.google.com/file/d/1ZKGZzan96F25DmUfJFWAyZvRzuu_eKie/view?usp=sharing)
+[APK Download](https://drive.google.com/file/d/1TSXdNZqIn57vYQLB_Bvmd0KJCdLZkzHF/view?usp=sharing)
 
 ## Screenshots
 <p align="center">
