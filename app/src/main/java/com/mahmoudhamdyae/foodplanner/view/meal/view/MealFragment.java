@@ -130,6 +130,11 @@ public class MealFragment extends Fragment implements IMealView, OnIngredientCli
         new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.add_to_plan_dialog_title)
                 .setItems(R.array.days_array, (dialog, which) -> {
+                    if (meal.getFavourite() == null || !meal.getFavourite()) {
+                        meal.setFavourite(false);
+                    } else {
+                        meal.setFavourite(true);
+                    }
                     meal.setDay(getString(Utils.dayToString(which)));
                     presenter.addToPlan(meal);
                     Toast.makeText(getContext(), meal.getName() + " Added to Plan", Toast.LENGTH_SHORT).show();

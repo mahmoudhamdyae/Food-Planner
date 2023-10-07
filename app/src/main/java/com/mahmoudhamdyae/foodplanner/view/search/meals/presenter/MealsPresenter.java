@@ -40,7 +40,7 @@ public class MealsPresenter implements IMealsPresenter, NetworkCallback {
                         meals -> {
                             ArrayList<Meal> arrayList = new ArrayList<>();
                             for (Meal meal: meals) {
-                                if (meal.getDay().equals(name)) arrayList.add(meal);
+                                if (meal.getDay() != null && meal.getDay().equals(name)) arrayList.add(meal);
                             }
                             listener.onGetMealsSuccess(new MealsResponse(arrayList));
                         },
@@ -52,7 +52,7 @@ public class MealsPresenter implements IMealsPresenter, NetworkCallback {
 
     @Override
     public void removeMealFromPlan(Meal meal) {
-        repo.removeMealFromFav(meal, this, false);
+        repo.removeMealFromPlan(meal, this);
     }
 
     @Override
