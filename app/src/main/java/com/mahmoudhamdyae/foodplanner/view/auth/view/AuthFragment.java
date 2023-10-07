@@ -20,6 +20,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.mahmoudhamdyae.foodplanner.LoadingDialog;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
 import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
@@ -32,6 +33,7 @@ public class AuthFragment extends Fragment implements IAuthView {
 
     private static final int RC_SIGN_IN = 1;
     private IAuthPresenter presenter;
+    private LoadingDialog loadingDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class AuthFragment extends Fragment implements IAuthView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        loadingDialog = new LoadingDialog(getActivity());
 
         presenter = new AuthPresenter(this, new AccountServiceImpl(requireContext()), RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(),
                 LocalDataSourceImpl.getInstance(requireContext())));
@@ -114,6 +118,7 @@ public class AuthFragment extends Fragment implements IAuthView {
 
     @Override
     public void onAuthSuccess() {
+        loadingDialog.dismissDialog();
         // Google Log in success
         navigateToHomeScreen();
     }
@@ -122,12 +127,14 @@ public class AuthFragment extends Fragment implements IAuthView {
 
     @Override
     public void onGoogleAuthSuccess(Intent signInIntent) {
+        loadingDialog.startLoadingDialog();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     @Override
     public void onFailure(String errorMsg) {
         // Failed to log in
+        loadingDialog.dismissDialog();
         Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
     }
 }

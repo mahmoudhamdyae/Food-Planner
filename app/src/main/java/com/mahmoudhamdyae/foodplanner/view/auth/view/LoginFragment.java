@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
+import com.mahmoudhamdyae.foodplanner.LoadingDialog;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
 import com.mahmoudhamdyae.foodplanner.db.LocalDataSourceImpl;
@@ -29,8 +30,8 @@ import com.mahmoudhamdyae.foodplanner.view.auth.presenter.IAuthPresenter;
 public class LoginFragment extends Fragment implements IAuthView {
 
     private TextInputLayout emailEditText, passwordEditText;
-
     private IAuthPresenter presenter;
+    private LoadingDialog loadingDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,8 @@ public class LoginFragment extends Fragment implements IAuthView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        loadingDialog = new LoadingDialog(getActivity());
 
         presenter = new AuthPresenter(this, new AccountServiceImpl(requireContext()), RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(),
                 LocalDataSourceImpl.getInstance(requireContext())));
@@ -95,6 +98,7 @@ public class LoginFragment extends Fragment implements IAuthView {
     }
 
     private void login() {
+        loadingDialog.startLoadingDialog();
         String email = emailEditText.getEditText().getText().toString();
         String password = passwordEditText.getEditText().getText().toString();
         presenter.login(email, password);
@@ -127,6 +131,7 @@ public class LoginFragment extends Fragment implements IAuthView {
     @Override
     public void onAuthSuccess() {
         // Log in success
+        loadingDialog.dismissDialog();
         navigateToHomeScreen();
     }
 
@@ -136,6 +141,7 @@ public class LoginFragment extends Fragment implements IAuthView {
     @Override
     public void onFailure(String errorMsg) {
         // Failed to log in
+        loadingDialog.dismissDialog();
         Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
     }
 }

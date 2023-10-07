@@ -28,6 +28,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
+import com.mahmoudhamdyae.foodplanner.LoadingDialog;
 import com.mahmoudhamdyae.foodplanner.R;
 import com.mahmoudhamdyae.foodplanner.SharedPref;
 import com.mahmoudhamdyae.foodplanner.account.AccountServiceImpl;
@@ -65,6 +66,8 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     private HomePresenter presenter;
     private SharedPref sharedPref;
 
+    private LoadingDialog loadingDialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +92,7 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
         mealOfTheDayLabel = view.findViewById(R.id.meal_of_the_day_label);
         categoriesLabel = view.findViewById(R.id.categories_label);
         recyclerView = view.findViewById(R.id.categories_recycler_view);
+        loadingDialog = new LoadingDialog(getActivity());
 
         // Presenter
         presenter = new HomePresenter(this, RepositoryImpl.getInstance(RemoteDataSourceImpl.getInstance(), LocalDataSourceImpl.getInstance(requireContext())), new AccountServiceImpl(requireContext()));
@@ -160,9 +164,11 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
                 .setMessage(R.string.dialog_sign_out_msg)
                 .setPositiveButton(R.string.dialog_sign_out, (dialog, id) -> {
                     // Sign out
+                    dialog.dismiss();
+                    loadingDialog.startLoadingDialog();
                     presenter.signOut();
                     navigateToAuthScreen();
-                    dialog.dismiss();
+                    loadingDialog.dismissDialog();
                 })
                 .setNegativeButton(R.string.dialog_cancel, (dialog, id) -> {
                     // User cancelled the dialog

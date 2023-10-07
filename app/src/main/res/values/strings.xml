@@ -124,4 +124,6 @@
     <string name="dialog_remove_from_plan_msg">Are you sure you want to remove %1$s from the plan?</string>
     <string name="dialog_remove_from_plan_yes">Remove</string>
     <string name="dialog_remove_from_plan_cancel">Cancel</string>
+    <!-- Loading Dialog -->
+    <string name="please_wait">Please Wait…</string>
 </resources>
