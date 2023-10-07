@@ -151,6 +151,9 @@ public class HomeFragment extends Fragment implements OnCategoryClickListener, I
     public void onResume() {
         super.onResume();
         mShimmerViewContainer.startShimmerAnimation();
+        presenter.getMeals();
+        mealOfTheDay = sharedPref.getMeal();
+        setMealOfTheDayUI();
     }
 
     @Override
