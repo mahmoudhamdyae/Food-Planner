@@ -121,6 +121,7 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
         } else {
             emptyView.setVisibility(View.GONE);
         }
+        errorImage.setVisibility(View.GONE);
         stopShimmerEffectAndShowUi();
         mAdapter.setList(meals);
     }
