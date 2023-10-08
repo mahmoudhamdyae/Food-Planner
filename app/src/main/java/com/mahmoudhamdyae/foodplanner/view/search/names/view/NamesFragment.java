@@ -93,6 +93,7 @@ public class NamesFragment extends Fragment implements INamesView, OnMealClickLi
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 mShimmerViewContainer.setVisibility(View.VISIBLE);
                 mShimmerViewContainer.startShimmerAnimation();
+                errorImage.setVisibility(View.GONE);
                 searchImage.setVisibility(View.GONE);
                 emitter.onNext(charSequence.toString());
             }
